@@ -8,24 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Егор\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Егор\\OneDrive\\Робочий стіл\\C#\\GitPaint\\Paint\\NewPaintProject\\NewPaintProject\\NewPaintProject.csproj",
+      "projectUniqueName": "G:\\DevEducation\\CSharp\\Paint\\NewPaintProject\\NewPaintProject\\NewPaintProject.csproj",
       "projectName": "NewPaintProject",
-      "projectPath": "C:\\Users\\Егор\\OneDrive\\Робочий стіл\\C#\\GitPaint\\Paint\\NewPaintProject\\NewPaintProject\\NewPaintProject.csproj",
-      "packagesPath": "C:\\Users\\Егор\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Егор\\OneDrive\\Робочий стіл\\C#\\GitPaint\\Paint\\NewPaintProject\\NewPaintProject\\obj\\",
+      "projectPath": "G:\\DevEducation\\CSharp\\Paint\\NewPaintProject\\NewPaintProject\\NewPaintProject.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "G:\\DevEducation\\CSharp\\Paint\\NewPaintProject\\NewPaintProject\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Егор\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

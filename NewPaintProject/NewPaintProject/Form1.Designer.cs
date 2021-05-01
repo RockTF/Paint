@@ -40,6 +40,7 @@ namespace NewPaintProject
             ((System.ComponentModel.ISupportInitialize)(this.mainPicture)).BeginInit();
 =======
             this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 >>>>>>> origin/main
             this.SuspendLayout();
@@ -123,14 +124,29 @@ namespace NewPaintProject
             this.button7.Text = "button7";
             this.button7.UseVisualStyleBackColor = true;
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(13, 49);
+            this.button8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(94, 31);
+            this.button8.TabIndex = 9;
+            this.button8.Text = "button8";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 <<<<<<< HEAD
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(700, 338);
 =======
             this.ClientSize = new System.Drawing.Size(800, 450);
+=======
+            this.ClientSize = new System.Drawing.Size(800, 451);
+            this.Controls.Add(this.button8);
+>>>>>>> develop
             this.Controls.Add(this.button7);
 >>>>>>> origin/main
             this.Controls.Add(this.button6);
@@ -158,6 +174,7 @@ namespace NewPaintProject
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
     }
 }
 

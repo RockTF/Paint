@@ -21,9 +21,32 @@ namespace NewPaitnt.Implementation
         public Brush Brush { get; set; }
         public bool IsImageBorderClosed { get; set; }
         public SmoothingMode SmoothingMode { get; set; }
-        public void Initialize()
+        public Settings()
         {
-            throw new NotImplementedException();
+            ImageWidth = 640;
+            ImageHeight = 360;
+            Mode = "point";
+            PenColor = Color.Black;
+            PenWidth = 1f;
+            Pen = new Pen(PenColor, PenWidth);
+            BrushColor = Color.Black;
+            Brush = new SolidBrush(BrushColor);
+            IsImageBorderClosed = false;
+            SmoothingMode = SmoothingMode.None;
+        }
+
+        public void Reset()
+        {
+            ImageWidth = 640;
+            ImageHeight = 360;
+            Mode = "point";
+            PenColor = Color.Black;
+            PenWidth = 1f;
+            Pen = new Pen(PenColor, PenWidth);
+            BrushColor = Color.Black;
+            Brush = new SolidBrush(BrushColor);
+            IsImageBorderClosed = false;
+            SmoothingMode = SmoothingMode.None;
         }
     }
 }

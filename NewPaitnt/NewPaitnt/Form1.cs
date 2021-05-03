@@ -1,4 +1,5 @@
-﻿using NewPaitnt.Interfaces;
+﻿using NewPaitnt.Implementation;
+using NewPaitnt.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,16 @@ namespace NewPaitnt
         public void CalculateCoordinates()
         {
             throw new NotImplementedException();
+        }
+
+        private void mainPaint_Load(object sender, EventArgs e)
+        {
+            Settings settings = new Settings();
+            DrawingEngine drawingEngine = new DrawingEngine();
+            MainImage = new Bitmap(settings.ImageWidth, settings.ImageHeight);
+            drawingEngine.MainGraphics = Graphics.FromImage(MainImage);
+            drawingEngine.MainGraphics.Clear(Color.White);
+            pictureBoxPaint.Image = MainImage;
         }
     }
 }

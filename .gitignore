@@ -1,4 +1,4 @@
-/NewPaitnt\NewPaitnt\bin
-/NewPaitnt\NewPaitnt\obj
-/NewPaitnt\.vs
-/.idea
+/NewPaitnt/NewPaitnt/bin
+NewPaitnt/NewPaitnt/obj
+NewPaitnt/.vs
+.idea

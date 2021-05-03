@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NewPaintProject
+namespace NewPaitnt
 {
-    public partial class Form1 : Form
+    public partial class mainPaint : Form
     {
-        public Form1()
+        public mainPaint()
         {
             InitializeComponent();
         }

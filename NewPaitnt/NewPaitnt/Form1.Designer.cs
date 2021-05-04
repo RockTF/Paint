@@ -75,6 +75,8 @@ namespace NewPaitnt
             this.pictureBoxPaint.Size = new System.Drawing.Size(831, 487);
             this.pictureBoxPaint.TabIndex = 0;
             this.pictureBoxPaint.TabStop = false;
+            this.pictureBoxPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseDown);
+            this.pictureBoxPaint.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseMove);
             // 
             // panelMenu
             // 

@@ -49,6 +49,7 @@ namespace NewPaitnt.Implementation
 
         public static void Draw()
         {
+            // Вызывается соответствующий метод рисования
             switch (Settings.Mode)
             {
                 case "rectangle":
@@ -81,12 +82,19 @@ namespace NewPaitnt.Implementation
 
         public static void DrawRectangle()
         {
+            // Копирование временного изображения в основное
             MainImage = (Bitmap)TempImage.Clone();
+            // Пересоздание основного обьекта графики на основе основного изображения
             MainGraphics = Graphics.FromImage(MainImage);
+            // Пересоздание основы для рисования фигуры на основе прозрачного изображения
             Transparent = (Bitmap)ClearTransparent.Clone();
+            // Пересоздание обьекта графики фигуры на основе прозрачного изображения
             FigureGraphics = Graphics.FromImage(Transparent);
+            // Отрисофка фигуры по прозрачному изображению
             FigureGraphics.DrawRectangle(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
+            // Отрисовка прозрачного изображения с фигурой поверх основного изображения
             MainGraphics.DrawImage(Transparent, 0, 0);
+            // Явный вызов сборщика мусора для удаления старых обьектов графики
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }

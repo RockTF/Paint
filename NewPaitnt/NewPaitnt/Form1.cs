@@ -21,7 +21,7 @@ namespace NewPaitnt
 
         private void mainPaint_Load(object sender, EventArgs e)
         {
-            Settings.Initialize();
+            Settings.Init1ialize();
             DrawingEngine.Initialize();
             pictureBoxPaint.Image = DrawingEngine.MainImage;
         }
@@ -49,6 +49,16 @@ namespace NewPaitnt
                 // Обновление основного изображения в PictureBox
                 pictureBoxPaint.Image = DrawingEngine.MainImage;
             }
+        }
+
+        private void Triangle_Click(object sender, EventArgs e) // Треугольник
+        {
+
+        }
+
+        private void CurvedLine_Click(object sender, EventArgs e) // Кривая линия
+        {
+
         }
     }
 }

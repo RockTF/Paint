@@ -8,55 +8,55 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Implementation
 {
-    class DrawingEngine : IDrawingEngine
+    public static class DrawingEngine
     {
-        public Bitmap TempImage { get; set; }
-        public Bitmap Figure { get ; set; }
-        public Bitmap Transparent { get; set; }
-        public Graphics MainGraphics { get; set; }
-        public Graphics FigureGraphics { get; set; }
+        public static Bitmap TempImage { get; set; }
+        public static Bitmap Figure { get ; set; }
+        public static Bitmap Transparent { get; set; }
+        public static Graphics MainGraphics { get; set; }
+        public static Graphics FigureGraphics { get; set; }
 
-        public void ClearCanvas()
+        public static void ClearCanvas()
         {
             throw new NotImplementedException();
         }
 
-        public void Draw()
+        public static void Draw()
+        {
+            
+        }
+
+        public static void DrawCurve()
         {
             throw new NotImplementedException();
         }
 
-        public void DrawCurve()
+        public static void DrawEllipse()
         {
             throw new NotImplementedException();
         }
 
-        public void DrawEllipse()
+        public static void DrawLine()
         {
             throw new NotImplementedException();
         }
 
-        public void DrawLine()
+        public static void DrawPoint()
         {
             throw new NotImplementedException();
         }
 
-        public void DrawPoint()
+        public static void DrawRectangle()
         {
             throw new NotImplementedException();
         }
 
-        public void DrawRectangle()
+        public static void DrawSmoothCurve()
         {
             throw new NotImplementedException();
         }
 
-        public void DrawSmoothCurve()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Initialize()
+        public static void Initialize()
         {
             throw new NotImplementedException();
         }

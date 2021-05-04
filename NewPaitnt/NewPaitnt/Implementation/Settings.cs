@@ -9,42 +9,34 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Implementation
 {
-    class Settings : ISettings
+    public static class Settings
     {
-        public ushort ImageWidth { get; set; }
-        public ushort ImageHeight { get; set; }
-        public string Mode { get; set; }
-        public Color PenColor { get; set; }
-        public float PenWidth { get; set; }
-        public Pen Pen { get; set; }
-        public Color BrushColor { get; set; }
-        public Brush Brush { get; set; }
-        public bool IsImageBorderClosed { get; set; }
-        public SmoothingMode SmoothingMode { get; set; }
-        public Settings()
+        public static ushort ImageWidth { get; set; }
+        public static ushort ImageHeight { get; set; }
+        public static string Mode { get; set; }
+        public static Pen Pen { get; set; }
+        public static Brush Brush { get; set; }
+        public static bool IsImageBorderClosed { get; set; }
+        public static SmoothingMode SmoothingMode { get; set; }
+        public static void Initialize()
         {
             ImageWidth = 640;
             ImageHeight = 360;
-            Mode = "point";
-            PenColor = Color.Black;
-            PenWidth = 1f;
-            Pen = new Pen(PenColor, PenWidth);
-            BrushColor = Color.Black;
-            Brush = new SolidBrush(BrushColor);
+            Mode = "rectangle";
+            Pen = new Pen(Color.Black, 1f);
+            Brush = new SolidBrush(Color.Transparent);
             IsImageBorderClosed = false;
             SmoothingMode = SmoothingMode.None;
         }
 
-        public void Reset()
+        public static void Reset()
         {
             ImageWidth = 640;
             ImageHeight = 360;
-            Mode = "point";
-            PenColor = Color.Black;
-            PenWidth = 1f;
-            Pen = new Pen(PenColor, PenWidth);
-            BrushColor = Color.Black;
-            Brush = new SolidBrush(BrushColor);
+            Mode = "rectangle";
+            Pen.Color = Color.Black;
+            Pen.Width = 1f;
+            Brush = new SolidBrush(Color.Transparent);
             IsImageBorderClosed = false;
             SmoothingMode = SmoothingMode.None;
         }

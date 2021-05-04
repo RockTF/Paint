@@ -12,16 +12,16 @@ using System.Windows.Forms;
 
 namespace NewPaitnt
 {
-    public partial class mainPaint : Form, IGraphicEditor
+    public partial class mainPaint : Form
     {
-        public Bitmap MainImage { get; set; }
-        public List<Bitmap> History { get; set; }
-        public ushort Xclick { get; set; }
-        public ushort Yclick { get; set; }
-        public ushort Xstart { get; set; }
-        public ushort Ystart { get; set; }
-        public ushort Xend { get; set; }
-        public ushort Yend { get; set; }
+        public static Bitmap MainImage { get; set; }
+        public static List<Bitmap> History { get; set; }
+        public static ushort Xclick { get; set; }
+        public static ushort Yclick { get; set; }
+        public static ushort Xstart { get; set; }
+        public static ushort Ystart { get; set; }
+        public static ushort Xend { get; set; }
+        public static ushort Yend { get; set; }
 
         public mainPaint()
         {
@@ -35,11 +35,10 @@ namespace NewPaitnt
 
         private void mainPaint_Load(object sender, EventArgs e)
         {
-            Settings settings = new Settings();
-            DrawingEngine drawingEngine = new DrawingEngine();
-            MainImage = new Bitmap(settings.ImageWidth, settings.ImageHeight);
-            drawingEngine.MainGraphics = Graphics.FromImage(MainImage);
-            drawingEngine.MainGraphics.Clear(Color.White);
+            Settings.Initialize();
+            MainImage = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
+            DrawingEngine.MainGraphics = Graphics.FromImage(MainImage);
+            DrawingEngine.MainGraphics.Clear(Color.White);
             pictureBoxPaint.Image = MainImage;
         }
     }

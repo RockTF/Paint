@@ -8,19 +8,19 @@
     "net5.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Anton\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Anton\\DevEducation\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj",
+      "projectUniqueName": "G:\\DevEducation\\CSharp\\NewPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj",
       "projectName": "NewPaitnt",
-      "projectPath": "D:\\Anton\\DevEducation\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj",
-      "packagesPath": "C:\\Users\\Anton\\.nuget\\packages\\",
-      "outputPath": "D:\\Anton\\DevEducation\\Paint\\NewPaitnt\\NewPaitnt\\obj\\",
+      "projectPath": "G:\\DevEducation\\CSharp\\NewPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "G:\\DevEducation\\CSharp\\NewPaint\\Paint\\NewPaitnt\\NewPaitnt\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Anton\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

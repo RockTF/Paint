@@ -18,7 +18,8 @@ namespace NewPaitnt.Implementation
         public static Brush Brush { get; set; }
         public static bool IsImageBorderClosed { get; set; }
         public static SmoothingMode SmoothingMode { get; set; }
-        public static void Initialize()
+
+        public static void Init1ialize()
         {
             ImageWidth = 640;
             ImageHeight = 360;

@@ -16,6 +16,7 @@ namespace NewPaitnt.Implementation
         public static int Ystart { get; set; }
         public static int Xend { get; set; }
         public static int Yend { get; set; }
+
         public static Bitmap MainImage { get; set; }
         public static List<Bitmap> History { get; set; }
         public static Bitmap TempImage { get; set; }
@@ -32,6 +33,7 @@ namespace NewPaitnt.Implementation
             MainGraphics = Graphics.FromImage(MainImage);
             MainGraphics.Clear(Color.White);
         }
+
         public static void ClearCanvas()
         {
             MainGraphics.Clear(Color.White);

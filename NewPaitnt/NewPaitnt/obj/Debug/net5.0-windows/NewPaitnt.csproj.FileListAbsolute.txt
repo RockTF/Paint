@@ -55,3 +55,22 @@ G:\DevEducation\CSharp\NewPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windo
 G:\DevEducation\CSharp\NewPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\ref\NewPaitnt.dll
 G:\DevEducation\CSharp\NewPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.pdb
 G:\DevEducation\CSharp\NewPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.genruntimeconfig.cache
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\bin\Debug\net5.0-windows\NewPaitnt.exe
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\bin\Debug\net5.0-windows\NewPaitnt.deps.json
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\bin\Debug\net5.0-windows\NewPaitnt.runtimeconfig.json
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\bin\Debug\net5.0-windows\NewPaitnt.runtimeconfig.dev.json
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\bin\Debug\net5.0-windows\NewPaitnt.dll
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\bin\Debug\net5.0-windows\ref\NewPaitnt.dll
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\bin\Debug\net5.0-windows\NewPaitnt.pdb
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.csprojAssemblyReference.cache
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.mainPaint.resources
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.Properties.Resources.resources
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.csproj.GenerateResource.cache
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.AssemblyInfoInputs.cache
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.AssemblyInfo.cs
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.csproj.CoreCompileInputs.cache
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.dll
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\ref\NewPaitnt.dll
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.pdb
+C:\Users\Егор\OneDrive\Робочий стіл\C#\GitPaint\Paint\NewPaitnt\NewPaitnt\obj\Debug\net5.0-windows\NewPaitnt.genruntimeconfig.cache

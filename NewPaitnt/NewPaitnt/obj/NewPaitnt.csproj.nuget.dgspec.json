@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "G:\\DevEducation\\CSharp\\NewPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj": {}
+    "C:\\Users\\Егор\\OneDrive\\Робочий стіл\\C#\\GitPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj": {}
   },
   "projects": {
-    "G:\\DevEducation\\CSharp\\NewPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj": {
+    "C:\\Users\\Егор\\OneDrive\\Робочий стіл\\C#\\GitPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\DevEducation\\CSharp\\NewPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj",
+        "projectUniqueName": "C:\\Users\\Егор\\OneDrive\\Робочий стіл\\C#\\GitPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj",
         "projectName": "NewPaitnt",
-        "projectPath": "G:\\DevEducation\\CSharp\\NewPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "G:\\DevEducation\\CSharp\\NewPaint\\Paint\\NewPaitnt\\NewPaitnt\\obj\\",
+        "projectPath": "C:\\Users\\Егор\\OneDrive\\Робочий стіл\\C#\\GitPaint\\Paint\\NewPaitnt\\NewPaitnt\\NewPaitnt.csproj",
+        "packagesPath": "C:\\Users\\Егор\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Егор\\OneDrive\\Робочий стіл\\C#\\GitPaint\\Paint\\NewPaitnt\\NewPaitnt\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Егор\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

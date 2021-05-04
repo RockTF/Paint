@@ -30,7 +30,9 @@ namespace NewPaitnt
         {
             if (e.Button == MouseButtons.Left)
             {
+                // Копирование текущего изображения во временное
                 DrawingEngine.MainImageToTemporary();
+                // Передача координат клика в класс DrawingEngine
                 DrawingEngine.Xclick = e.X;
                 DrawingEngine.Yclick = e.Y;
             }
@@ -40,8 +42,11 @@ namespace NewPaitnt
         {
             if (e.Button == MouseButtons.Left)
             {
+                // Расчет координат для отрисовки фигуры
                 DrawingEngine.CalculateCoordinates(e.X, e.Y);
+                // Вызов общего метода рисования
                 DrawingEngine.Draw();
+                // Обновление основного изображения в PictureBox
                 pictureBoxPaint.Image = DrawingEngine.MainImage;
             }
         }

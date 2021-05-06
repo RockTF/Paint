@@ -42,14 +42,11 @@ namespace NewPaitnt
 
         private void pictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Left)
             {
-
                 DrawingEngine.Xmove = e.X;
                 DrawingEngine.Ymove = e.Y;
                 
-
                 // Расчет координат для отрисовки фигуры
                 DrawingEngine.CalculateCoordinates(e.X, e.Y);
                 // Вызов общего метода рисования
@@ -114,12 +111,20 @@ namespace NewPaitnt
         private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
             DrawingEngine.Points.ResetPoints();
-           
         }
 
         private void btnRectangle_Click(object sender, EventArgs e)
         {
             Settings.Mode = "Rectangle";
+        }
+
+        private void btnEllipse_Click(object sender, EventArgs e)
+        {
+            Settings.Mode = "Ellipse";
+        }
+
+        private void btnFill_Click(object sender, EventArgs e)
+        {
 
         }
     }

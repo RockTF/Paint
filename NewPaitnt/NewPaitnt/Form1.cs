@@ -14,6 +14,8 @@ namespace NewPaitnt
 {
     public partial class mainPaint : Form
     {
+      
+
         public mainPaint()
         {
             InitializeComponent();
@@ -40,8 +42,14 @@ namespace NewPaitnt
 
         private void pictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
+
             if (e.Button == MouseButtons.Left)
             {
+
+                DrawingEngine.Xmove = e.X;
+                DrawingEngine.Ymove = e.Y;
+                
+
                 // Расчет координат для отрисовки фигуры
                 DrawingEngine.CalculateCoordinates(e.X, e.Y);
                 // Вызов общего метода рисования
@@ -58,6 +66,60 @@ namespace NewPaitnt
 
         private void CurvedLine_Click(object sender, EventArgs e) // Кривая линия
         {
+
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = "JPG(*.JPG)|*.jpg";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if (pictureBoxPaint != null)
+                {
+                    pictureBoxPaint.Image.Save(saveFileDialog1.FileName);
+                }
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            DrawingEngine.ClearCanvas();
+            pictureBoxPaint.Image = DrawingEngine.MainImage;
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            DrawingEngine.Undo();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            Settings.Pen.Width = trackBar1.Value;
+        }
+
+        private void btnCollor_Click(object sender, EventArgs e)
+        {
+            Settings.Pen.Color= ((Button)sender).BackColor;
+        }
+
+        private void btnOther_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Settings.Pen.Color = colorDialog1.Color;
+                ((Button)sender).BackColor = colorDialog1.Color;
+            }
+        }
+
+        private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
+        {
+            DrawingEngine.Points.ResetPoints();
+           
+        }
+
+        private void btnRectangle_Click(object sender, EventArgs e)
+        {
+            Settings.Mode = "Rectangle";
 
         }
     }

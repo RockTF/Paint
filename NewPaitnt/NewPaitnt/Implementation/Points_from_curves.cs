@@ -9,7 +9,7 @@ namespace NewPaitnt.Implementation
 {
    public class Points
     {
-        //класс для создвние точек
+        //класс для создания точек
         private int _numOfPoint = 0; // номер точки 
         private Point[] _points; // подключаем using System.Drawing массив точек
         public Points(int size)
@@ -26,7 +26,7 @@ namespace NewPaitnt.Implementation
 
         public void SetPoint(int x, int y)
         {
-            // устанавливае точки 
+            // устанавливаем точки 
             if (_numOfPoint >= _points.Length) // проверяем не выходим ли мы за длину
             {
                 _numOfPoint = 0;

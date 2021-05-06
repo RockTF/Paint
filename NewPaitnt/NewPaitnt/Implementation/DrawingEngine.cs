@@ -63,6 +63,9 @@ namespace NewPaitnt.Implementation
                 case "Rectangle":
                     DrawRectangle();
                     break;
+                case "Ellipse":
+                    DrawEllipse();
+                    break;
                 default:
                     break;
             }
@@ -74,7 +77,6 @@ namespace NewPaitnt.Implementation
             if (DrawingEngine.Points.GetCountPoints() >= 2) //проверяем заполнено или нет 
             {
                 DrawingEngine.MainGraphics.DrawLines(Settings.Pen, DrawingEngine.Points.GetPoints());
-               // pictureBoxPaint.Image = DrawingEngine.MainImage;
                 DrawingEngine.Points.SetPoint(Xmove, Ymove);
             }
             DrawingEngine.Points.SetPoint(Xmove, Ymove);
@@ -82,7 +84,14 @@ namespace NewPaitnt.Implementation
 
         public static void DrawEllipse()
         {
-            throw new NotImplementedException();
+            MainImage = (Bitmap)TempImage.Clone();
+            MainGraphics = Graphics.FromImage(MainImage);
+            Transparent = (Bitmap)ClearTransparent.Clone();
+            FigureGraphics = Graphics.FromImage(Transparent);
+            FigureGraphics.DrawEllipse(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
+            MainGraphics.DrawImage(Transparent, 0, 0);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         public static void DrawLine()

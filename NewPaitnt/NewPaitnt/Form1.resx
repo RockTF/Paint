@@ -58,6 +58,20 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+  <data name="btnOther.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAABGdBTUEAALGPC/xhBQAAAGVJREFUOE9j
+        +EAWGNWGAain7fXr1w+QAJALlUACWLQ9fvxYQkKCAQzExMQePnwIlUAC2B05ffp0iLYZM2ZAhVABdm3v
+        37+3tra2sLAAMqBCqABnkBwFAygHA+DUhh+MakMDHz4AAILtdoREvFFxAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnPoint.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAABGdBTUEAALGPC/xhBQAAAEZJREFUGFdj
+        AAGDhF2qeml78kA0XEAjevtXtaht/zVitn81TturzKCXuisfJADDIB0QlUAVYJXR27+AVYIAiAFSARFg
+        YAAAyx8mXR5J8r4AAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="btnCurvedLine.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAANtJREFUOE/t
@@ -108,7 +122,7 @@
   <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        rwAAAK8BK7AVuQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMMSURBVEhLrZRJ
+        qAAAAKgBefSzxgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMMSURBVEhLrZRJ
         TFNBAIbBgwejHowXo1fijcSDkVVatq4sLZRutIX2tdDSV3ZIRKQIxuViNNGDHkzQuJCgSaMJASUalE2I
         iqJBJS6FACJqFbhI53fAkRigsS1+yeQd5v/fN0vei/ifpBiN0Ul6Q39sRoafjs9xSuV+NrVxUgs4ZbKp
         cE5oNCFJp0eMRIIYuXyGTW+IyDTOVp9SyBEqwJJAkG9ArEyGGKmUsEx4ZNhsW9Jt9utpFhuoAH8EKzuQ

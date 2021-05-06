@@ -12,10 +12,13 @@ namespace NewPaitnt.Implementation
     {
         public static int Xclick { get; set; }
         public static int Yclick { get; set; }
+        public static int Xmove { get; set; }
+        public static int Ymove { get; set; }
         public static int Xstart { get; set; }
         public static int Ystart { get; set; }
         public static int Xend { get; set; }
         public static int Yend { get; set; }
+
         public static Bitmap MainImage { get; set; }
         public static List<Bitmap> History { get; set; }
         public static Bitmap TempImage { get; set; }
@@ -24,14 +27,18 @@ namespace NewPaitnt.Implementation
         public static Bitmap ClearTransparent { get; set; }
         public static Graphics MainGraphics { get; set; }
         public static Graphics FigureGraphics { get; set; }
+        public static Points Points = new Points(2);
+
 
         public static void Initialize()
+
         {
             MainImage = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
             ClearTransparent = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
             MainGraphics = Graphics.FromImage(MainImage);
             MainGraphics.Clear(Color.White);
         }
+
         public static void ClearCanvas()
         {
             MainGraphics.Clear(Color.White);
@@ -50,7 +57,10 @@ namespace NewPaitnt.Implementation
             // Вызывается соответствующий метод рисования
             switch (Settings.Mode)
             {
-                case "rectangle":
+                case "Curve":
+                    DrawCurve();
+                    break;
+                case "Rectangle":
                     DrawRectangle();
                     break;
                 default:
@@ -60,7 +70,14 @@ namespace NewPaitnt.Implementation
 
         public static void DrawCurve()
         {
-            throw new NotImplementedException();
+            DrawingEngine.Points.SetPoint(Xmove, Ymove);
+            if (DrawingEngine.Points.GetCountPoints() >= 2) //проверяем заполнено или нет 
+            {
+                DrawingEngine.MainGraphics.DrawLines(Settings.Pen, DrawingEngine.Points.GetPoints());
+               // pictureBoxPaint.Image = DrawingEngine.MainImage;
+                DrawingEngine.Points.SetPoint(Xmove, Ymove);
+            }
+            DrawingEngine.Points.SetPoint(Xmove, Ymove);
         }
 
         public static void DrawEllipse()

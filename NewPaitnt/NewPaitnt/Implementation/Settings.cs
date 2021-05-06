@@ -18,11 +18,12 @@ namespace NewPaitnt.Implementation
         public static Brush Brush { get; set; }
         public static bool IsImageBorderClosed { get; set; }
         public static SmoothingMode SmoothingMode { get; set; }
-        public static void Initialize()
+
+        public static void Init1ialize()
         {
-            ImageWidth = 640;
-            ImageHeight = 360;
-            Mode = "rectangle"; // "point", "curve", "line", "rectangle", "ellipse", "traingle"
+            ImageWidth = 1024;
+            ImageHeight = 768;
+            Mode = "Curve"; // "point", "curve", "line", "rectangle", "ellipse", "traingle"
             Pen = new Pen(Color.Black, 1f);
             Pen.StartCap = LineCap.Round;
             Pen.EndCap = LineCap.Round;

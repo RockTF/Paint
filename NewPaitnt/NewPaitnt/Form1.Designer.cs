@@ -32,13 +32,14 @@ namespace NewPaitnt
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainPaint));
             this.pictureBoxPaint = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnUndo = new System.Windows.Forms.Button();
             this.btnFill = new System.Windows.Forms.Button();
             this.btnOther = new System.Windows.Forms.Button();
             this.btnMidnightBlue = new System.Windows.Forms.Button();
             this.btnIndigo = new System.Windows.Forms.Button();
             this.btnTan = new System.Windows.Forms.Button();
             this.btnOliveDrab = new System.Windows.Forms.Button();
-            this.btnBack = new System.Windows.Forms.Button();
             this.btnBlack = new System.Windows.Forms.Button();
             this.btnPlum = new System.Windows.Forms.Button();
             this.btnGray = new System.Windows.Forms.Button();
@@ -66,6 +67,7 @@ namespace NewPaitnt
             this.btnSave = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.btnRedo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPaint)).BeginInit();
             this.panelMenu.SuspendLayout();
             this.panelFigures.SuspendLayout();
@@ -91,13 +93,15 @@ namespace NewPaitnt
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.White;
+            this.panelMenu.Controls.Add(this.btnRedo);
+            this.panelMenu.Controls.Add(this.button1);
+            this.panelMenu.Controls.Add(this.btnUndo);
             this.panelMenu.Controls.Add(this.btnFill);
             this.panelMenu.Controls.Add(this.btnOther);
             this.panelMenu.Controls.Add(this.btnMidnightBlue);
             this.panelMenu.Controls.Add(this.btnIndigo);
             this.panelMenu.Controls.Add(this.btnTan);
             this.panelMenu.Controls.Add(this.btnOliveDrab);
-            this.panelMenu.Controls.Add(this.btnBack);
             this.panelMenu.Controls.Add(this.btnBlack);
             this.panelMenu.Controls.Add(this.btnPlum);
             this.panelMenu.Controls.Add(this.btnGray);
@@ -123,6 +127,34 @@ namespace NewPaitnt
             this.panelMenu.Size = new System.Drawing.Size(854, 80);
             this.panelMenu.TabIndex = 1;
             // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(394, 29);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(66, 23);
+            this.button1.TabIndex = 41;
+            this.button1.Text = "Undo";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // btnUndo
+            // 
+            this.btnUndo.FlatAppearance.BorderSize = 0;
+            this.btnUndo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnUndo.Image")));
+            this.btnUndo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUndo.Location = new System.Drawing.Point(183, 15);
+            this.btnUndo.Name = "btnUndo";
+            this.btnUndo.Size = new System.Drawing.Size(66, 23);
+            this.btnUndo.TabIndex = 40;
+            this.btnUndo.Text = "Undo";
+            this.btnUndo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUndo.UseVisualStyleBackColor = true;
+            // 
             // btnFill
             // 
             this.btnFill.FlatAppearance.BorderSize = 0;
@@ -142,14 +174,12 @@ namespace NewPaitnt
             // 
             this.btnOther.BackColor = System.Drawing.Color.White;
             this.btnOther.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOther.Image = ((System.Drawing.Image)(resources.GetObject("btnOther.Image")));
             this.btnOther.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOther.Location = new System.Drawing.Point(775, 21);
+            this.btnOther.Location = new System.Drawing.Point(775, 22);
             this.btnOther.Name = "btnOther";
-            this.btnOther.Size = new System.Drawing.Size(66, 39);
+            this.btnOther.Size = new System.Drawing.Size(66, 38);
             this.btnOther.TabIndex = 38;
             this.btnOther.Text = "Other ";
-            this.btnOther.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOther.UseVisualStyleBackColor = false;
             this.btnOther.Click += new System.EventHandler(this.btnOther_Click);
             // 
@@ -200,20 +230,6 @@ namespace NewPaitnt
             this.btnOliveDrab.TabIndex = 32;
             this.btnOliveDrab.UseVisualStyleBackColor = false;
             this.btnOliveDrab.Click += new System.EventHandler(this.btnCollor_Click);
-            // 
-            // btnBack
-            // 
-            this.btnBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
-            this.btnBack.FlatAppearance.BorderSize = 0;
-            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnBack.ForeColor = System.Drawing.Color.Black;
-            this.btnBack.Location = new System.Drawing.Point(171, 26);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(72, 30);
-            this.btnBack.TabIndex = 30;
-            this.btnBack.Text = "Back";
-            this.btnBack.UseVisualStyleBackColor = false;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnBlack
             // 
@@ -512,6 +528,20 @@ namespace NewPaitnt
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnRedo
+            // 
+            this.btnRedo.FlatAppearance.BorderSize = 0;
+            this.btnRedo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnRedo.Image")));
+            this.btnRedo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRedo.Location = new System.Drawing.Point(183, 43);
+            this.btnRedo.Name = "btnRedo";
+            this.btnRedo.Size = new System.Drawing.Size(66, 23);
+            this.btnRedo.TabIndex = 42;
+            this.btnRedo.Text = "Redo";
+            this.btnRedo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRedo.UseVisualStyleBackColor = true;
+            // 
             // mainPaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -559,7 +589,6 @@ namespace NewPaitnt
         private System.Windows.Forms.Button btnWhite;
         private System.Windows.Forms.Button button;
         private System.Windows.Forms.Button btnDarkOliveGreen;
-        private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnMidnightBlue;
         private System.Windows.Forms.Button btnIndigo;
         private System.Windows.Forms.Button btnTan;
@@ -575,6 +604,8 @@ namespace NewPaitnt
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button btnFill;
+        private System.Windows.Forms.Button btnUndo;
+        private System.Windows.Forms.Button btnRedo;
     }
 }
 

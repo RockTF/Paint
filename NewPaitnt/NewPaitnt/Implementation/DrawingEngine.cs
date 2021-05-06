@@ -12,6 +12,8 @@ namespace NewPaitnt.Implementation
     {
         public static int Xclick { get; set; }
         public static int Yclick { get; set; }
+        public static int Xmove { get; set; }
+        public static int Ymove { get; set; }
         public static int Xstart { get; set; }
         public static int Ystart { get; set; }
         public static int Xend { get; set; }
@@ -25,8 +27,11 @@ namespace NewPaitnt.Implementation
         public static Bitmap ClearTransparent { get; set; }
         public static Graphics MainGraphics { get; set; }
         public static Graphics FigureGraphics { get; set; }
+        public static Points Points = new Points(2);
+
 
         public static void Initialize()
+
         {
             MainImage = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
             ClearTransparent = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
@@ -52,8 +57,14 @@ namespace NewPaitnt.Implementation
             // Вызывается соответствующий метод рисования
             switch (Settings.Mode)
             {
-                case "rectangle":
+                case "Curve":
+                    DrawCurve();
+                    break;
+                case "Rectangle":
                     DrawRectangle();
+                    break;
+                case "Ellipse":
+                    DrawEllipse();
                     break;
                 default:
                     break;
@@ -62,12 +73,25 @@ namespace NewPaitnt.Implementation
 
         public static void DrawCurve()
         {
-            throw new NotImplementedException();
+            DrawingEngine.Points.SetPoint(Xmove, Ymove);
+            if (DrawingEngine.Points.GetCountPoints() >= 2) //проверяем заполнено или нет 
+            {
+                DrawingEngine.MainGraphics.DrawLines(Settings.Pen, DrawingEngine.Points.GetPoints());
+                DrawingEngine.Points.SetPoint(Xmove, Ymove);
+            }
+            DrawingEngine.Points.SetPoint(Xmove, Ymove);
         }
 
         public static void DrawEllipse()
         {
-            throw new NotImplementedException();
+            MainImage = (Bitmap)TempImage.Clone();
+            MainGraphics = Graphics.FromImage(MainImage);
+            Transparent = (Bitmap)ClearTransparent.Clone();
+            FigureGraphics = Graphics.FromImage(Transparent);
+            FigureGraphics.DrawEllipse(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
+            MainGraphics.DrawImage(Transparent, 0, 0);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         public static void DrawLine()

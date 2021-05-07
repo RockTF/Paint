@@ -23,22 +23,24 @@ namespace NewPaitnt.Implementation
         {
             ImageWidth = 928;
             ImageHeight = 560;
-            Mode = "point"; // "point", "curve", "line", "rectangle", "ellipse", "traingle"
+            Mode = "rectangle"; // "point", "curve", "line", "rectangle", "ellipse", "traingle"
             Pen = new Pen(Color.Black, 1f);
             Pen.StartCap = LineCap.Round;
             Pen.EndCap = LineCap.Round;
+            // Соединение линий под углом (излом)
             Pen.LineJoin = LineJoin.Round;
+            // Кончик линии на штрихе
             Pen.DashCap = DashCap.Round;
             Brush = new SolidBrush(Color.Transparent);
             IsImageBorderClosed = false;
             SmoothingMode = SmoothingMode.None;
         }
-
+        // Предстоит реализовать сброс настроек
         public static void Reset()
         {
             ImageWidth = 640;
             ImageHeight = 360;
-            Mode = "point";
+            Mode = "smoothCorv";
             Pen.Color = Color.Black;
             Pen.Width = 1f;
             Pen.StartCap = LineCap.Round;

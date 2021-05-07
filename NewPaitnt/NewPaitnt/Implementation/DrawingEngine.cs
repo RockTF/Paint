@@ -20,8 +20,10 @@ namespace NewPaitnt.Implementation
         public static int Yend { get; set; }
         public static int UndoIndex { get; set; }
 
+        public static bool IsLineFinished { get; set; }
+        public static bool AddNextPoint { get; set; }
+
         public static Bitmap MainImage { get; set; }
-        public static List<Bitmap> History { get; set; }
         public static Bitmap TempImage { get; set; }
         public static Bitmap Figure { get ; set; }
         public static Bitmap Transparent { get; set; }
@@ -30,20 +32,29 @@ namespace NewPaitnt.Implementation
         public static Graphics FigureGraphics { get; set; }
         public static Points Points { get; set; }
         public static List<Point> CurvePoints { get; set; }
+        public static List<Point> SmoothCurvePoints { get; set; }
+        public static List<Bitmap> History { get; set; }
 
 
         public static void Initialize()
 
         {
             MainImage = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
+            //TempImage = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
             ClearTransparent = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
             MainGraphics = Graphics.FromImage(MainImage);
             MainGraphics.Clear(Color.White);
+
             History = new List<Bitmap>();
             History.Add((Bitmap)MainImage.Clone());
             UndoIndex = 0;
+
             Points = new Points(2);
             CurvePoints = new List<Point>();
+
+            IsLineFinished = true;
+            AddNextPoint = false;
+            SmoothCurvePoints = new List<Point>();
         }
 
         public static void ClearCanvas()
@@ -75,6 +86,15 @@ namespace NewPaitnt.Implementation
                     break;
                 case "ellipse":
                     DrawEllipse();
+                    break;
+                case "triangle":
+                    DrawTriangle();
+                    break;
+                case "line":
+                    DrawLine();
+                    break;
+                case "smoothCorv":
+                    DrawSmoothCurve();
                     break;
                 default:
                     break;
@@ -112,23 +132,52 @@ namespace NewPaitnt.Implementation
             GC.WaitForPendingFinalizers();
         }
 
-        public static void DrawEllipse()
+        public static void DrawTriangle()
         {
-            MainImage = (Bitmap)TempImage.Clone();
+            MainImage = (Bitmap)TempImage.Clone(); // Преобразование в Bitmap ибо Object
             MainGraphics = Graphics.FromImage(MainImage);
             Transparent = (Bitmap)ClearTransparent.Clone();
+            FigureGraphics = Graphics.FromImage(Transparent);
+            FigureGraphics.SmoothingMode = Settings.SmoothingMode;
+            Points.CalculateCoordinatesTriangle(Xstart, Ystart, Xend, Yend);
+            FigureGraphics.FillPolygon(Settings.Brush, Points.GetPointsTriangle());
+            FigureGraphics.DrawPolygon(Settings.Pen, Points.GetPointsTriangle());
+            MainGraphics.DrawImage(Transparent, 0, 0);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        public static void DrawEllipse()
+        {
+            MainImage = (Bitmap)TempImage.Clone(); // Преобразование в Bitmap ибо Object
+            MainGraphics = Graphics.FromImage(MainImage);
+
+            Transparent = (Bitmap)ClearTransparent.Clone();
+
             FigureGraphics = Graphics.FromImage(Transparent);
             FigureGraphics.SmoothingMode = Settings.SmoothingMode;
             FigureGraphics.FillEllipse(Settings.Brush, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             FigureGraphics.DrawEllipse(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             MainGraphics.DrawImage(Transparent, 0, 0);
+
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
 
         public static void DrawLine()
         {
-            throw new NotImplementedException();
+            MainImage = (Bitmap)TempImage.Clone(); // Преобразование в Bitmap ибо Object
+            MainGraphics = Graphics.FromImage(MainImage);
+            Transparent = (Bitmap)ClearTransparent.Clone();
+            FigureGraphics = Graphics.FromImage(Transparent);
+            FigureGraphics.SmoothingMode = Settings.SmoothingMode;
+            Points.CalculatePointForLine(Xclick, Yclick, Xmove, Ymove);
+            FigureGraphics.DrawLines(Settings.Pen, Points.GetPointsForLine());
+            MainGraphics.DrawImage(Transparent, 0, 0);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         public static void DrawPoint()
@@ -162,7 +211,36 @@ namespace NewPaitnt.Implementation
 
         public static void DrawSmoothCurve()
         {
-            throw new NotImplementedException();
+            MainImage = (Bitmap)TempImage.Clone();
+            MainGraphics = Graphics.FromImage(MainImage);
+            Transparent = (Bitmap)ClearTransparent.Clone();
+            FigureGraphics = Graphics.FromImage(Transparent);
+            FigureGraphics.SmoothingMode = Settings.SmoothingMode;
+
+            if (SmoothCurvePoints.Count == 0)
+            {
+                SmoothCurvePoints.Add(new Point(Xclick, Yclick));
+            }
+
+                if (AddNextPoint)
+                {
+                    SmoothCurvePoints.Add(new Point(Xmove, Ymove));
+                }
+                else
+                {
+                    SmoothCurvePoints[SmoothCurvePoints.Count - 1] = new Point(Xmove, Ymove);
+                }
+
+                if (IsLineFinished)
+                {
+                    SmoothCurvePoints.Add(new Point(Xend, Yend));
+                }
+           
+            FigureGraphics.DrawCurve(Settings.Pen, SmoothCurvePoints.ToArray());
+            MainGraphics.DrawImage(Transparent, 0, 0);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         public static void MainImageToTemporary()

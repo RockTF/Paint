@@ -32,6 +32,8 @@ namespace NewPaitnt
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainPaint));
             this.pictureBoxPaint = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.checkBoxAntiAliasing = new System.Windows.Forms.CheckBox();
             this.pictureBoxPen = new System.Windows.Forms.PictureBox();
             this.btnRedo = new System.Windows.Forms.Button();
             this.btnUndo = new System.Windows.Forms.Button();
@@ -70,7 +72,6 @@ namespace NewPaitnt
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.footer = new System.Windows.Forms.Panel();
             this.memoryLabel = new System.Windows.Forms.Label();
-            this.checkBoxAntiAliasing = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPaint)).BeginInit();
             this.panelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPen)).BeginInit();
@@ -133,6 +134,29 @@ namespace NewPaitnt
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(944, 80);
             this.panelMenu.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(80, 14);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(20, 20);
+            this.button1.TabIndex = 45;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.SmoothCorve);
+            // 
+            // checkBoxAntiAliasing
+            // 
+            this.checkBoxAntiAliasing.AutoSize = true;
+            this.checkBoxAntiAliasing.Location = new System.Drawing.Point(423, 54);
+            this.checkBoxAntiAliasing.Name = "checkBoxAntiAliasing";
+            this.checkBoxAntiAliasing.Size = new System.Drawing.Size(90, 19);
+            this.checkBoxAntiAliasing.TabIndex = 44;
+            this.checkBoxAntiAliasing.Text = "AntiAliasing";
+            this.checkBoxAntiAliasing.UseVisualStyleBackColor = true;
+            this.checkBoxAntiAliasing.CheckedChanged += new System.EventHandler(this.checkBoxAntiAliasing_CheckedChanged);
             // 
             // pictureBoxPen
             // 
@@ -398,6 +422,7 @@ namespace NewPaitnt
             // 
             this.panelFigures.BackColor = System.Drawing.Color.White;
             this.panelFigures.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelFigures.Controls.Add(this.button1);
             this.panelFigures.Controls.Add(this.btnPoint);
             this.panelFigures.Controls.Add(this.btnCurve);
             this.panelFigures.Controls.Add(this.btnEllipse);
@@ -406,9 +431,9 @@ namespace NewPaitnt
             this.panelFigures.Controls.Add(this.btnRectangle);
             this.panelFigures.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.panelFigures.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panelFigures.Location = new System.Drawing.Point(539, 16);
+            this.panelFigures.Location = new System.Drawing.Point(519, 16);
             this.panelFigures.Name = "panelFigures";
-            this.panelFigures.Size = new System.Drawing.Size(82, 50);
+            this.panelFigures.Size = new System.Drawing.Size(102, 50);
             this.panelFigures.TabIndex = 6;
             // 
             // btnPoint
@@ -457,6 +482,7 @@ namespace NewPaitnt
             this.btnTriangle.Size = new System.Drawing.Size(22, 22);
             this.btnTriangle.TabIndex = 9;
             this.btnTriangle.UseVisualStyleBackColor = true;
+            this.btnTriangle.Click += new System.EventHandler(this.btnTriangle_Click);
             // 
             // btnLine
             // 
@@ -468,6 +494,7 @@ namespace NewPaitnt
             this.btnLine.Size = new System.Drawing.Size(20, 20);
             this.btnLine.TabIndex = 7;
             this.btnLine.UseVisualStyleBackColor = true;
+            this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
             // 
             // btnRectangle
             // 
@@ -497,7 +524,7 @@ namespace NewPaitnt
             this.labelSize.BackColor = System.Drawing.Color.Transparent;
             this.labelSize.Location = new System.Drawing.Point(452, 8);
             this.labelSize.Name = "labelSize";
-            this.labelSize.Size = new System.Drawing.Size(30, 15);
+            this.labelSize.Size = new System.Drawing.Size(27, 15);
             this.labelSize.TabIndex = 5;
             this.labelSize.Text = "Size";
             // 
@@ -571,20 +598,9 @@ namespace NewPaitnt
             this.memoryLabel.Location = new System.Drawing.Point(11, 3);
             this.memoryLabel.Margin = new System.Windows.Forms.Padding(0);
             this.memoryLabel.Name = "memoryLabel";
-            this.memoryLabel.Size = new System.Drawing.Size(134, 15);
+            this.memoryLabel.Size = new System.Drawing.Size(128, 15);
             this.memoryLabel.TabIndex = 0;
             this.memoryLabel.Text = "Memory usage: 0,0 MB";
-            // 
-            // checkBoxAntiAliasing
-            // 
-            this.checkBoxAntiAliasing.AutoSize = true;
-            this.checkBoxAntiAliasing.Location = new System.Drawing.Point(423, 54);
-            this.checkBoxAntiAliasing.Name = "checkBoxAntiAliasing";
-            this.checkBoxAntiAliasing.Size = new System.Drawing.Size(91, 19);
-            this.checkBoxAntiAliasing.TabIndex = 44;
-            this.checkBoxAntiAliasing.Text = "AntiAliasing";
-            this.checkBoxAntiAliasing.UseVisualStyleBackColor = true;
-            this.checkBoxAntiAliasing.CheckedChanged += new System.EventHandler(this.checkBoxAntiAliasing_CheckedChanged);
             // 
             // mainPaint
             // 
@@ -657,6 +673,7 @@ namespace NewPaitnt
         private System.Windows.Forms.Label memoryLabel;
         private System.Windows.Forms.PictureBox pictureBoxPen;
         private System.Windows.Forms.CheckBox checkBoxAntiAliasing;
+        private System.Windows.Forms.Button button1;
     }
 }
 

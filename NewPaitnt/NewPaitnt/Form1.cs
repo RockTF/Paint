@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +16,8 @@ namespace NewPaitnt
 {
     public partial class mainPaint : Form
     {
-      
-
+        Process currentProcess;
+        bool IsBtnFillClicked;
         public mainPaint()
         {
             InitializeComponent();
@@ -25,24 +27,75 @@ namespace NewPaitnt
         {
             Settings.Init1ialize();
             DrawingEngine.Initialize();
+            PenPreview.Initialize(pictureBoxPen.Width, pictureBoxPen.Height);
+            pictureBoxPen.Image = PenPreview.PenBitmap;
             pictureBoxPaint.Image = DrawingEngine.MainImage;
+
+            currentProcess = Process.GetCurrentProcess();
+            currentProcess.Refresh();
+            memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f /1024f).ToString("F1") + " MB";
+
+            IsBtnFillClicked = false;
         }
 
         private void pictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                // Копирование текущего изображения во временное
-                DrawingEngine.MainImageToTemporary();
+                DrawingEngine.ClearUnnecessaryHistory();
+
+                if (DrawingEngine.IsLineFinished)
+                {
+                    // Копирование текущего изображения во временное
+                    DrawingEngine.MainImageToTemporary();
+                }
+
                 // Передача координат клика в класс DrawingEngine
                 DrawingEngine.Xclick = e.X;
                 DrawingEngine.Yclick = e.Y;
+
+                if (Settings.Mode == "point")
+                {
+                    DrawingEngine.Draw();
+                    pictureBoxPaint.Image = DrawingEngine.MainImage;
+                }
+
+                if (Settings.Mode == "smoothCorv")
+                {
+                    DrawingEngine.IsLineFinished = false;
+                    DrawingEngine.AddNextPoint = true;
+                }
+            }
+        }
+
+        private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
+        {
+            DrawingEngine.Points.ResetPoints(); // Метод Наташи
+            DrawingEngine.SaveToHistory();
+            DrawingEngine.CurvePoints = new List<Point>(); //Мой вариант
+
+            // Приводим в порядок память
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            currentProcess.Refresh();
+            memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
+
+            if (Settings.Mode == "smoothCorv" && e.Button == MouseButtons.Right && DrawingEngine.SmoothCurvePoints.Count > 0)
+            {
+                DrawingEngine.IsLineFinished = true;
+
+                DrawingEngine.Xend = e.X;
+                DrawingEngine.Yend = e.Y;
+
+                DrawingEngine.Draw();
+                pictureBoxPaint.Image = DrawingEngine.MainImage;
+                DrawingEngine.SmoothCurvePoints = new List<Point>();
             }
         }
 
         private void pictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left && Settings.Mode != "point")
             {
                 DrawingEngine.Xmove = e.X;
                 DrawingEngine.Ymove = e.Y;
@@ -53,17 +106,19 @@ namespace NewPaitnt
                 DrawingEngine.Draw();
                 // Обновление основного изображения в PictureBox
                 pictureBoxPaint.Image = DrawingEngine.MainImage;
+
             }
-        }
 
-        private void Triangle_Click(object sender, EventArgs e) // Треугольник
-        {
+            if (Settings.Mode == "smoothCorv" && DrawingEngine.SmoothCurvePoints.Count > 0 && !DrawingEngine.IsLineFinished)
+            {
+                DrawingEngine.AddNextPoint = false;
 
-        }
+                DrawingEngine.Xmove = e.X;
+                DrawingEngine.Ymove = e.Y;
 
-        private void CurvedLine_Click(object sender, EventArgs e) // Кривая линия
-        {
-
+                DrawingEngine.Draw();
+                pictureBoxPaint.Image = DrawingEngine.MainImage;
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -92,11 +147,23 @@ namespace NewPaitnt
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             Settings.Pen.Width = trackBar1.Value;
+            PenPreview.Refresh();
+            pictureBoxPen.Image = PenPreview.PenBitmap;
         }
 
         private void btnCollor_Click(object sender, EventArgs e)
         {
-            Settings.Pen.Color= ((Button)sender).BackColor;
+            if (IsBtnFillClicked)
+            {
+                Settings.Brush = new SolidBrush(((Button)sender).BackColor);
+                IsBtnFillClicked = false;
+            }
+            else
+            {
+                Settings.Pen.Color = ((Button)sender).BackColor;
+                PenPreview.Refresh();
+                pictureBoxPen.Image = PenPreview.PenBitmap;
+            }
         }
 
         private void btnOther_Click(object sender, EventArgs e)
@@ -105,27 +172,95 @@ namespace NewPaitnt
             {
                 Settings.Pen.Color = colorDialog1.Color;
                 ((Button)sender).BackColor = colorDialog1.Color;
+                PenPreview.Refresh();
+                pictureBoxPen.Image = PenPreview.PenBitmap;
             }
         }
 
-        private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
-        {
-            DrawingEngine.Points.ResetPoints();
-        }
-
+       
         private void btnRectangle_Click(object sender, EventArgs e)
         {
-            Settings.Mode = "Rectangle";
+            Settings.Mode = "rectangle";
         }
 
         private void btnEllipse_Click(object sender, EventArgs e)
         {
-            Settings.Mode = "Ellipse";
+            Settings.Mode = "ellipse";
         }
 
         private void btnFill_Click(object sender, EventArgs e)
         {
-
+            IsBtnFillClicked = true;
         }
+
+        private void btnPoint_Click(object sender, EventArgs e)
+        {
+            Settings.Mode = "point";
+        }
+
+        private void btnUndo_Click(object sender, EventArgs e)
+        {
+            DrawingEngine.Undo();
+            pictureBoxPaint.Image = DrawingEngine.MainImage;
+        }
+
+        private void btnRedo_Click(object sender, EventArgs e)
+        {
+            DrawingEngine.Redo();
+            pictureBoxPaint.Image = DrawingEngine.MainImage;
+        }
+
+        private void btnCurve_Click(object sender, EventArgs e)
+        {
+            Settings.Mode = "curve";
+        }
+
+        private void comboBoxContour_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBoxContour.SelectedIndex)
+            {
+                case 0:
+                    Settings.Pen.DashStyle = DashStyle.Solid;
+                    break;
+                case 1:
+                    Settings.Pen.DashStyle = DashStyle.Dash;
+                    break;
+                case 2:
+                    Settings.Pen.DashStyle = DashStyle.DashDot;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void checkBoxAntiAliasing_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxAntiAliasing.Checked)
+            {
+                Settings.SmoothingMode = SmoothingMode.AntiAlias;
+            }
+            else
+            {
+                Settings.SmoothingMode = SmoothingMode.None;
+            }
+            PenPreview.Refresh();
+            pictureBoxPen.Image = PenPreview.PenBitmap;
+        }
+
+        private void btnTriangle_Click(object sender, EventArgs e)
+        {
+            Settings.Mode = "triangle";
+        }
+
+        private void btnLine_Click(object sender, EventArgs e)
+        {
+            Settings.Mode = "line";
+        }
+
+        private void SmoothCorve(object sender, EventArgs e)
+        {
+            Settings.Mode = "smoothCorv";
+        }
+
     }
 }

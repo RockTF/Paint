@@ -7,11 +7,24 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Implementation
 {
-   public class Points
+    public class Points
     {
-        //класс для создвние точек
+        //класс для создания точек
         private int _numOfPoint = 0; // номер точки 
         private Point[] _points; // подключаем using System.Drawing массив точек
+        private Point[] _pointsForTriangle;
+        private Point[] _pointsForLine;
+
+        public void CalculateCoordinatesTriangle(int xStart, int yStart, int xEnd, int yEnd)
+        {
+            _pointsForTriangle = new Point[]
+            {
+                new Point(DrawingEngine.Xend, DrawingEngine.Yend),
+                new Point(DrawingEngine.Xstart, DrawingEngine.Yend),
+                new Point((DrawingEngine.Xstart + DrawingEngine.Xend) / 2, DrawingEngine.Ystart)
+            };
+        }
+
         public Points(int size)
         {
             if (size <= 0) // проверка на размер 
@@ -26,7 +39,7 @@ namespace NewPaitnt.Implementation
 
         public void SetPoint(int x, int y)
         {
-            // устанавливае точки 
+            // устанавливаем точки 
             if (_numOfPoint >= _points.Length) // проверяем не выходим ли мы за длину
             {
                 _numOfPoint = 0;
@@ -53,6 +66,26 @@ namespace NewPaitnt.Implementation
         {
             //массив точек для фигур
             return _points;
+        }
+
+        public Point[] GetPointsTriangle()
+        {
+            //массив точек для фигур
+            return _pointsForTriangle;
+        }
+
+        public void CalculatePointForLine(int xClick, int yClick, int xMove, int yMove)
+        {
+            _pointsForLine = new Point[]
+            {
+                new Point(xClick,yClick),
+                new Point(xMove,yMove)
+            };
+        }
+        public Point[] GetPointsForLine()
+        {
+           
+            return _pointsForLine;
         }
     }
 }

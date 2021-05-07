@@ -18,6 +18,7 @@ namespace NewPaitnt.Implementation
         public static int Ystart { get; set; }
         public static int Xend { get; set; }
         public static int Yend { get; set; }
+        public static int UndoIndex { get; set; }
 
         public static Bitmap MainImage { get; set; }
         public static List<Bitmap> History { get; set; }
@@ -27,7 +28,8 @@ namespace NewPaitnt.Implementation
         public static Bitmap ClearTransparent { get; set; }
         public static Graphics MainGraphics { get; set; }
         public static Graphics FigureGraphics { get; set; }
-        public static Points Points = new Points(2);
+        public static Points Points { get; set; }
+        public static List<Point> CurvePoints { get; set; }
 
 
         public static void Initialize()
@@ -37,6 +39,11 @@ namespace NewPaitnt.Implementation
             ClearTransparent = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);
             MainGraphics = Graphics.FromImage(MainImage);
             MainGraphics.Clear(Color.White);
+            History = new List<Bitmap>();
+            History.Add((Bitmap)MainImage.Clone());
+            UndoIndex = 0;
+            Points = new Points(2);
+            CurvePoints = new List<Point>();
         }
 
         public static void ClearCanvas()
@@ -57,13 +64,16 @@ namespace NewPaitnt.Implementation
             // Вызывается соответствующий метод рисования
             switch (Settings.Mode)
             {
-                case "Curve":
+                case "point":
+                    DrawPoint();
+                    break;
+                case "curve":
                     DrawCurve();
                     break;
-                case "Rectangle":
+                case "rectangle":
                     DrawRectangle();
                     break;
-                case "Ellipse":
+                case "ellipse":
                     DrawEllipse();
                     break;
                 default:
@@ -73,13 +83,33 @@ namespace NewPaitnt.Implementation
 
         public static void DrawCurve()
         {
-            DrawingEngine.Points.SetPoint(Xmove, Ymove);
-            if (DrawingEngine.Points.GetCountPoints() >= 2) //проверяем заполнено или нет 
+            MainImage = (Bitmap)TempImage.Clone();
+            MainGraphics = Graphics.FromImage(MainImage);
+            Transparent = (Bitmap)ClearTransparent.Clone();
+            FigureGraphics = Graphics.FromImage(Transparent);
+            FigureGraphics.SmoothingMode = Settings.SmoothingMode;
+
+            // Мой вариант
+            if (CurvePoints.Count == 0)
             {
-                DrawingEngine.MainGraphics.DrawLines(Settings.Pen, DrawingEngine.Points.GetPoints());
-                DrawingEngine.Points.SetPoint(Xmove, Ymove);
+                CurvePoints.Add(new Point(Xclick, Yclick));
             }
-            DrawingEngine.Points.SetPoint(Xmove, Ymove);
+            CurvePoints.Add(new Point(Xmove, Ymove));
+            FigureGraphics.DrawCurve(Settings.Pen, CurvePoints.ToArray());
+
+            // Метод Наташи
+            //DrawingEngine.Points.SetPoint(Xmove, Ymove);
+            //if (DrawingEngine.Points.GetCountPoints() >= 2) //проверяем заполнено или нет 
+            //{
+            //    DrawingEngine.MainGraphics.DrawLines(Settings.Pen, DrawingEngine.Points.GetPoints());
+            //    DrawingEngine.Points.SetPoint(Xmove, Ymove);
+            //}
+            //DrawingEngine.Points.SetPoint(Xmove, Ymove);
+
+            MainGraphics.DrawImage(Transparent, 0, 0);
+            
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         public static void DrawEllipse()
@@ -88,6 +118,8 @@ namespace NewPaitnt.Implementation
             MainGraphics = Graphics.FromImage(MainImage);
             Transparent = (Bitmap)ClearTransparent.Clone();
             FigureGraphics = Graphics.FromImage(Transparent);
+            FigureGraphics.SmoothingMode = Settings.SmoothingMode;
+            FigureGraphics.FillEllipse(Settings.Brush, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             FigureGraphics.DrawEllipse(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             MainGraphics.DrawImage(Transparent, 0, 0);
             GC.Collect();
@@ -101,7 +133,10 @@ namespace NewPaitnt.Implementation
 
         public static void DrawPoint()
         {
-            throw new NotImplementedException();
+            Pen pointPen = (Pen)Settings.Pen.Clone();
+            pointPen.DashPattern = new float[] { 1f, 1f };
+            MainGraphics.SmoothingMode = Settings.SmoothingMode;
+            MainGraphics.DrawLine(pointPen, Xclick, Yclick, Xclick + 1, Yclick + 1);
         }
 
         public static void DrawRectangle()
@@ -114,7 +149,9 @@ namespace NewPaitnt.Implementation
             Transparent = (Bitmap)ClearTransparent.Clone();
             // Пересоздание обьекта графики фигуры на основе прозрачного изображения
             FigureGraphics = Graphics.FromImage(Transparent);
+            FigureGraphics.SmoothingMode = Settings.SmoothingMode;
             // Отрисофка фигуры по прозрачному изображению
+            FigureGraphics.FillRectangle(Settings.Brush, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             FigureGraphics.DrawRectangle(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             // Отрисовка прозрачного изображения с фигурой поверх основного изображения
             MainGraphics.DrawImage(Transparent, 0, 0);
@@ -135,17 +172,40 @@ namespace NewPaitnt.Implementation
 
         public static void SaveToHistory()
         {
-
+            if (History.Count < 32)
+            {
+                History.Add((Bitmap)MainImage.Clone());
+            }
+            else
+            {
+                History.RemoveAt(0);
+                History.Add((Bitmap)MainImage.Clone());
+            }
+            UndoIndex = History.Count - 1;
         }
 
         public static void Undo()
         {
-
+            UndoIndex = (UndoIndex > 0) ? UndoIndex - 1 : UndoIndex;
+            MainGraphics.DrawImage(History[UndoIndex], 0, 0);
         }
 
         public static void Redo()
         {
+            UndoIndex = (UndoIndex < History.Count - 1) ? UndoIndex + 1 : UndoIndex;
+            MainGraphics.DrawImage(History[UndoIndex], 0, 0);
+        }
 
+        public static void ClearUnnecessaryHistory()
+        {
+            if (UndoIndex == History.Count - 1)
+            {
+                return;
+            }
+            else
+            {
+                History.RemoveRange(UndoIndex + 1, History.Count - 1 - UndoIndex);
+            }
         }
     }
 }

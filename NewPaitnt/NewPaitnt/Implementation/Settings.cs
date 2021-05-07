@@ -21,9 +21,9 @@ namespace NewPaitnt.Implementation
 
         public static void Init1ialize()
         {
-            ImageWidth = 1024;
-            ImageHeight = 768;
-            Mode = "Curve"; // "point", "curve", "line", "rectangle", "ellipse", "traingle"
+            ImageWidth = 928;
+            ImageHeight = 560;
+            Mode = "point"; // "point", "curve", "line", "rectangle", "ellipse", "traingle"
             Pen = new Pen(Color.Black, 1f);
             Pen.StartCap = LineCap.Round;
             Pen.EndCap = LineCap.Round;
@@ -38,7 +38,7 @@ namespace NewPaitnt.Implementation
         {
             ImageWidth = 640;
             ImageHeight = 360;
-            Mode = "rectangle";
+            Mode = "point";
             Pen.Color = Color.Black;
             Pen.Width = 1f;
             Pen.StartCap = LineCap.Round;

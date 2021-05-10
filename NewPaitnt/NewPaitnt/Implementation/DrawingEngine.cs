@@ -112,9 +112,12 @@ namespace NewPaitnt.Implementation
             // Мой вариант
             if (CurvePoints.Count == 0)
             {
+                // Добавляем кординаты клика (сохраненные на mouseDown) если список пустой
                 CurvePoints.Add(new Point(Xclick, Yclick));
             }
+            // На каджом перемещении мыши добавляем точку движения в список
             CurvePoints.Add(new Point(Xmove, Ymove));
+            // Отрисовывем кривую по всем точкам в списке, список приводим к массиву
             FigureGraphics.DrawCurve(Settings.Pen, CurvePoints.ToArray());
 
             // Метод Наташи
@@ -190,19 +193,24 @@ namespace NewPaitnt.Implementation
 
         public static void DrawRectangle()
         {
-            // Копирование временного изображения в основное
+            // Копирование временного изображения в основное каждый раз при перемещении указателя мыши
+            // для динамической отрисовки фигуры
             MainImage = (Bitmap)TempImage.Clone();
             // Пересоздание основного обьекта графики на основе основного изображения
+            // так как существующий обьект графики продолжает ссылаться в памяти на старое изображение
             MainGraphics = Graphics.FromImage(MainImage);
             // Пересоздание основы для рисования фигуры на основе прозрачного изображения
+            // для того, чтобы на каждом движении мыши с зажатой кнопкой отрисовывать фигуру по чистому прозрачному изображению
             Transparent = (Bitmap)ClearTransparent.Clone();
             // Пересоздание обьекта графики фигуры на основе прозрачного изображения
+            // причина аналогичная
             FigureGraphics = Graphics.FromImage(Transparent);
+            // Задаем новому обьекту графики фигуры режим сглаживания
             FigureGraphics.SmoothingMode = Settings.SmoothingMode;
             // Отрисофка фигуры по прозрачному изображению
             FigureGraphics.FillRectangle(Settings.Brush, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             FigureGraphics.DrawRectangle(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
-            // Отрисовка прозрачного изображения с фигурой поверх основного изображения
+            // Отрисовка изображения с фигурой на прозрачном фоне поверх основного изображения
             MainGraphics.DrawImage(Transparent, 0, 0);
             // Явный вызов сборщика мусора для удаления старых обьектов графики
             GC.Collect();
@@ -245,6 +253,8 @@ namespace NewPaitnt.Implementation
 
         public static void MainImageToTemporary()
         {
+            // Копирование текущего изображения во временное для того, чтобы не затронуть его, пока нажата кнопка мыши
+            // и фигура динамически изменяется
             TempImage = (Bitmap)MainImage.Clone();
         }
 

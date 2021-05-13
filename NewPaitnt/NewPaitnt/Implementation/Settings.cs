@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static NewPaitnt.Implementation.DrawingEngine;
 
 namespace NewPaitnt.Implementation
 {
@@ -13,7 +14,7 @@ namespace NewPaitnt.Implementation
     {
         public static int ImageWidth { get; set; }
         public static int ImageHeight { get; set; }
-        public static string Mode { get; set; }
+        public static Buttons Mode { get; set; }
         public static Pen Pen { get; set; }
         public static Brush Brush { get; set; }
         public static bool IsImageBorderClosed { get; set; }
@@ -23,7 +24,7 @@ namespace NewPaitnt.Implementation
         {
             ImageWidth = 928;
             ImageHeight = 560;
-            Mode = "rectangle"; // "point", "curve", "line", "rectangle", "ellipse", "traingle"
+            Mode = Buttons.curve;  // "point", "curve", "line", "rectangle", "ellipse", "traingle"
             Pen = new Pen(Color.Black, 1f);
             Pen.StartCap = LineCap.Round;
             Pen.EndCap = LineCap.Round;
@@ -40,7 +41,7 @@ namespace NewPaitnt.Implementation
         {
             ImageWidth = 640;
             ImageHeight = 360;
-            Mode = "smoothCorv";
+            Settings.Mode = DrawingEngine.Buttons.curve; 
             Pen.Color = Color.Black;
             Pen.Width = 1f;
             Pen.StartCap = LineCap.Round;

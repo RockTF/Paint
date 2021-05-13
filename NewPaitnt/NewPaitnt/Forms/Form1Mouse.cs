@@ -28,33 +28,30 @@ namespace NewPaitnt
                 DrawingEngine.Xclick = e.X;
                 DrawingEngine.Yclick = e.Y;
 
-                if (Settings.Mode == "point")
+                if (Settings.Mode == DrawingEngine.Buttons.point)
                 {
                     DrawingEngine.Draw();
                     pictureBoxPaint.Image = DrawingEngine.MainImage;
                 }
 
-                if (Settings.Mode == "smoothCorv")
+                if (Settings.Mode == DrawingEngine.Buttons.smoothCorv)
                 {
                     DrawingEngine.IsLineFinished = false;
                     DrawingEngine.AddNextPoint = true;
                 }
+
             }
         }
 
         private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
-            DrawingEngine.Points.ResetPoints(); // Метод Наташи
             DrawingEngine.SaveToHistory();
             DrawingEngine.CurvePoints = new List<Point>(); //Мой вариант
 
-            // Приводим в порядок память
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
             currentProcess.Refresh();
             memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
 
-            if (Settings.Mode == "smoothCorv" && e.Button == MouseButtons.Right && DrawingEngine.SmoothCurvePoints.Count > 0)
+            if (Settings.Mode == DrawingEngine.Buttons.smoothCorv && e.Button == MouseButtons.Right && DrawingEngine.SmoothCurvePoints.Count > 0)
             {
                 DrawingEngine.IsLineFinished = true;
 
@@ -69,7 +66,7 @@ namespace NewPaitnt
 
         private void pictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && Settings.Mode != "point")
+            if (e.Button == MouseButtons.Left && Settings.Mode != DrawingEngine.Buttons.point)
             {
                 DrawingEngine.Xmove = e.X;
                 DrawingEngine.Ymove = e.Y;
@@ -83,7 +80,7 @@ namespace NewPaitnt
 
             }
 
-            if (Settings.Mode == "smoothCorv" && DrawingEngine.SmoothCurvePoints.Count > 0 && !DrawingEngine.IsLineFinished)
+            if (Settings.Mode == DrawingEngine.Buttons.smoothCorv && DrawingEngine.SmoothCurvePoints.Count > 0 && !DrawingEngine.IsLineFinished)
             {
                 DrawingEngine.AddNextPoint = false;
 

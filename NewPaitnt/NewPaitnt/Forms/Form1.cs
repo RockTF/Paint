@@ -21,7 +21,10 @@ namespace NewPaitnt
         public mainPaint()
         {
             InitializeComponent();
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         }
+
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -53,11 +56,24 @@ namespace NewPaitnt
             pictureBoxPen.Image = PenPreview.PenBitmap;
         }
 
-        private void btnCollor_Click(object sender, EventArgs e)
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Settings.Pen.Color = colorDialog1.Color;
+                btnColor.BackColor = colorDialog1.Color;
+                PenPreview.Refresh();
+                pictureBoxPen.Image = PenPreview.PenBitmap;
+            }
+        }
+
+        private void btnColor_Click_1(object sender, EventArgs e)
         {
             if (IsBtnFillClicked)
             {
+
                 Settings.Brush = new SolidBrush(((Button)sender).BackColor);
+                btnColor.BackColor = ((Button)sender).BackColor;
                 IsBtnFillClicked = false;
             }
             else
@@ -66,28 +82,17 @@ namespace NewPaitnt
                 PenPreview.Refresh();
                 pictureBoxPen.Image = PenPreview.PenBitmap;
             }
+
         }
 
-        private void btnOther_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Settings.Pen.Color = colorDialog1.Color;
-                ((Button)sender).BackColor = colorDialog1.Color;
-                PenPreview.Refresh();
-                pictureBoxPen.Image = PenPreview.PenBitmap;
-            }
-        }
-
-       
         private void btnRectangle_Click(object sender, EventArgs e)
         {
-            Settings.Mode = "rectangle";
+            Settings.Mode = DrawingEngine.Buttons.rectangle;
         }
 
         private void btnEllipse_Click(object sender, EventArgs e)
         {
-            Settings.Mode = "ellipse";
+            Settings.Mode = DrawingEngine.Buttons.ellipse;
         }
 
         private void btnFill_Click(object sender, EventArgs e)
@@ -97,7 +102,7 @@ namespace NewPaitnt
 
         private void btnPoint_Click(object sender, EventArgs e)
         {
-            Settings.Mode = "point";
+            Settings.Mode = DrawingEngine.Buttons.point;
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
@@ -114,7 +119,7 @@ namespace NewPaitnt
 
         private void btnCurve_Click(object sender, EventArgs e)
         {
-            Settings.Mode = "curve";
+            Settings.Mode = DrawingEngine.Buttons.curve;
         }
 
         private void comboBoxContour_SelectedIndexChanged(object sender, EventArgs e)
@@ -151,17 +156,17 @@ namespace NewPaitnt
 
         private void btnTriangle_Click(object sender, EventArgs e)
         {
-            Settings.Mode = "triangle";
+            Settings.Mode = DrawingEngine.Buttons.triangle;
         }
 
         private void btnLine_Click(object sender, EventArgs e)
         {
-            Settings.Mode = "line";
+            Settings.Mode = DrawingEngine.Buttons.line;
         }
 
         private void SmoothCorve(object sender, EventArgs e)
         {
-            Settings.Mode = "smoothCorv";
+            Settings.Mode = DrawingEngine.Buttons.smoothCorv;
         }
 
     }

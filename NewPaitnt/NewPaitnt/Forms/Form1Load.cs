@@ -24,16 +24,17 @@ namespace NewPaitnt
             memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
 
             IsBtnFillClicked = false;
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            DoubleBuffered = true;
 
-            // Set the value of the double-buffering style bits to true.
-            this.SetStyle(ControlStyles.DoubleBuffer |
-               ControlStyles.UserPaint |
-               ControlStyles.AllPaintingInWmPaint,
-               true);
-            this.UpdateStyles();
+            //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            //DoubleBuffered = true;
+
+            //// Set the value of the double-buffering style bits to true.
+            //this.SetStyle(ControlStyles.DoubleBuffer |
+            //   ControlStyles.UserPaint |
+            //   ControlStyles.AllPaintingInWmPaint,
+            //   true);
+            //this.UpdateStyles();
         }
     }
 }

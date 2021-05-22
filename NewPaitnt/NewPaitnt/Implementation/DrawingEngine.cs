@@ -56,6 +56,8 @@ namespace NewPaitnt.Implementation
         // Временный тип штриха для рисования точек (возможно костыль)
         public static DashStyle TempDashStyle { get; set; }
 
+
+       
         public static void Initialize()
 
         {
@@ -195,6 +197,8 @@ namespace NewPaitnt.Implementation
             FigureGraphics.DrawRectangle(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             // Отрисовка фигуры по основному изображению
             MainGraphics.DrawImage(Transparent, 0, 0);
+        
+           
 
         }
 

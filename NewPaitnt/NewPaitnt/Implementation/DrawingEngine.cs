@@ -37,6 +37,7 @@ namespace NewPaitnt.Implementation
         public static List<Point> Line { get; set; }
         public static List<Bitmap> History { get; set; }
 
+
        
         public static void Initialize()
 
@@ -221,7 +222,7 @@ namespace NewPaitnt.Implementation
             FigureGraphics.DrawRectangle(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             // Отрисовка изображения с фигурой на прозрачном фоне поверх основного изображения
             MainGraphics.DrawImage(Transparent, 0, 0);
-            // Явный вызов сборщика мусора для удаления старых обьектов графики
+        
            
         }
 

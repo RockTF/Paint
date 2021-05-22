@@ -32,9 +32,10 @@ namespace NewPaitnt
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainPaint));
             this.pictureBoxPaint = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnColor = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBoxColorContour = new System.Windows.Forms.PictureBox();
+            this.labelColor1 = new System.Windows.Forms.Label();
+            this.labelColor2 = new System.Windows.Forms.Label();
+            this.labelColors = new System.Windows.Forms.Label();
             this.pictureBoxColors = new System.Windows.Forms.PictureBox();
             this.checkBoxAntiAliasing = new System.Windows.Forms.CheckBox();
             this.pictureBoxPen = new System.Windows.Forms.PictureBox();
@@ -59,6 +60,9 @@ namespace NewPaitnt
             this.btnWhite = new System.Windows.Forms.Button();
             this.btnRed = new System.Windows.Forms.Button();
             this.panelFigures = new System.Windows.Forms.Panel();
+            this.btnHexagon = new System.Windows.Forms.Button();
+            this.btnSguare = new System.Windows.Forms.Button();
+            this.btnPolygon = new System.Windows.Forms.Button();
             this.btnSmoothCorve = new System.Windows.Forms.Button();
             this.btnPoint = new System.Windows.Forms.Button();
             this.btnEllipse = new System.Windows.Forms.Button();
@@ -75,14 +79,17 @@ namespace NewPaitnt
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.footer = new System.Windows.Forms.Panel();
             this.memoryLabel = new System.Windows.Forms.Label();
+            this.pictureBoxColorFill = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPaint)).BeginInit();
             this.panelMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorContour)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColors)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPen)).BeginInit();
             this.panelFigures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.footer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorFill)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxPaint
@@ -91,10 +98,10 @@ namespace NewPaitnt
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxPaint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
-            this.pictureBoxPaint.Location = new System.Drawing.Point(11, 91);
+            this.pictureBoxPaint.Location = new System.Drawing.Point(11, 106);
             this.pictureBoxPaint.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBoxPaint.Name = "pictureBoxPaint";
-            this.pictureBoxPaint.Size = new System.Drawing.Size(936, 573);
+            this.pictureBoxPaint.Size = new System.Drawing.Size(936, 601);
             this.pictureBoxPaint.TabIndex = 0;
             this.pictureBoxPaint.TabStop = false;
             this.pictureBoxPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseDown);
@@ -104,9 +111,11 @@ namespace NewPaitnt
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.SystemColors.Control;
-            this.panelMenu.Controls.Add(this.label2);
-            this.panelMenu.Controls.Add(this.btnColor);
-            this.panelMenu.Controls.Add(this.label1);
+            this.panelMenu.Controls.Add(this.pictureBoxColorFill);
+            this.panelMenu.Controls.Add(this.pictureBoxColorContour);
+            this.panelMenu.Controls.Add(this.labelColor1);
+            this.panelMenu.Controls.Add(this.labelColor2);
+            this.panelMenu.Controls.Add(this.labelColors);
             this.panelMenu.Controls.Add(this.pictureBoxColors);
             this.panelMenu.Controls.Add(this.checkBoxAntiAliasing);
             this.panelMenu.Controls.Add(this.pictureBoxPen);
@@ -135,42 +144,50 @@ namespace NewPaitnt
             this.panelMenu.Controls.Add(this.labelSize);
             this.panelMenu.Controls.Add(this.trackBar1);
             this.panelMenu.Controls.Add(this.comboBoxContour);
-            this.panelMenu.Controls.Add(this.btnClear);
-            this.panelMenu.Controls.Add(this.btnSave);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(944, 80);
             this.panelMenu.TabIndex = 1;
             // 
-            // label2
+            // pictureBoxColorContour
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(655, 53);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(36, 15);
-            this.label2.TabIndex = 48;
-            this.label2.Text = "Color";
+            this.pictureBoxColorContour.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxColorContour.Location = new System.Drawing.Point(655, 15);
+            this.pictureBoxColorContour.Name = "pictureBoxColorContour";
+            this.pictureBoxColorContour.Size = new System.Drawing.Size(35, 35);
+            this.pictureBoxColorContour.TabIndex = 51;
+            this.pictureBoxColorContour.TabStop = false;
             // 
-            // btnColor
+            // labelColor1
             // 
-            this.btnColor.BackColor = System.Drawing.Color.White;
-            this.btnColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor.Location = new System.Drawing.Point(655, 15);
-            this.btnColor.Name = "btnColor";
-            this.btnColor.Size = new System.Drawing.Size(35, 35);
-            this.btnColor.TabIndex = 47;
-            this.btnColor.UseVisualStyleBackColor = false;
-            this.btnColor.Click += new System.EventHandler(this.btnColor_Click_1);
+            this.labelColor1.AutoSize = true;
+            this.labelColor1.BackColor = System.Drawing.Color.Transparent;
+            this.labelColor1.Location = new System.Drawing.Point(613, 52);
+            this.labelColor1.Name = "labelColor1";
+            this.labelColor1.Size = new System.Drawing.Size(36, 15);
+            this.labelColor1.TabIndex = 50;
+            this.labelColor1.Text = "Color";
             // 
-            // label1
+            // labelColor2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(877, 53);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 15);
-            this.label1.TabIndex = 46;
-            this.label1.Text = "Colors";
+            this.labelColor2.AutoSize = true;
+            this.labelColor2.BackColor = System.Drawing.Color.Transparent;
+            this.labelColor2.Location = new System.Drawing.Point(655, 53);
+            this.labelColor2.Name = "labelColor2";
+            this.labelColor2.Size = new System.Drawing.Size(36, 15);
+            this.labelColor2.TabIndex = 48;
+            this.labelColor2.Text = "Color";
+            // 
+            // labelColors
+            // 
+            this.labelColors.AutoSize = true;
+            this.labelColors.BackColor = System.Drawing.Color.Transparent;
+            this.labelColors.Location = new System.Drawing.Point(877, 53);
+            this.labelColors.Name = "labelColors";
+            this.labelColors.Size = new System.Drawing.Size(41, 15);
+            this.labelColors.TabIndex = 46;
+            this.labelColors.Text = "Colors";
             // 
             // pictureBoxColors
             // 
@@ -183,15 +200,14 @@ namespace NewPaitnt
             this.pictureBoxColors.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxColors.TabIndex = 45;
             this.pictureBoxColors.TabStop = false;
-            this.pictureBoxColors.Click += new System.EventHandler(this.btnColor_Click);
             // 
             // checkBoxAntiAliasing
             // 
             this.checkBoxAntiAliasing.AutoSize = true;
             this.checkBoxAntiAliasing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.checkBoxAntiAliasing.Location = new System.Drawing.Point(426, 54);
+            this.checkBoxAntiAliasing.Location = new System.Drawing.Point(398, 54);
             this.checkBoxAntiAliasing.Name = "checkBoxAntiAliasing";
-            this.checkBoxAntiAliasing.Size = new System.Drawing.Size(86, 17);
+            this.checkBoxAntiAliasing.Size = new System.Drawing.Size(88, 17);
             this.checkBoxAntiAliasing.TabIndex = 44;
             this.checkBoxAntiAliasing.Text = "AntiAliasing";
             this.checkBoxAntiAliasing.UseVisualStyleBackColor = true;
@@ -201,7 +217,7 @@ namespace NewPaitnt
             // 
             this.pictureBoxPen.BackColor = System.Drawing.Color.White;
             this.pictureBoxPen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxPen.Location = new System.Drawing.Point(385, 12);
+            this.pictureBoxPen.Location = new System.Drawing.Point(357, 12);
             this.pictureBoxPen.Name = "pictureBoxPen";
             this.pictureBoxPen.Size = new System.Drawing.Size(35, 35);
             this.pictureBoxPen.TabIndex = 43;
@@ -212,7 +228,7 @@ namespace NewPaitnt
             this.btnCurve.FlatAppearance.BorderSize = 0;
             this.btnCurve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCurve.Image = ((System.Drawing.Image)(resources.GetObject("btnCurve.Image")));
-            this.btnCurve.Location = new System.Drawing.Point(389, 50);
+            this.btnCurve.Location = new System.Drawing.Point(361, 50);
             this.btnCurve.Name = "btnCurve";
             this.btnCurve.Size = new System.Drawing.Size(20, 20);
             this.btnCurve.TabIndex = 14;
@@ -225,7 +241,7 @@ namespace NewPaitnt
             this.btnRedo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnRedo.Image")));
             this.btnRedo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRedo.Location = new System.Drawing.Point(183, 43);
+            this.btnRedo.Location = new System.Drawing.Point(155, 43);
             this.btnRedo.Name = "btnRedo";
             this.btnRedo.Size = new System.Drawing.Size(66, 23);
             this.btnRedo.TabIndex = 42;
@@ -240,7 +256,7 @@ namespace NewPaitnt
             this.btnUndo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnUndo.Image")));
             this.btnUndo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUndo.Location = new System.Drawing.Point(183, 15);
+            this.btnUndo.Location = new System.Drawing.Point(155, 15);
             this.btnUndo.Name = "btnUndo";
             this.btnUndo.Size = new System.Drawing.Size(66, 23);
             this.btnUndo.TabIndex = 40;
@@ -255,7 +271,7 @@ namespace NewPaitnt
             this.btnFill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFill.Image = ((System.Drawing.Image)(resources.GetObject("btnFill.Image")));
             this.btnFill.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFill.Location = new System.Drawing.Point(262, 43);
+            this.btnFill.Location = new System.Drawing.Point(234, 43);
             this.btnFill.Name = "btnFill";
             this.btnFill.Size = new System.Drawing.Size(95, 23);
             this.btnFill.TabIndex = 39;
@@ -274,7 +290,6 @@ namespace NewPaitnt
             this.btnMidnightBlue.Size = new System.Drawing.Size(18, 18);
             this.btnMidnightBlue.TabIndex = 37;
             this.btnMidnightBlue.UseVisualStyleBackColor = false;
-            this.btnMidnightBlue.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnIndigo
             // 
@@ -286,7 +301,6 @@ namespace NewPaitnt
             this.btnIndigo.Size = new System.Drawing.Size(18, 18);
             this.btnIndigo.TabIndex = 36;
             this.btnIndigo.UseVisualStyleBackColor = false;
-            this.btnIndigo.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnTan
             // 
@@ -298,7 +312,6 @@ namespace NewPaitnt
             this.btnTan.Size = new System.Drawing.Size(18, 18);
             this.btnTan.TabIndex = 33;
             this.btnTan.UseVisualStyleBackColor = false;
-            this.btnTan.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnOliveDrab
             // 
@@ -310,7 +323,6 @@ namespace NewPaitnt
             this.btnOliveDrab.Size = new System.Drawing.Size(18, 18);
             this.btnOliveDrab.TabIndex = 32;
             this.btnOliveDrab.UseVisualStyleBackColor = false;
-            this.btnOliveDrab.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnBlack
             // 
@@ -322,7 +334,6 @@ namespace NewPaitnt
             this.btnBlack.Size = new System.Drawing.Size(18, 18);
             this.btnBlack.TabIndex = 25;
             this.btnBlack.UseVisualStyleBackColor = false;
-            this.btnBlack.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnPlum
             // 
@@ -334,7 +345,6 @@ namespace NewPaitnt
             this.btnPlum.Size = new System.Drawing.Size(18, 18);
             this.btnPlum.TabIndex = 24;
             this.btnPlum.UseVisualStyleBackColor = false;
-            this.btnPlum.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnGray
             // 
@@ -346,7 +356,6 @@ namespace NewPaitnt
             this.btnGray.Size = new System.Drawing.Size(18, 18);
             this.btnGray.TabIndex = 23;
             this.btnGray.UseVisualStyleBackColor = false;
-            this.btnGray.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnPink
             // 
@@ -358,7 +367,6 @@ namespace NewPaitnt
             this.btnPink.Size = new System.Drawing.Size(18, 18);
             this.btnPink.TabIndex = 22;
             this.btnPink.UseVisualStyleBackColor = false;
-            this.btnPink.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnSteelBlue
             // 
@@ -370,7 +378,6 @@ namespace NewPaitnt
             this.btnSteelBlue.Size = new System.Drawing.Size(18, 18);
             this.btnSteelBlue.TabIndex = 21;
             this.btnSteelBlue.UseVisualStyleBackColor = false;
-            this.btnSteelBlue.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnOrange
             // 
@@ -382,7 +389,6 @@ namespace NewPaitnt
             this.btnOrange.Size = new System.Drawing.Size(18, 18);
             this.btnOrange.TabIndex = 20;
             this.btnOrange.UseVisualStyleBackColor = false;
-            this.btnOrange.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnGold
             // 
@@ -394,7 +400,6 @@ namespace NewPaitnt
             this.btnGold.Size = new System.Drawing.Size(18, 18);
             this.btnGold.TabIndex = 19;
             this.btnGold.UseVisualStyleBackColor = false;
-            this.btnGold.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnMarron
             // 
@@ -406,7 +411,6 @@ namespace NewPaitnt
             this.btnMarron.Size = new System.Drawing.Size(18, 18);
             this.btnMarron.TabIndex = 18;
             this.btnMarron.UseVisualStyleBackColor = false;
-            this.btnMarron.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnDarkOliveGreen
             // 
@@ -418,7 +422,6 @@ namespace NewPaitnt
             this.btnDarkOliveGreen.Size = new System.Drawing.Size(18, 18);
             this.btnDarkOliveGreen.TabIndex = 17;
             this.btnDarkOliveGreen.UseVisualStyleBackColor = false;
-            this.btnDarkOliveGreen.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnWheat
             // 
@@ -430,7 +433,6 @@ namespace NewPaitnt
             this.btnWheat.Size = new System.Drawing.Size(18, 18);
             this.btnWheat.TabIndex = 16;
             this.btnWheat.UseVisualStyleBackColor = false;
-            this.btnWheat.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnWhite
             // 
@@ -442,7 +444,6 @@ namespace NewPaitnt
             this.btnWhite.Size = new System.Drawing.Size(18, 18);
             this.btnWhite.TabIndex = 15;
             this.btnWhite.UseVisualStyleBackColor = false;
-            this.btnWhite.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // btnRed
             // 
@@ -454,12 +455,14 @@ namespace NewPaitnt
             this.btnRed.Size = new System.Drawing.Size(18, 18);
             this.btnRed.TabIndex = 14;
             this.btnRed.UseVisualStyleBackColor = false;
-            this.btnRed.Click += new System.EventHandler(this.btnColor_Click_1);
             // 
             // panelFigures
             // 
             this.panelFigures.BackColor = System.Drawing.Color.White;
             this.panelFigures.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelFigures.Controls.Add(this.btnHexagon);
+            this.panelFigures.Controls.Add(this.btnSguare);
+            this.panelFigures.Controls.Add(this.btnPolygon);
             this.panelFigures.Controls.Add(this.btnSmoothCorve);
             this.panelFigures.Controls.Add(this.btnPoint);
             this.panelFigures.Controls.Add(this.btnEllipse);
@@ -468,17 +471,50 @@ namespace NewPaitnt
             this.panelFigures.Controls.Add(this.btnRectangle);
             this.panelFigures.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.panelFigures.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panelFigures.Location = new System.Drawing.Point(545, 16);
+            this.panelFigures.Location = new System.Drawing.Point(497, 8);
             this.panelFigures.Name = "panelFigures";
-            this.panelFigures.Size = new System.Drawing.Size(82, 50);
+            this.panelFigures.Size = new System.Drawing.Size(80, 72);
             this.panelFigures.TabIndex = 6;
+            // 
+            // btnHexagon
+            // 
+            this.btnHexagon.FlatAppearance.BorderSize = 0;
+            this.btnHexagon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHexagon.Image = ((System.Drawing.Image)(resources.GetObject("btnHexagon.Image")));
+            this.btnHexagon.Location = new System.Drawing.Point(53, 22);
+            this.btnHexagon.Name = "btnHexagon";
+            this.btnHexagon.Size = new System.Drawing.Size(22, 22);
+            this.btnHexagon.TabIndex = 48;
+            this.btnHexagon.UseVisualStyleBackColor = true;
+            // 
+            // btnSguare
+            // 
+            this.btnSguare.FlatAppearance.BorderSize = 0;
+            this.btnSguare.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSguare.Image = ((System.Drawing.Image)(resources.GetObject("btnSguare.Image")));
+            this.btnSguare.Location = new System.Drawing.Point(29, 1);
+            this.btnSguare.Name = "btnSguare";
+            this.btnSguare.Size = new System.Drawing.Size(22, 22);
+            this.btnSguare.TabIndex = 47;
+            this.btnSguare.UseVisualStyleBackColor = true;
+            // 
+            // btnPolygon
+            // 
+            this.btnPolygon.FlatAppearance.BorderSize = 0;
+            this.btnPolygon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPolygon.Image = ((System.Drawing.Image)(resources.GetObject("btnPolygon.Image")));
+            this.btnPolygon.Location = new System.Drawing.Point(29, 22);
+            this.btnPolygon.Name = "btnPolygon";
+            this.btnPolygon.Size = new System.Drawing.Size(22, 22);
+            this.btnPolygon.TabIndex = 46;
+            this.btnPolygon.UseVisualStyleBackColor = true;
             // 
             // btnSmoothCorve
             // 
             this.btnSmoothCorve.FlatAppearance.BorderSize = 0;
             this.btnSmoothCorve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSmoothCorve.Image = ((System.Drawing.Image)(resources.GetObject("btnSmoothCorve.Image")));
-            this.btnSmoothCorve.Location = new System.Drawing.Point(29, 26);
+            this.btnSmoothCorve.Location = new System.Drawing.Point(30, 46);
             this.btnSmoothCorve.Name = "btnSmoothCorve";
             this.btnSmoothCorve.Size = new System.Drawing.Size(20, 20);
             this.btnSmoothCorve.TabIndex = 45;
@@ -490,7 +526,7 @@ namespace NewPaitnt
             this.btnPoint.FlatAppearance.BorderSize = 0;
             this.btnPoint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPoint.Image = ((System.Drawing.Image)(resources.GetObject("btnPoint.Image")));
-            this.btnPoint.Location = new System.Drawing.Point(54, 26);
+            this.btnPoint.Location = new System.Drawing.Point(55, 46);
             this.btnPoint.Name = "btnPoint";
             this.btnPoint.Size = new System.Drawing.Size(20, 20);
             this.btnPoint.TabIndex = 15;
@@ -502,7 +538,7 @@ namespace NewPaitnt
             this.btnEllipse.FlatAppearance.BorderSize = 0;
             this.btnEllipse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEllipse.Image = ((System.Drawing.Image)(resources.GetObject("btnEllipse.Image")));
-            this.btnEllipse.Location = new System.Drawing.Point(52, 1);
+            this.btnEllipse.Location = new System.Drawing.Point(53, 1);
             this.btnEllipse.Name = "btnEllipse";
             this.btnEllipse.Size = new System.Drawing.Size(22, 22);
             this.btnEllipse.TabIndex = 10;
@@ -514,7 +550,7 @@ namespace NewPaitnt
             this.btnTriangle.FlatAppearance.BorderSize = 0;
             this.btnTriangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTriangle.Image = ((System.Drawing.Image)(resources.GetObject("btnTriangle.Image")));
-            this.btnTriangle.Location = new System.Drawing.Point(28, 1);
+            this.btnTriangle.Location = new System.Drawing.Point(3, 22);
             this.btnTriangle.Name = "btnTriangle";
             this.btnTriangle.Size = new System.Drawing.Size(22, 22);
             this.btnTriangle.TabIndex = 9;
@@ -526,7 +562,7 @@ namespace NewPaitnt
             this.btnLine.FlatAppearance.BorderSize = 0;
             this.btnLine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLine.Image = ((System.Drawing.Image)(resources.GetObject("btnLine.Image")));
-            this.btnLine.Location = new System.Drawing.Point(4, 26);
+            this.btnLine.Location = new System.Drawing.Point(5, 46);
             this.btnLine.Name = "btnLine";
             this.btnLine.Size = new System.Drawing.Size(20, 20);
             this.btnLine.TabIndex = 7;
@@ -548,7 +584,7 @@ namespace NewPaitnt
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(268, 17);
+            this.pictureBox2.Location = new System.Drawing.Point(240, 17);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(20, 20);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -559,15 +595,15 @@ namespace NewPaitnt
             // 
             this.labelSize.AutoSize = true;
             this.labelSize.BackColor = System.Drawing.Color.Transparent;
-            this.labelSize.Location = new System.Drawing.Point(455, 8);
+            this.labelSize.Location = new System.Drawing.Point(427, 8);
             this.labelSize.Name = "labelSize";
-            this.labelSize.Size = new System.Drawing.Size(30, 15);
+            this.labelSize.Size = new System.Drawing.Size(27, 15);
             this.labelSize.TabIndex = 5;
             this.labelSize.Text = "Size";
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(415, 20);
+            this.trackBar1.Location = new System.Drawing.Point(387, 20);
             this.trackBar1.Maximum = 32;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(107, 45);
@@ -577,13 +613,14 @@ namespace NewPaitnt
             // 
             // comboBoxContour
             // 
+            this.comboBoxContour.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxContour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxContour.FormattingEnabled = true;
             this.comboBoxContour.Items.AddRange(new object[] {
             "―――",
             "-------",
             "− ∙ − ∙"});
-            this.comboBoxContour.Location = new System.Drawing.Point(290, 16);
+            this.comboBoxContour.Location = new System.Drawing.Point(262, 16);
             this.comboBoxContour.Name = "comboBoxContour";
             this.comboBoxContour.Size = new System.Drawing.Size(70, 23);
             this.comboBoxContour.TabIndex = 2;
@@ -596,7 +633,7 @@ namespace NewPaitnt
             this.btnClear.FlatAppearance.BorderSize = 0;
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnClear.ForeColor = System.Drawing.Color.Black;
-            this.btnClear.Location = new System.Drawing.Point(93, 26);
+            this.btnClear.Location = new System.Drawing.Point(106, 86);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(72, 30);
             this.btnClear.TabIndex = 1;
@@ -610,7 +647,7 @@ namespace NewPaitnt
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSave.ForeColor = System.Drawing.Color.Black;
-            this.btnSave.Location = new System.Drawing.Point(15, 26);
+            this.btnSave.Location = new System.Drawing.Point(28, 86);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(72, 30);
             this.btnSave.TabIndex = 0;
@@ -623,7 +660,7 @@ namespace NewPaitnt
             this.footer.BackColor = System.Drawing.SystemColors.Control;
             this.footer.Controls.Add(this.memoryLabel);
             this.footer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.footer.Location = new System.Drawing.Point(0, 661);
+            this.footer.Location = new System.Drawing.Point(0, 707);
             this.footer.Margin = new System.Windows.Forms.Padding(0);
             this.footer.Name = "footer";
             this.footer.Size = new System.Drawing.Size(944, 20);
@@ -635,19 +672,30 @@ namespace NewPaitnt
             this.memoryLabel.Location = new System.Drawing.Point(11, 3);
             this.memoryLabel.Margin = new System.Windows.Forms.Padding(0);
             this.memoryLabel.Name = "memoryLabel";
-            this.memoryLabel.Size = new System.Drawing.Size(134, 15);
+            this.memoryLabel.Size = new System.Drawing.Size(128, 15);
             this.memoryLabel.TabIndex = 0;
             this.memoryLabel.Text = "Memory usage: 0,0 MB";
+            // 
+            // pictureBoxColorFill
+            // 
+            this.pictureBoxColorFill.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxColorFill.Location = new System.Drawing.Point(613, 15);
+            this.pictureBoxColorFill.Name = "pictureBoxColorFill";
+            this.pictureBoxColorFill.Size = new System.Drawing.Size(35, 35);
+            this.pictureBoxColorFill.TabIndex = 52;
+            this.pictureBoxColorFill.TabStop = false;
             // 
             // mainPaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
-            this.ClientSize = new System.Drawing.Size(944, 681);
+            this.ClientSize = new System.Drawing.Size(944, 727);
             this.Controls.Add(this.footer);
             this.Controls.Add(this.panelMenu);
             this.Controls.Add(this.pictureBoxPaint);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnClear);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "mainPaint";
@@ -656,6 +704,7 @@ namespace NewPaitnt
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPaint)).EndInit();
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorContour)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColors)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPen)).EndInit();
             this.panelFigures.ResumeLayout(false);
@@ -663,6 +712,7 @@ namespace NewPaitnt
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.footer.ResumeLayout(false);
             this.footer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorFill)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -712,9 +762,14 @@ namespace NewPaitnt
         private System.Windows.Forms.CheckBox checkBoxAntiAliasing;
         private System.Windows.Forms.Button btnSmoothCorve;
         private System.Windows.Forms.PictureBox pictureBoxColors;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnColor;
+        private System.Windows.Forms.Label labelColors;
+        private System.Windows.Forms.Label labelColor2;
+        private System.Windows.Forms.Label labelColor1;
+        private System.Windows.Forms.Button btnHexagon;
+        private System.Windows.Forms.Button btnSguare;
+        private System.Windows.Forms.Button btnPolygon;
+        private System.Windows.Forms.PictureBox pictureBoxColorContour;
+        private System.Windows.Forms.PictureBox pictureBoxColorFill;
     }
 }
 

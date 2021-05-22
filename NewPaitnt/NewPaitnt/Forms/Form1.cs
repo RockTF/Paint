@@ -56,34 +56,34 @@ namespace NewPaitnt
             pictureBoxPen.Image = PenPreview.PenBitmap;
         }
 
-        private void btnColor_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Settings.Pen.Color = colorDialog1.Color;
-                btnColor.BackColor = colorDialog1.Color;
-                PenPreview.Refresh();
-                pictureBoxPen.Image = PenPreview.PenBitmap;
-            }
-        }
+        //private void btnColor_Click(object sender, EventArgs e)
+        //{
+        //    if (colorDialog1.ShowDialog() == DialogResult.OK)
+        //    {
+        //        Settings.Pen.Color = colorDialog1.Color;
+        //        btnColor.BackColor = colorDialog1.Color;
+        //        PenPreview.Refresh();
+        //        pictureBoxPen.Image = PenPreview.PenBitmap;
+        //    }
+        //}
 
-        private void btnColor_Click_1(object sender, EventArgs e)
-        {
-            if (IsBtnFillClicked)
-            {
+        //private void btnColor_Click_1(object sender, EventArgs e)
+        //{
+        //    if (IsBtnFillClicked)
+        //    {
 
-                Settings.Brush = new SolidBrush(((Button)sender).BackColor);
-                btnColor.BackColor = ((Button)sender).BackColor;
-                IsBtnFillClicked = false;
-            }
-            else
-            {
-                Settings.Pen.Color = ((Button)sender).BackColor;
-                PenPreview.Refresh();
-                pictureBoxPen.Image = PenPreview.PenBitmap;
-            }
+        //        Settings.Brush = new SolidBrush(((Button)sender).BackColor);
+        //        btnColor.BackColor = ((Button)sender).BackColor;
+        //        IsBtnFillClicked = false;
+        //    }
+        //    else
+        //    {
+        //        Settings.Pen.Color = ((Button)sender).BackColor;
+        //        PenPreview.Refresh();
+        //        pictureBoxPen.Image = PenPreview.PenBitmap;
+        //    }
 
-        }
+        //}
 
         private void btnRectangle_Click(object sender, EventArgs e)
         {

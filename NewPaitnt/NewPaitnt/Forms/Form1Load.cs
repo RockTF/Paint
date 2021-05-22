@@ -11,9 +11,12 @@ namespace NewPaitnt
 {
     public partial class mainPaint
     {
+        Settings settings;
+        MouseHandeler mouseHandeler;
         private void mainPaint_Load(object sender, EventArgs e)
         {
-            Settings.Init1ialize();
+            settings = Settings.Initialize();
+            mouseHandeler = MouseHandeler.Initialize();
             DrawingEngine.Initialize();
             PenPreview.Initialize(pictureBoxPen.Width, pictureBoxPen.Height);
             pictureBoxPen.Image = PenPreview.PenBitmap;

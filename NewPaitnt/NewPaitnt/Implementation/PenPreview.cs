@@ -1,36 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace NewPaitnt.Implementation
 {
-    public static class PenPreview
+    public class PenPreview
     {
-        public static int Xcenter { get; set; }
-        public static int Ycenter { get; set; }
-        public static Bitmap PenBitmap { get; set; }
-        public static Graphics PenGraphics { get; set; }
-        public static void Initialize(int Width, int Height)
+        private static PenPreview _penPreview;
+        private int _xCenter;
+        private int _yCenter;
+        public Bitmap PenBitmap { get; private set; }
+        private Graphics _penGraphics;
+        private Settings _settings;
+        private PenPreview(int Width, int Height)
         {
             PenBitmap = new Bitmap(Width, Height);
-            Xcenter = Width / 2 - 1;
-            Ycenter = Height / 2 - 1;
-            PenGraphics = Graphics.FromImage(PenBitmap);
-            PenGraphics.SmoothingMode = Settings.SmoothingMode;
+            _xCenter = Width / 2 - 1;
+            _yCenter = Height / 2 - 1;
+            _penGraphics = Graphics.FromImage(PenBitmap);
+            Settings _settings = Settings.Initialize();
+            _penGraphics.SmoothingMode = _settings.SmoothingMode;
             Refresh();
         }
-        public static void Refresh()
+        public static PenPreview Initialize(int Width, int Height)
         {
-            PenGraphics.Clear(Color.White);
-            Pen pointPen = (Pen)Settings.Pen.Clone();
-            pointPen.DashPattern = new float[] { 1f, 1f };
-            PenGraphics.SmoothingMode = Settings.SmoothingMode;
-            PenGraphics.DrawLine(pointPen, Xcenter, Ycenter, Xcenter + 1, Ycenter + 1);
+            
+            if (_penPreview == null)
+            {
+                _penPreview = new PenPreview(Width, Height);
+            }
+            return _penPreview;
         }
-
-
+        public void Refresh()
+        {
+            _penGraphics.Clear(Color.White);
+            Pen pointPen = (Pen)_settings.Pen.Clone();
+            pointPen.DashPattern = new float[] { 1f, 1f };
+            _penGraphics.SmoothingMode = _settings.SmoothingMode;
+            _penGraphics.DrawLine(pointPen, _xCenter, _yCenter, _xCenter + 1, _yCenter + 1);
+        }
     }
 }

@@ -1,56 +1,62 @@
-﻿using NewPaitnt.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static NewPaitnt.Implementation.DrawingEngine;
 
 namespace NewPaitnt.Implementation
 {
-    public static class Settings
+    public class Settings
     {
-        public static int ImageWidth { get; set; }
-        public static int ImageHeight { get; set; }
-        public static Buttons Mode { get; set; }
-        public static Pen Pen { get; set; }
-        public static Brush Brush { get; set; }
-        public static bool IsImageBorderClosed { get; set; }
-        public static SmoothingMode SmoothingMode { get; set; }
-
-        public static void Init1ialize()
+        private static Settings _settings;
+        public int ImageWidth { get; private set; }
+        public int ImageHeight { get; private set; }
+        public Buttons Mode { get; private set; }
+        public Pen Pen { get; private set; }
+        public Brush Brush { get; private set; }
+        public SmoothingMode SmoothingMode { get; private set; }
+        private Settings()
         {
             ImageWidth = 928;
             ImageHeight = 560;
-            Mode = Buttons.curve;  // "point", "curve", "line", "rectangle", "ellipse", "traingle"
+            Mode = Buttons.curve;
             Pen = new Pen(Color.Black, 1f);
             Pen.StartCap = LineCap.Round;
             Pen.EndCap = LineCap.Round;
-            // Соединение линий под углом (излом)
             Pen.LineJoin = LineJoin.Round;
-            // Кончик линии на штрихе
             Pen.DashCap = DashCap.Round;
             Brush = new SolidBrush(Color.Transparent);
-            IsImageBorderClosed = false;
             SmoothingMode = SmoothingMode.None;
         }
-        // Предстоит реализовать сброс настроек
-        public static void Reset()
+        public static Settings Initialize()
         {
-            ImageWidth = 640;
-            ImageHeight = 360;
-            Settings.Mode = DrawingEngine.Buttons.curve; 
-            Pen.Color = Color.Black;
-            Pen.Width = 1f;
-            Pen.StartCap = LineCap.Round;
-            Pen.EndCap = LineCap.Round;
-            Pen.LineJoin = LineJoin.Round;
-            Pen.DashCap = DashCap.Round;
-            Brush = new SolidBrush(Color.Transparent);
-            IsImageBorderClosed = false;
-            SmoothingMode = SmoothingMode.None;
+            if (_settings == null)
+            {
+                _settings = new Settings();
+            }
+            return _settings;
+        }
+        public void SetImageWidth(int newWidth)
+        {
+            _settings.ImageWidth = newWidth;
+        }
+        public void SetImageHeight(int newHeight)
+        {
+            _settings.ImageHeight = newHeight;
+        }
+        public void SetMode(Buttons newMode)
+        {
+            _settings.Mode = newMode;
+        }
+        public void SetPenWidth(float newWidth)
+        {
+            _settings.Pen.Width = newWidth;
+        }
+        public void SetBrushColor(Color newColor)
+        {
+            _settings.Brush = new SolidBrush(newColor);
+        }
+        public void SetSmoothingMode(SmoothingMode newMode)
+        {
+            _settings.SmoothingMode = newMode;
         }
     }
 }

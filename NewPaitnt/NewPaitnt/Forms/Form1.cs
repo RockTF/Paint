@@ -168,6 +168,5 @@ namespace NewPaitnt
         {
             Settings.Mode = DrawingEngine.Buttons.smoothCorv;
         }
-
     }
 }

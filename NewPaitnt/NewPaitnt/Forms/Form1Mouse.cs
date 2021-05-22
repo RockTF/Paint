@@ -13,83 +13,20 @@ namespace NewPaitnt
     {
         private void pictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                DrawingEngine.ClearUnnecessaryHistory();
-
-                if (DrawingEngine.IsLineFinished)
-                {
-                    // Копирование текущего изображения во временное для того, чтобы не затронуть его, пока нажата кнопка мыши
-                    // и фигура динамически изменяется
-                    DrawingEngine.MainImageToTemporary();
-                }
-
-                // Передача координат клика в класс DrawingEngine
-                DrawingEngine.Xclick = e.X;
-                DrawingEngine.Yclick = e.Y;
-
-                if (Settings.Mode == DrawingEngine.Buttons.point)
-                {
-                    DrawingEngine.Draw();
-                    pictureBoxPaint.Image = DrawingEngine.MainImage;
-                }
-
-                if (Settings.Mode == DrawingEngine.Buttons.smoothCorv)
-                {
-                    DrawingEngine.IsLineFinished = false;
-                    DrawingEngine.AddNextPoint = true;
-                }
-
-            }
+            mouseHandeler.MouseDown(sender, e);
+            pictureBoxPaint.Invalidate();
         }
-
-        private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
-        {
-            DrawingEngine.SaveToHistory();
-            DrawingEngine.CurvePoints = new List<Point>(); //Мой вариант
-
-            currentProcess.Refresh();
-            memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
-
-            if (Settings.Mode == DrawingEngine.Buttons.smoothCorv && e.Button == MouseButtons.Right && DrawingEngine.SmoothCurvePoints.Count > 0)
-            {
-                DrawingEngine.IsLineFinished = true;
-
-                DrawingEngine.Xend = e.X;
-                DrawingEngine.Yend = e.Y;
-
-                DrawingEngine.Draw();
-                pictureBoxPaint.Image = DrawingEngine.MainImage;
-                DrawingEngine.SmoothCurvePoints = new List<Point>();
-            }
-        }
-
         private void pictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && Settings.Mode != DrawingEngine.Buttons.point)
-            {
-                DrawingEngine.Xmove = e.X;
-                DrawingEngine.Ymove = e.Y;
-
-                // Расчет координат для отрисовки фигуры
-                DrawingEngine.CalculateCoordinates(e.X, e.Y);
-                // Вызов общего метода рисования
-                DrawingEngine.Draw();
-                // Обновление основного изображения в PictureBox
-                pictureBoxPaint.Image = DrawingEngine.MainImage;
-
-            }
-
-            if (Settings.Mode == DrawingEngine.Buttons.smoothCorv && DrawingEngine.SmoothCurvePoints.Count > 0 && !DrawingEngine.IsLineFinished)
-            {
-                DrawingEngine.AddNextPoint = false;
-
-                DrawingEngine.Xmove = e.X;
-                DrawingEngine.Ymove = e.Y;
-
-                DrawingEngine.Draw();
-                pictureBoxPaint.Image = DrawingEngine.MainImage;
-            }
+            mouseHandeler.MouseMove(sender, e);
+            pictureBoxPaint.Invalidate();
+        }
+        private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
+        {
+            currentProcess.Refresh();
+            memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
+            mouseHandeler.MouseUp(sender, e);
+            pictureBoxPaint.Invalidate();
         }
     }
 }

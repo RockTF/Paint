@@ -1,5 +1,4 @@
-﻿
-namespace NewPaitnt
+﻿namespace NewPaitnt
 {
     partial class mainPaint
     {

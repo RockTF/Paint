@@ -13,14 +13,17 @@ namespace NewPaitnt
     {
         Settings settings;
         MouseHandeler mouseHandeler;
+        DrawingEngine drawingEngine;
+        PenPreview penPreview;
         private void mainPaint_Load(object sender, EventArgs e)
         {
             settings = Settings.Initialize();
             mouseHandeler = MouseHandeler.Initialize();
-            DrawingEngine.Initialize();
-            PenPreview.Initialize(pictureBoxPen.Width, pictureBoxPen.Height);
-            pictureBoxPen.Image = PenPreview.PenBitmap;
-            pictureBoxPaint.Image = DrawingEngine.MainImage;
+            drawingEngine = DrawingEngine.Initialize();
+            penPreview = PenPreview.Initialize(pictureBoxPen.Width, pictureBoxPen.Height);
+
+            pictureBoxPen.Image = penPreview.PenBitmap;
+            pictureBoxPaint.Image = drawingEngine.MainImage;
 
             currentProcess = Process.GetCurrentProcess();
             currentProcess.Refresh();

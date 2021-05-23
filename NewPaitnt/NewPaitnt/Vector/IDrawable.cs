@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace NewPaitnt.Vector
 {
     interface IDrawable
     {
-        void Draw();
-
+        abstract void Draw(ref Graphics graphics);
+        void Move(Point from, Point to);
+        void Selest();
+        void Deselect();
+        void RefreshPen();
     }
 }

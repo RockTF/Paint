@@ -7,27 +7,8 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Vector
 {
-    public class Line : Figure
+    public class Line
     {
 
-        public Line(Point pointStart, Point pointEnd)
-        {
-
-        }
-
-        public void Draw()
-        {
-          
-        }
-
-        public void Refresh(Point pointEnd) 
-        {
-
-        }
-
-        public void Refresh(Point pointStart, Point pointEnd)
-        {
-
-        }
     }
 }

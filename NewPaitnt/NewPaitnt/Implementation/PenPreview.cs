@@ -16,7 +16,7 @@ namespace NewPaitnt.Implementation
             _xCenter = Width / 2 - 1;
             _yCenter = Height / 2 - 1;
             _penGraphics = Graphics.FromImage(PenBitmap);
-            Settings _settings = Settings.Initialize();
+            _settings = Settings.Initialize();
             _penGraphics.SmoothingMode = _settings.SmoothingMode;
             Refresh();
         }

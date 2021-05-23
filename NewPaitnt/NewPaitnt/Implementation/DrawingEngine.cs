@@ -37,8 +37,6 @@ namespace NewPaitnt.Implementation
             smoothCorv
         }
 
-
-
         private DrawingEngine()
         {
             _settings = Settings.Initialize();
@@ -55,7 +53,7 @@ namespace NewPaitnt.Implementation
 
         }
 
-        private static DrawingEngine Initialize()
+        public static DrawingEngine Initialize()
         {
             if (_drawingEngine == null)
             {
@@ -74,25 +72,25 @@ namespace NewPaitnt.Implementation
             switch (_settings.Mode)
             {
                 case Buttons.point:
-                    _figures.Add(new Line(_mouseHandler.Click, _mouseHandler.Move));
+                    _figures.Add(new vectorPoint());
                     break;
                 case Buttons.curve:
-                    DrawCurve();
+                    //DrawCurve();
                     break;
                 case Buttons.rectangle:
-                    DrawRectangle();
+                    //DrawRectangle();
                     break;
                 case Buttons.ellipse:
-                    DrawEllipse();
+                    //DrawEllipse();
                     break;
                 case Buttons.triangle:
-                    DrawTriangle();
+                    //DrawTriangle();
                     break;
                 case Buttons.line:
-                    DrawLine();
+                    //DrawLine();
                     break;
                 case Buttons.smoothCorv:
-                    DrawSmoothCurve();
+                    //DrawSmoothCurve();
                     break;
                 default:
                     break;
@@ -110,7 +108,7 @@ namespace NewPaitnt.Implementation
 
         public void SelectFigure(int figurePosition)
         {
-            if (figurePosition = 0)
+            if (figurePosition == 0)
             {
                 MainGraphics.Clear(Color.White);
 
@@ -129,7 +127,7 @@ namespace NewPaitnt.Implementation
                 MainGraphics.DrawImage(CurrentFigure, 0, 0);
                 MainGraphics.DrawImage(Foreground, 0, 0);
             }
-            else if (figurePosition = _figures.Count - 1)
+            else if (figurePosition == _figures.Count - 1)
             {
                 MainGraphics.Clear(Color.White);
 
@@ -178,7 +176,6 @@ namespace NewPaitnt.Implementation
         {
             _figures[figurePosition].Draw(ref MainGraphics);
         }
-
-        
+               
     }
 }

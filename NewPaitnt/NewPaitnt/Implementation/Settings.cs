@@ -17,7 +17,7 @@ namespace NewPaitnt.Implementation
         {
             ImageWidth = 928;
             ImageHeight = 560;
-            Mode = Buttons.curve;
+            Mode = Buttons.point;
             Pen = new Pen(Color.Black, 1f);
             Pen.StartCap = LineCap.Round;
             Pen.EndCap = LineCap.Round;
@@ -50,6 +50,14 @@ namespace NewPaitnt.Implementation
         {
             _settings.Pen.Width = newWidth;
         }
+        public void SetPenColor(Color color)
+        {
+            _settings.Pen.Color = color;
+        }
+        public void SetPenDashStyle(DashStyle newStyle)
+        {
+            _settings.Pen.DashStyle = newStyle;
+        }
         public void SetBrushColor(Color newColor)
         {
             _settings.Brush = new SolidBrush(newColor);
@@ -57,6 +65,19 @@ namespace NewPaitnt.Implementation
         public void SetSmoothingMode(SmoothingMode newMode)
         {
             _settings.SmoothingMode = newMode;
+        }
+        public void Reset()
+        {
+            ImageWidth = 928;
+            ImageHeight = 560;
+            Mode = Buttons.point;
+            Pen = new Pen(Color.Black, 1f);
+            Pen.StartCap = LineCap.Round;
+            Pen.EndCap = LineCap.Round;
+            Pen.LineJoin = LineJoin.Round;
+            Pen.DashCap = DashCap.Round;
+            Brush = new SolidBrush(Color.Transparent);
+            SmoothingMode = SmoothingMode.None;
         }
     }
 }

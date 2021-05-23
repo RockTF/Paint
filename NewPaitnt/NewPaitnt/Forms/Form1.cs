@@ -40,30 +40,30 @@ namespace NewPaitnt
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            DrawingEngine.ClearCanvas();
-            pictureBoxPaint.Image = DrawingEngine.MainImage;
+            drawingEngine.ClearCanvas();
+            pictureBoxPaint.Image = drawingEngine.MainImage;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            DrawingEngine.Undo();
+            //drawingEngine.Undo();
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            Settings.Pen.Width = trackBar1.Value;
-            PenPreview.Refresh();
-            pictureBoxPen.Image = PenPreview.PenBitmap;
+            settings.SetPenWidth(trackBar1.Value);
+            penPreview.Refresh();
+            pictureBoxPen.Image = penPreview.PenBitmap;
         }
 
         private void btnColor_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
-                Settings.Pen.Color = colorDialog1.Color;
+                settings.SetPenColor(colorDialog1.Color);
                 btnColor.BackColor = colorDialog1.Color;
-                PenPreview.Refresh();
-                pictureBoxPen.Image = PenPreview.PenBitmap;
+                penPreview.Refresh();
+                pictureBoxPen.Image = penPreview.PenBitmap;
             }
         }
 
@@ -72,27 +72,27 @@ namespace NewPaitnt
             if (IsBtnFillClicked)
             {
 
-                Settings.Brush = new SolidBrush(((Button)sender).BackColor);
+                settings.SetBrushColor(((Button)sender).BackColor);
                 btnColor.BackColor = ((Button)sender).BackColor;
                 IsBtnFillClicked = false;
             }
             else
             {
-                Settings.Pen.Color = ((Button)sender).BackColor;
-                PenPreview.Refresh();
-                pictureBoxPen.Image = PenPreview.PenBitmap;
+                settings.SetPenColor(((Button)sender).BackColor);
+                penPreview.Refresh();
+                pictureBoxPen.Image = penPreview.PenBitmap;
             }
 
         }
 
         private void btnRectangle_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.rectangle;
+            settings.SetMode(DrawingEngine.Buttons.point); // возможно ENUM нужно вынести отдельно, так как нельзя вызвать его у обьекта
         }
 
         private void btnEllipse_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.ellipse;
+            settings.SetMode(DrawingEngine.Buttons.ellipse);
         }
 
         private void btnFill_Click(object sender, EventArgs e)
@@ -102,24 +102,24 @@ namespace NewPaitnt
 
         private void btnPoint_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.point;
+            settings.SetMode(DrawingEngine.Buttons.point);
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
         {
-            DrawingEngine.Undo();
-            pictureBoxPaint.Image = DrawingEngine.MainImage;
+            //DrawingEngine.Undo();
+            //pictureBoxPaint.Image = DrawingEngine.MainImage;
         }
 
         private void btnRedo_Click(object sender, EventArgs e)
         {
-            DrawingEngine.Redo();
-            pictureBoxPaint.Image = DrawingEngine.MainImage;
+            //DrawingEngine.Redo();
+            //pictureBoxPaint.Image = DrawingEngine.MainImage;
         }
 
         private void btnCurve_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.curve;
+            settings.SetMode(DrawingEngine.Buttons.curve);
         }
 
         private void comboBoxContour_SelectedIndexChanged(object sender, EventArgs e)
@@ -127,13 +127,13 @@ namespace NewPaitnt
             switch (comboBoxContour.SelectedIndex)
             {
                 case 0:
-                    Settings.Pen.DashStyle = DashStyle.Solid;
+                    settings.SetPenDashStyle(DashStyle.Solid);
                     break;
                 case 1:
-                    Settings.Pen.DashStyle = DashStyle.Dash;
+                    settings.SetPenDashStyle(DashStyle.Dash);
                     break;
                 case 2:
-                    Settings.Pen.DashStyle = DashStyle.DashDot;
+                    settings.SetPenDashStyle(DashStyle.DashDot);
                     break;
                 default:
                     break;
@@ -144,29 +144,29 @@ namespace NewPaitnt
         {
             if (checkBoxAntiAliasing.Checked)
             {
-                Settings.SmoothingMode = SmoothingMode.AntiAlias;
+                settings.SetSmoothingMode(SmoothingMode.AntiAlias);
             }
             else
             {
-                Settings.SmoothingMode = SmoothingMode.None;
+                settings.SetSmoothingMode(SmoothingMode.None);
             }
-            PenPreview.Refresh();
-            pictureBoxPen.Image = PenPreview.PenBitmap;
+            penPreview.Refresh();
+            pictureBoxPen.Image = penPreview.PenBitmap;
         }
 
         private void btnTriangle_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.triangle;
+            settings.SetMode(DrawingEngine.Buttons.triangle);
         }
 
         private void btnLine_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.line;
+            settings.SetMode(DrawingEngine.Buttons.line);
         }
 
         private void SmoothCorve(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.smoothCorv;
+            settings.SetMode(DrawingEngine.Buttons.smoothCorv);
         }
     }
 }

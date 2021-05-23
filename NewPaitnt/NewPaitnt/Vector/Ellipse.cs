@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Vector
 {
-    class Ellipse : Figure
+    class Ellipse
     {
 
     }

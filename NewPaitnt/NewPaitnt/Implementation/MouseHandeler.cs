@@ -10,6 +10,7 @@ namespace NewPaitnt.Implementation
         public Point PreviousMove { get; private set; }
         public Point Move { get; private set; }
         public Point RightClick { get; private set; }
+        private DrawingEngine _drawingEngine;
 
         private MouseHandeler()
         {
@@ -17,6 +18,7 @@ namespace NewPaitnt.Implementation
             PreviousMove = new Point(0, 0);
             Move = new Point(0, 0);
             RightClick = new Point(0, 0);
+            //_drawingEngine = DrawingEngine.Initialize();
         }
         public static MouseHandeler Initialize()
         {
@@ -38,6 +40,8 @@ namespace NewPaitnt.Implementation
             {
                 RightClick = e.Location;
             }
+            //_drawingEngine.CreateFigure();
+            //_drawingEngine.DrawAllFigures();
         }
         public void MouseMove(object sender, MouseEventArgs e)
         {

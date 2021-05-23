@@ -44,15 +44,7 @@ namespace NewPaitnt
             this.btnSmoothCorve = new System.Windows.Forms.Button();
             this.btnPoint = new System.Windows.Forms.Button();
             this.btnLine = new System.Windows.Forms.Button();
-            this.labelImageSize = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.labelHeight = new System.Windows.Forms.Label();
-            this.labelWidth = new System.Windows.Forms.Label();
-            this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
-            this.pictureBoxColorFill = new System.Windows.Forms.PictureBox();
-            this.pictureBoxColorContour = new System.Windows.Forms.PictureBox();
-            this.labelColor1 = new System.Windows.Forms.Label();
+            this.pictureBoxColorFillFigure = new System.Windows.Forms.PictureBox();
             this.labelColor2 = new System.Windows.Forms.Label();
             this.labelColors = new System.Windows.Forms.Label();
             this.pictureBoxColors = new System.Windows.Forms.PictureBox();
@@ -91,16 +83,12 @@ namespace NewPaitnt
             this.toolStripMenuCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuClear = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPaint)).BeginInit();
             this.panelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPolygon)).BeginInit();
             this.panelMenuFigures.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorFill)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorContour)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorFillFigure)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColors)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -128,15 +116,9 @@ namespace NewPaitnt
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.SystemColors.Control;
-            this.panelMenu.Controls.Add(this.labelPolygon);
-            this.panelMenu.Controls.Add(this.numericUpDownPolygon);
             this.panelMenu.Controls.Add(this.labelFigures);
             this.panelMenu.Controls.Add(this.panelMenuFigures);
-            this.panelMenu.Controls.Add(this.labelImageSize);
-            this.panelMenu.Controls.Add(this.panel1);
-            this.panelMenu.Controls.Add(this.pictureBoxColorFill);
-            this.panelMenu.Controls.Add(this.pictureBoxColorContour);
-            this.panelMenu.Controls.Add(this.labelColor1);
+            this.panelMenu.Controls.Add(this.pictureBoxColorFillFigure);
             this.panelMenu.Controls.Add(this.labelColor2);
             this.panelMenu.Controls.Add(this.labelColors);
             this.panelMenu.Controls.Add(this.pictureBoxColors);
@@ -176,15 +158,16 @@ namespace NewPaitnt
             // 
             this.labelPolygon.AutoSize = true;
             this.labelPolygon.BackColor = System.Drawing.Color.Transparent;
-            this.labelPolygon.Location = new System.Drawing.Point(604, 34);
+            this.labelPolygon.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelPolygon.Location = new System.Drawing.Point(4, 58);
             this.labelPolygon.Name = "labelPolygon";
-            this.labelPolygon.Size = new System.Drawing.Size(51, 15);
+            this.labelPolygon.Size = new System.Drawing.Size(49, 13);
             this.labelPolygon.TabIndex = 58;
             this.labelPolygon.Text = "Polygon";
             // 
             // numericUpDownPolygon
             // 
-            this.numericUpDownPolygon.Location = new System.Drawing.Point(658, 32);
+            this.numericUpDownPolygon.Location = new System.Drawing.Point(58, 56);
             this.numericUpDownPolygon.Name = "numericUpDownPolygon";
             this.numericUpDownPolygon.Size = new System.Drawing.Size(40, 23);
             this.numericUpDownPolygon.TabIndex = 57;
@@ -193,7 +176,7 @@ namespace NewPaitnt
             // 
             this.labelFigures.AutoSize = true;
             this.labelFigures.BackColor = System.Drawing.Color.Transparent;
-            this.labelFigures.Location = new System.Drawing.Point(531, 8);
+            this.labelFigures.Location = new System.Drawing.Point(427, 9);
             this.labelFigures.Name = "labelFigures";
             this.labelFigures.Size = new System.Drawing.Size(45, 15);
             this.labelFigures.TabIndex = 56;
@@ -202,6 +185,8 @@ namespace NewPaitnt
             // panelMenuFigures
             // 
             this.panelMenuFigures.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenuFigures.Controls.Add(this.labelPolygon);
+            this.panelMenuFigures.Controls.Add(this.numericUpDownPolygon);
             this.panelMenuFigures.Controls.Add(this.btnSguare);
             this.panelMenuFigures.Controls.Add(this.btnRectangle);
             this.panelMenuFigures.Controls.Add(this.btnHexagon);
@@ -210,9 +195,9 @@ namespace NewPaitnt
             this.panelMenuFigures.Controls.Add(this.btnSmoothCorve);
             this.panelMenuFigures.Controls.Add(this.btnPoint);
             this.panelMenuFigures.Controls.Add(this.btnLine);
-            this.panelMenuFigures.Location = new System.Drawing.Point(520, 14);
+            this.panelMenuFigures.Location = new System.Drawing.Point(416, 15);
             this.panelMenuFigures.Name = "panelMenuFigures";
-            this.panelMenuFigures.Size = new System.Drawing.Size(81, 79);
+            this.panelMenuFigures.Size = new System.Drawing.Size(101, 79);
             this.panelMenuFigures.TabIndex = 55;
             // 
             // btnSguare
@@ -243,7 +228,7 @@ namespace NewPaitnt
             this.btnHexagon.FlatAppearance.BorderSize = 0;
             this.btnHexagon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHexagon.Image = ((System.Drawing.Image)(resources.GetObject("btnHexagon.Image")));
-            this.btnHexagon.Location = new System.Drawing.Point(4, 32);
+            this.btnHexagon.Location = new System.Drawing.Point(75, 11);
             this.btnHexagon.Name = "btnHexagon";
             this.btnHexagon.Size = new System.Drawing.Size(20, 20);
             this.btnHexagon.TabIndex = 48;
@@ -266,7 +251,7 @@ namespace NewPaitnt
             this.btnTriangle.FlatAppearance.BorderSize = 0;
             this.btnTriangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTriangle.Image = ((System.Drawing.Image)(resources.GetObject("btnTriangle.Image")));
-            this.btnTriangle.Location = new System.Drawing.Point(28, 32);
+            this.btnTriangle.Location = new System.Drawing.Point(5, 32);
             this.btnTriangle.Name = "btnTriangle";
             this.btnTriangle.Size = new System.Drawing.Size(20, 20);
             this.btnTriangle.TabIndex = 9;
@@ -278,7 +263,7 @@ namespace NewPaitnt
             this.btnSmoothCorve.FlatAppearance.BorderSize = 0;
             this.btnSmoothCorve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSmoothCorve.Image = ((System.Drawing.Image)(resources.GetObject("btnSmoothCorve.Image")));
-            this.btnSmoothCorve.Location = new System.Drawing.Point(4, 52);
+            this.btnSmoothCorve.Location = new System.Drawing.Point(52, 33);
             this.btnSmoothCorve.Name = "btnSmoothCorve";
             this.btnSmoothCorve.Size = new System.Drawing.Size(20, 20);
             this.btnSmoothCorve.TabIndex = 45;
@@ -290,7 +275,7 @@ namespace NewPaitnt
             this.btnPoint.FlatAppearance.BorderSize = 0;
             this.btnPoint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPoint.Image = ((System.Drawing.Image)(resources.GetObject("btnPoint.Image")));
-            this.btnPoint.Location = new System.Drawing.Point(29, 52);
+            this.btnPoint.Location = new System.Drawing.Point(76, 33);
             this.btnPoint.Name = "btnPoint";
             this.btnPoint.Size = new System.Drawing.Size(20, 20);
             this.btnPoint.TabIndex = 15;
@@ -302,96 +287,21 @@ namespace NewPaitnt
             this.btnLine.FlatAppearance.BorderSize = 0;
             this.btnLine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLine.Image = ((System.Drawing.Image)(resources.GetObject("btnLine.Image")));
-            this.btnLine.Location = new System.Drawing.Point(52, 32);
+            this.btnLine.Location = new System.Drawing.Point(29, 32);
             this.btnLine.Name = "btnLine";
             this.btnLine.Size = new System.Drawing.Size(20, 20);
             this.btnLine.TabIndex = 7;
             this.btnLine.UseVisualStyleBackColor = true;
             this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
             // 
-            // labelImageSize
+            // pictureBoxColorFillFigure
             // 
-            this.labelImageSize.AutoSize = true;
-            this.labelImageSize.BackColor = System.Drawing.Color.Transparent;
-            this.labelImageSize.Location = new System.Drawing.Point(28, 7);
-            this.labelImageSize.Name = "labelImageSize";
-            this.labelImageSize.Size = new System.Drawing.Size(62, 15);
-            this.labelImageSize.TabIndex = 54;
-            this.labelImageSize.Text = "Image size";
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.labelHeight);
-            this.panel1.Controls.Add(this.labelWidth);
-            this.panel1.Controls.Add(this.numericUpDownHeight);
-            this.panel1.Controls.Add(this.numericUpDownWidth);
-            this.panel1.Location = new System.Drawing.Point(17, 14);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(123, 79);
-            this.panel1.TabIndex = 53;
-            // 
-            // labelHeight
-            // 
-            this.labelHeight.AutoSize = true;
-            this.labelHeight.BackColor = System.Drawing.Color.Transparent;
-            this.labelHeight.Location = new System.Drawing.Point(9, 45);
-            this.labelHeight.Name = "labelHeight";
-            this.labelHeight.Size = new System.Drawing.Size(43, 15);
-            this.labelHeight.TabIndex = 56;
-            this.labelHeight.Text = "Height";
-            // 
-            // labelWidth
-            // 
-            this.labelWidth.AutoSize = true;
-            this.labelWidth.BackColor = System.Drawing.Color.Transparent;
-            this.labelWidth.Location = new System.Drawing.Point(9, 15);
-            this.labelWidth.Name = "labelWidth";
-            this.labelWidth.Size = new System.Drawing.Size(39, 15);
-            this.labelWidth.TabIndex = 55;
-            this.labelWidth.Text = "Width";
-            // 
-            // numericUpDownHeight
-            // 
-            this.numericUpDownHeight.Location = new System.Drawing.Point(60, 43);
-            this.numericUpDownHeight.Name = "numericUpDownHeight";
-            this.numericUpDownHeight.Size = new System.Drawing.Size(50, 23);
-            this.numericUpDownHeight.TabIndex = 1;
-            // 
-            // numericUpDownWidth
-            // 
-            this.numericUpDownWidth.Location = new System.Drawing.Point(60, 13);
-            this.numericUpDownWidth.Name = "numericUpDownWidth";
-            this.numericUpDownWidth.Size = new System.Drawing.Size(50, 23);
-            this.numericUpDownWidth.TabIndex = 0;
-            // 
-            // pictureBoxColorFill
-            // 
-            this.pictureBoxColorFill.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxColorFill.Location = new System.Drawing.Point(724, 27);
-            this.pictureBoxColorFill.Name = "pictureBoxColorFill";
-            this.pictureBoxColorFill.Size = new System.Drawing.Size(35, 35);
-            this.pictureBoxColorFill.TabIndex = 52;
-            this.pictureBoxColorFill.TabStop = false;
-            // 
-            // pictureBoxColorContour
-            // 
-            this.pictureBoxColorContour.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxColorContour.Location = new System.Drawing.Point(766, 27);
-            this.pictureBoxColorContour.Name = "pictureBoxColorContour";
-            this.pictureBoxColorContour.Size = new System.Drawing.Size(35, 35);
-            this.pictureBoxColorContour.TabIndex = 51;
-            this.pictureBoxColorContour.TabStop = false;
-            // 
-            // labelColor1
-            // 
-            this.labelColor1.AutoSize = true;
-            this.labelColor1.BackColor = System.Drawing.Color.Transparent;
-            this.labelColor1.Location = new System.Drawing.Point(724, 64);
-            this.labelColor1.Name = "labelColor1";
-            this.labelColor1.Size = new System.Drawing.Size(36, 15);
-            this.labelColor1.TabIndex = 50;
-            this.labelColor1.Text = "Color";
+            this.pictureBoxColorFillFigure.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxColorFillFigure.Location = new System.Drawing.Point(766, 27);
+            this.pictureBoxColorFillFigure.Name = "pictureBoxColorFillFigure";
+            this.pictureBoxColorFillFigure.Size = new System.Drawing.Size(35, 35);
+            this.pictureBoxColorFillFigure.TabIndex = 51;
+            this.pictureBoxColorFillFigure.TabStop = false;
             // 
             // labelColor2
             // 
@@ -429,7 +339,7 @@ namespace NewPaitnt
             // 
             this.checkBoxAntiAliasing.AutoSize = true;
             this.checkBoxAntiAliasing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.checkBoxAntiAliasing.Location = new System.Drawing.Point(400, 60);
+            this.checkBoxAntiAliasing.Location = new System.Drawing.Point(301, 62);
             this.checkBoxAntiAliasing.Name = "checkBoxAntiAliasing";
             this.checkBoxAntiAliasing.Size = new System.Drawing.Size(88, 17);
             this.checkBoxAntiAliasing.TabIndex = 44;
@@ -441,7 +351,7 @@ namespace NewPaitnt
             // 
             this.pictureBoxPen.BackColor = System.Drawing.Color.White;
             this.pictureBoxPen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxPen.Location = new System.Drawing.Point(359, 18);
+            this.pictureBoxPen.Location = new System.Drawing.Point(260, 20);
             this.pictureBoxPen.Name = "pictureBoxPen";
             this.pictureBoxPen.Size = new System.Drawing.Size(35, 35);
             this.pictureBoxPen.TabIndex = 43;
@@ -453,7 +363,7 @@ namespace NewPaitnt
             this.btnCurve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCurve.Image = ((System.Drawing.Image)(resources.GetObject("btnCurve.Image")));
             this.btnCurve.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCurve.Location = new System.Drawing.Point(240, 72);
+            this.btnCurve.Location = new System.Drawing.Point(127, 15);
             this.btnCurve.Name = "btnCurve";
             this.btnCurve.Size = new System.Drawing.Size(57, 20);
             this.btnCurve.TabIndex = 14;
@@ -468,7 +378,7 @@ namespace NewPaitnt
             this.btnRedo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnRedo.Image")));
             this.btnRedo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRedo.Location = new System.Drawing.Point(155, 55);
+            this.btnRedo.Location = new System.Drawing.Point(21, 56);
             this.btnRedo.Name = "btnRedo";
             this.btnRedo.Size = new System.Drawing.Size(66, 23);
             this.btnRedo.TabIndex = 42;
@@ -483,7 +393,7 @@ namespace NewPaitnt
             this.btnUndo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnUndo.Image")));
             this.btnUndo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUndo.Location = new System.Drawing.Point(155, 27);
+            this.btnUndo.Location = new System.Drawing.Point(21, 28);
             this.btnUndo.Name = "btnUndo";
             this.btnUndo.Size = new System.Drawing.Size(66, 23);
             this.btnUndo.TabIndex = 40;
@@ -498,7 +408,7 @@ namespace NewPaitnt
             this.btnFill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFill.Image = ((System.Drawing.Image)(resources.GetObject("btnFill.Image")));
             this.btnFill.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFill.Location = new System.Drawing.Point(235, 42);
+            this.btnFill.Location = new System.Drawing.Point(122, 70);
             this.btnFill.Name = "btnFill";
             this.btnFill.Size = new System.Drawing.Size(95, 23);
             this.btnFill.TabIndex = 39;
@@ -686,7 +596,7 @@ namespace NewPaitnt
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(240, 15);
+            this.pictureBox2.Location = new System.Drawing.Point(128, 42);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(20, 20);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -697,7 +607,7 @@ namespace NewPaitnt
             // 
             this.labelSize.AutoSize = true;
             this.labelSize.BackColor = System.Drawing.Color.Transparent;
-            this.labelSize.Location = new System.Drawing.Point(429, 14);
+            this.labelSize.Location = new System.Drawing.Point(330, 16);
             this.labelSize.Name = "labelSize";
             this.labelSize.Size = new System.Drawing.Size(27, 15);
             this.labelSize.TabIndex = 5;
@@ -705,7 +615,7 @@ namespace NewPaitnt
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(389, 26);
+            this.trackBar1.Location = new System.Drawing.Point(290, 28);
             this.trackBar1.Maximum = 32;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(107, 45);
@@ -722,7 +632,7 @@ namespace NewPaitnt
             "―――",
             "-------",
             "− ∙ − ∙"});
-            this.comboBoxContour.Location = new System.Drawing.Point(262, 14);
+            this.comboBoxContour.Location = new System.Drawing.Point(151, 41);
             this.comboBoxContour.Name = "comboBoxContour";
             this.comboBoxContour.Size = new System.Drawing.Size(70, 23);
             this.comboBoxContour.TabIndex = 2;
@@ -766,7 +676,7 @@ namespace NewPaitnt
             this.toolStripMenuCreate,
             this.toolStripMenuOpen,
             this.toolStripMenuSave,
-            this.toolStripMenuDelete});
+            this.toolStripMenuClear});
             this.toolStripMenuFile.Name = "toolStripMenuFile";
             this.toolStripMenuFile.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuFile.Text = "File";
@@ -789,11 +699,11 @@ namespace NewPaitnt
             this.toolStripMenuSave.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuSave.Text = "Save";
             // 
-            // toolStripMenuDelete
+            // toolStripMenuClear
             // 
-            this.toolStripMenuDelete.Name = "toolStripMenuDelete";
-            this.toolStripMenuDelete.Size = new System.Drawing.Size(108, 22);
-            this.toolStripMenuDelete.Text = "Delete";
+            this.toolStripMenuClear.Name = "toolStripMenuClear";
+            this.toolStripMenuClear.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuClear.Text = "Clear";
             // 
             // mainPaint
             // 
@@ -815,12 +725,8 @@ namespace NewPaitnt
             this.panelMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPolygon)).EndInit();
             this.panelMenuFigures.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorFill)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorContour)).EndInit();
+            this.panelMenuFigures.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorFillFigure)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColors)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -878,17 +784,9 @@ namespace NewPaitnt
         private System.Windows.Forms.PictureBox pictureBoxColors;
         private System.Windows.Forms.Label labelColors;
         private System.Windows.Forms.Label labelColor2;
-        private System.Windows.Forms.Label labelColor1;
         private System.Windows.Forms.Button btnHexagon;
         private System.Windows.Forms.Button btnSguare;
-        private System.Windows.Forms.PictureBox pictureBoxColorContour;
-        private System.Windows.Forms.PictureBox pictureBoxColorFill;
-        private System.Windows.Forms.Label labelImageSize;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label labelHeight;
-        private System.Windows.Forms.Label labelWidth;
-        private System.Windows.Forms.NumericUpDown numericUpDownHeight;
-        private System.Windows.Forms.NumericUpDown numericUpDownWidth;
+        private System.Windows.Forms.PictureBox pictureBoxColorFillFigure;
         private System.Windows.Forms.Label labelFigures;
         private System.Windows.Forms.Panel panelMenuFigures;
         private System.Windows.Forms.Label labelPolygon;
@@ -899,7 +797,7 @@ namespace NewPaitnt
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuCreate;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuOpen;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuSave;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuDelete;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuClear;
     }
 }
 

@@ -19,8 +19,11 @@ namespace NewPaitnt
         {
             settings = Settings.Initialize();
             mouseHandeler = MouseHandeler.Initialize();
-            drawingEngine = DrawingEngine.Initialize();
-            penPreview = PenPreview.Initialize(pictureBoxPen.Width, pictureBoxPen.Height);
+            // Прокидываем предыдущие через конструктор явно
+            drawingEngine = DrawingEngine.Initialize(settings, mouseHandeler);
+            // Костыль чтобы не было переполнения стека
+            mouseHandeler.SetDrawingEngine(drawingEngine);
+            penPreview = PenPreview.Initialize(settings, pictureBoxPen.Width, pictureBoxPen.Height);
 
             pictureBoxPen.Image = penPreview.PenBitmap;
             pictureBoxPaint.Image = drawingEngine.MainImage;

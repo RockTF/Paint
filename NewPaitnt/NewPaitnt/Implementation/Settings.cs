@@ -34,6 +34,8 @@ namespace NewPaitnt.Implementation
             }
             return _settings;
         }
+
+        // Все свойства сетим через методы чтобы не поменять случайно
         public void SetImageWidth(int newWidth)
         {
             _settings.ImageWidth = newWidth;
@@ -66,6 +68,8 @@ namespace NewPaitnt.Implementation
         {
             _settings.SmoothingMode = newMode;
         }
+
+        // Сброс на начальные настройки
         public void Reset()
         {
             ImageWidth = 928;

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace NewPaitnt.Implementation
 {
-    class MouseHandeler
+    public class MouseHandeler
     {
         private static MouseHandeler _mouseHandeler;
         public Point Click { get; private set; }
@@ -18,7 +18,6 @@ namespace NewPaitnt.Implementation
             PreviousMove = new Point(0, 0);
             Move = new Point(0, 0);
             RightClick = new Point(0, 0);
-            //_drawingEngine = DrawingEngine.Initialize();
         }
         public static MouseHandeler Initialize()
         {
@@ -40,8 +39,10 @@ namespace NewPaitnt.Implementation
             {
                 RightClick = e.Location;
             }
-            //_drawingEngine.CreateFigure();
-            //_drawingEngine.DrawAllFigures();
+            // Вызываем метод создания новой фигуры
+            _drawingEngine.CreateFigure();
+            // Отрисовываем все фигуры - пока чтобы работало, потом надо будет переделать более корректно
+            _drawingEngine.DrawAllFigures();
         }
         public void MouseMove(object sender, MouseEventArgs e)
         {
@@ -54,6 +55,11 @@ namespace NewPaitnt.Implementation
         public void MouseUp(object sender, MouseEventArgs e)
         {
 
+        }
+
+        public void SetDrawingEngine(DrawingEngine drawingEngine)
+        {
+            _drawingEngine = drawingEngine;
         }
     }
 }

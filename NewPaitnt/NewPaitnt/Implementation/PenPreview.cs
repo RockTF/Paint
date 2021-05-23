@@ -10,22 +10,22 @@ namespace NewPaitnt.Implementation
         public Bitmap PenBitmap { get; private set; }
         private Graphics _penGraphics;
         private Settings _settings;
-        private PenPreview(int Width, int Height)
+        private PenPreview(Settings settings, int Width, int Height)
         {
+            _settings = settings;
             PenBitmap = new Bitmap(Width, Height);
             _xCenter = Width / 2 - 1;
             _yCenter = Height / 2 - 1;
             _penGraphics = Graphics.FromImage(PenBitmap);
-            _settings = Settings.Initialize();
             _penGraphics.SmoothingMode = _settings.SmoothingMode;
             Refresh();
         }
-        public static PenPreview Initialize(int Width, int Height)
+        public static PenPreview Initialize(Settings settings, int Width, int Height)
         {
             
             if (_penPreview == null)
             {
-                _penPreview = new PenPreview(Width, Height);
+                _penPreview = new PenPreview(settings, Width, Height);
             }
             return _penPreview;
         }

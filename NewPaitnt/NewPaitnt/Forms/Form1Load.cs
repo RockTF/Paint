@@ -23,7 +23,7 @@ namespace NewPaitnt
             currentProcess.Refresh();
             memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
 
-            IsBtnFillClicked = false;
+            //IsBtnFillClicked = false;
 
             //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             //SetStyle(ControlStyles.AllPaintingInWmPaint, true);

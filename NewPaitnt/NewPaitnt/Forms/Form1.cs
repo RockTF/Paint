@@ -17,7 +17,7 @@ namespace NewPaitnt
     public partial class mainPaint : Form
     {
         Process currentProcess;
-        bool IsBtnFillClicked;
+        //bool IsBtnFillClicked;
         public mainPaint()
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace NewPaitnt
         }
 
 
-        private void btnSave_Click(object sender, EventArgs e)
+        /*private void btnSave_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "JPG(*.JPG)|*.jpg";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -36,13 +36,13 @@ namespace NewPaitnt
                     pictureBoxPaint.Image.Save(saveFileDialog1.FileName);
                 }
             }
-        }
+        }*/
 
-        private void btnClear_Click(object sender, EventArgs e)
+        /*private void btnClear_Click(object sender, EventArgs e)
         {
             DrawingEngine.ClearCanvas();
             pictureBoxPaint.Image = DrawingEngine.MainImage;
-        }
+        }*/
 
         private void btnBack_Click(object sender, EventArgs e)
         {
@@ -97,7 +97,7 @@ namespace NewPaitnt
 
         private void btnFill_Click(object sender, EventArgs e)
         {
-            IsBtnFillClicked = true;
+            //IsBtnFillClicked = true;
         }
 
         private void btnPoint_Click(object sender, EventArgs e)

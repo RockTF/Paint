@@ -17,7 +17,7 @@ namespace NewPaitnt
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new mainPaint());
+            Application.Run(new MainPaint());
         }
     }
 }

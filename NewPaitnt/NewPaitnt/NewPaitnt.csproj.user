@@ -4,13 +4,7 @@
     <Compile Update="Forms\CreateNewCanvas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\PaintPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\PaintPanelLoad.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\PaintPanelMouse.cs">
+    <Compile Update="Forms\PaintUnicorn.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

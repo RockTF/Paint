@@ -18,6 +18,10 @@ namespace NewPaitnt
     {
         Process currentProcess;
         bool IsBtnFillClicked;
+        public EFigure Mode;
+        public SmoothingMode SmoothingMode;
+        public Pen Pen;
+
         public MainPaint()
         {
             InitializeComponent();
@@ -101,7 +105,7 @@ namespace NewPaitnt
 
         private void TrackBarThickness_Scroll(object sender, EventArgs e)
         {
-            Settings.Pen.Width = TrackBarThickness.Value;
+            //Settings.Pen.Width = TrackBarThickness.Value;
             PenPreview.Refresh();
             PictureBoxThickness.Image = PenPreview.PenBitmap;
         }
@@ -138,12 +142,12 @@ namespace NewPaitnt
 
         private void BtnRectangle_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.rectangle;
+            Mode = EFigure.Curve; 
         }
 
         private void BtnEllipse_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.ellipse;
+           Mode = EFigure.Ellipse;
         }
 
         private void BtnFill_Click(object sender, EventArgs e)
@@ -153,50 +157,50 @@ namespace NewPaitnt
 
         private void BtnPoint_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.point;
+            Mode = EFigure.Dot;
         }
 
         private void BtnUndo_Click(object sender, EventArgs e)
         {
-            DrawingEngine.Undo();
-            PictureBoxPaint.Image = DrawingEngine.MainImage;
+            //DrawingEngine.Undo();
+            //PictureBoxPaint.Image = DrawingEngine.MainImage;
         }
 
         private void BtnRedo_Click(object sender, EventArgs e)
         {
-            DrawingEngine.Redo();
-            PictureBoxPaint.Image = DrawingEngine.MainImage;
+            //DrawingEngine.Redo();
+            //PictureBoxPaint.Image = DrawingEngine.MainImage;
         }
 
         private void BtnCurve_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.curve;
+            Mode = EFigure.Curve;
         }
 
         private void BtnTriangle_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.triangle;
+            Mode = EFigure.Triangle;
         }
 
         private void BtnLine_Click(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.line;
+            Mode = EFigure.Line;
         }
 
         private void SmoothCorve(object sender, EventArgs e)
         {
-            Settings.Mode = DrawingEngine.Buttons.smoothCorv;
+            Mode = EFigure.SmoothCorv;
         }
 
         private void CheckBoxAntiAliasing_CheckedChanged(object sender, EventArgs e)
         {
             if (CheckBoxAntiAliasing.Checked)
             {
-                Settings.SmoothingMode = SmoothingMode.AntiAlias;
+               SmoothingMode = SmoothingMode.AntiAlias;
             }
             else
             {
-                Settings.SmoothingMode = SmoothingMode.None;
+               SmoothingMode = SmoothingMode.None;
             }
             PenPreview.Refresh();
             PictureBoxThickness.Image = PenPreview.PenBitmap;
@@ -207,13 +211,13 @@ namespace NewPaitnt
             switch (ComboBoxContour.SelectedIndex)
             {
                 case 0:
-                    Settings.Pen.DashStyle = DashStyle.Solid;
+                    Pen.DashStyle = DashStyle.Solid;
                     break;
                 case 1:
-                    Settings.Pen.DashStyle = DashStyle.Dash;
+                    Pen.DashStyle = DashStyle.Dash;
                     break;
                 case 2:
-                    Settings.Pen.DashStyle = DashStyle.DashDot;
+                    Pen.DashStyle = DashStyle.DashDot;
                     break;
                 default:
                     break;

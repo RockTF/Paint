@@ -15,20 +15,20 @@ namespace NewPaitnt.Implementation
         public static Graphics PenGraphics { get; set; }
         public static void Initialize(int Width, int Height)
         {
-            PenBitmap = new Bitmap(Width, Height);
+            /*PenBitmap = new Bitmap(Width, Height);
             Xcenter = Width / 2 - 1;
             Ycenter = Height / 2 - 1;
             PenGraphics = Graphics.FromImage(PenBitmap);
-            PenGraphics.SmoothingMode = Settings.SmoothingMode;
-            Refresh();
+            PenGraphics.SmoothingMode = SmoothingMode;
+            Refresh();*/
         }
         public static void Refresh()
         {
-            PenGraphics.Clear(Color.White);
-            Pen pointPen = (Pen)Settings.Pen.Clone();
+            /*PenGraphics.Clear(Color.White);
+            Pen pointPen = (PenSettings.Pen.Clone();
             pointPen.DashPattern = new float[] { 1f, 1f };
-            PenGraphics.SmoothingMode = Settings.SmoothingMode;
-            PenGraphics.DrawLine(pointPen, Xcenter, Ycenter, Xcenter + 1, Ycenter + 1);
+            PenGraphics.SmoothingMode =NSmoothingMode;
+            PenGraphics.DrawLine(pointPen, Xcenter, Ycenter, Xcenter + 1, Ycenter + 1);*/
         }
 
 

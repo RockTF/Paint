@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Vector
 {
-    public interface IFigure
-    {
-        List<Point> points { get; set; }
-        Pen pen { get; set; }
-        Brush brush { get; set; }
+   public interface IDrawable
+   {
+        Graphics FigureGraphics { get; set; }
 
+        void Draw();
         void Refresh();
         void Move();
-        void Sckale();
-        void Rotate();
-    }
+        void Resize();
+
+   }
 }

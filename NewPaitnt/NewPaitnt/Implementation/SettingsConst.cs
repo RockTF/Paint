@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewPaitnt.Vector
+namespace NewPaitnt.Implementation
 {
-    interface IDrawable
+    class SettingsConst
     {
-        void Draw();
-
     }
 }

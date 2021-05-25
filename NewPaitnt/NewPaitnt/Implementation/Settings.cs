@@ -10,21 +10,21 @@ using static NewPaitnt.Implementation.DrawingEngine;
 
 namespace NewPaitnt.Implementation
 {
-    public static class Settings
+    public class Settings
     {
-        public static int ImageWidth { get; set; }
-        public static int ImageHeight { get; set; }
-        public static Buttons Mode { get; set; }
-        public static Pen Pen { get; set; }
-        public static Brush Brush { get; set; }
-        public static bool IsImageBorderClosed { get; set; }
-        public static SmoothingMode SmoothingMode { get; set; }
+        public int ImageWidth { get; set; }
+        public int ImageHeight { get; set; }
+        public EFigure Mode { get; set; }
+        public Pen Pen { get; set; }
+        public Brush Brush { get; set; }
+        public  bool IsImageBorderClosed { get; set; }
+        public SmoothingMode SmoothingMode { get; set; }
 
-        public static void Init1ialize()
+        public void Init1ialize()
         {
             ImageWidth = 928;
             ImageHeight = 560;
-            Mode = Buttons.curve;  // "point", "curve", "line", "rectangle", "ellipse", "traingle"
+            Mode = EFigure.Curve;  // "point", "curve", "line", "rectangle", "ellipse", "traingle"
             Pen = new Pen(Color.Black, 1f);
             Pen.StartCap = LineCap.Round;
             Pen.EndCap = LineCap.Round;
@@ -37,11 +37,11 @@ namespace NewPaitnt.Implementation
             SmoothingMode = SmoothingMode.None;
         }
         // Предстоит реализовать сброс настроек
-        public static void Reset()
+        public void Reset()
         {
             ImageWidth = 640;
             ImageHeight = 360;
-            Settings.Mode = DrawingEngine.Buttons.curve; 
+            Mode = EFigure.Curve; 
             Pen.Color = Color.Black;
             Pen.Width = 1f;
             Pen.StartCap = LineCap.Round;

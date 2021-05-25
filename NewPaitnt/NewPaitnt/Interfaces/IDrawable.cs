@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
 
-namespace NewPaitnt.Vector
+namespace NewPaitnt.Interfaces
 {
    public interface IDrawable
    {
-        Graphics FigureGraphics { get; set; }
+        string FigureName { get; }
+        List<Point> Points { get; }
+        Pen Pen { get; }
+        Brush Brush { get; }
+        SmoothingMode SmoothingMode { get; }
 
-        void Draw();
-        void Refresh();
-        void Move();
-        void Resize();
-
-   }
+        abstract void Draw(ref Graphics graphics);
+        void Move(Point from, Point to);
+        void ChangePen(Pen pen);
+    }
 }

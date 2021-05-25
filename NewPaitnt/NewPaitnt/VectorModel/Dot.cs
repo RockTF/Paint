@@ -1,43 +1,60 @@
-﻿using System;
+﻿using NewPaitnt.Interfaces;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
 
-namespace NewPaitnt.Vector
+namespace NewPaitnt.VectorModel
 {
-    public class Dot : Figure, IDrawable
+    public class Dot : IDrawable
     {
-        public override List<Point> Points { get; set; }
-        public override Pen Pen { get; set; }
-        public override Brush Brush { get; set; }
-        public Graphics FigureGraphics { get; set; }
+        public string FigureName { get; private set; }
+        public List<Point> Points { get; set; }
+        public Pen Pen { get; set; }
+        public Brush Brush { get; set; }
+        public SmoothingMode SmoothingMode { get; private set; }
 
-        public void CalculateDot()
-        {
-            Points.Add(new Point(Xclick, Yclick));
-            Points.Add(new Point(Xclick + 1, Yclick + 1));
-        } 
+        private static int _count = 0;
 
-        public void Draw()
+        public Dot(Point click, Pen pen, SmoothingMode smoothingMode)
         {
-            FigureGraphics.DrawLine(Pen, Points[0], Points[1]);
+            // Создаем список на две точки
+            Points = new List<Point>(2);
+            // Добавляем в него точку клика и рядом стоящую точку
+            Points.Add(click);
+            Points.Add(new Point(click.X + 1, click.Y + 1));
+            // Модифицируем перо для отрисовки точки вместо линии
+            Pen = (Pen)pen.Clone();
+            Pen.DashPattern = new float[] { 1f, 1f };
+            Brush = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
+
+            FigureName = "Dot" + _count++.ToString();
+
+            SmoothingMode = smoothingMode;
+        }
+        public void Draw(ref Graphics graphics)
+        {
+            // Устанавливаем графике режим сглаживания
+            graphics.SmoothingMode = SmoothingMode;
+            // Вызываем рисование линии, а по скольку перо модифицировано, выглядеть будет как точка
+            graphics.DrawLine(Pen, Points[0], Points[1]);
         }
 
-        public void Move()
+        // Переопределяет видимые точки на основе смещения
+        public void Move(Point from, Point to)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Points.Count; i++)
+            {
+                int tempX = Points[i].X + (to.X - from.X);
+                int tempY = Points[i].Y + (to.Y - from.Y);
+                Points[i] = new Point(tempX, tempY);
+            }
         }
 
-        public void Refresh()
+        // Меняет точке перо в соответствии с текущими настройками
+        public void ChangePen(Pen pen)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Resize()
-        {
-            throw new NotImplementedException();
+            Pen = (Pen)pen.Clone();
+            Pen.DashPattern = new float[] { 1f, 1f };
         }
     }
 }

@@ -1,15 +1,8 @@
 ﻿using NewPaitnt.Implementation;
-using NewPaitnt.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NewPaitnt
@@ -18,9 +11,7 @@ namespace NewPaitnt
     {
         Process currentProcess;
         bool IsBtnFillClicked;
-        public EFigure Mode;
-        public SmoothingMode SmoothingMode;
-        public Pen Pen;
+        DrawingEngine drawingEngine;
 
         public MainPaint()
         {
@@ -31,22 +22,16 @@ namespace NewPaitnt
 
         private void MainPaint_Load(object sender, EventArgs e)
         {
-            //settings = Settings.Initialize();
-            //mouseHandeler = MouseHandeler.Initialize();
-            //// Прокидываем предыдущие через конструктор явно
-            //drawingEngine = DrawingEngine.Initialize(settings, mouseHandeler);
-            //// Костыль чтобы не было переполнения стека
-            //mouseHandeler.SetDrawingEngine(drawingEngine);
-            //penPreview = PenPreview.Initialize(settings, pictureBoxPen.Width, pictureBoxPen.Height);
+            drawingEngine = DrawingEngine.Initialize(PictureBoxThickness.Width, PictureBoxThickness.Height);
 
-            //pictureBoxPen.Image = penPreview.PenBitmap;
-            //pictureBoxPaint.Image = drawingEngine.MainImage;
+            PictureBoxThickness.Image = drawingEngine.GetPenImage();
+            PictureBoxPaint.Image = drawingEngine.MainImage;
 
-            //currentProcess = Process.GetCurrentProcess();
-            //currentProcess.Refresh();
-            //memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
+            currentProcess = Process.GetCurrentProcess();
+            currentProcess.Refresh();
+            memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
 
-            //IsBtnFillClicked = false;
+            IsBtnFillClicked = false;
 
 
             // Антон ещё меняет
@@ -64,14 +49,18 @@ namespace NewPaitnt
 
         private void PictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
         {
-            //mouseHandeler.MouseDown(sender, e);
-            //pictureBoxPaint.Image = drawingEngine.MainImage;
+            if (e.Button == MouseButtons.Left)
+            {
+                drawingEngine.NewClick(e.Location);
+                drawingEngine.CreateFigure();
+                drawingEngine.DrawAllFigures();
+                PictureBoxPaint.Image = drawingEngine.MainImage;
+            }
         }
 
         private void PictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
-            //mouseHandeler.MouseMove(sender, e);
-            //pictureBoxPaint.Image = drawingEngine.MainImage;
+            //PictureBoxPaint.Image = drawingEngine.MainImage;
         }
 
         private void PictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
@@ -105,9 +94,8 @@ namespace NewPaitnt
 
         private void TrackBarThickness_Scroll(object sender, EventArgs e)
         {
-            //Settings.Pen.Width = TrackBarThickness.Value;
-            PenPreview.Refresh();
-            PictureBoxThickness.Image = PenPreview.PenBitmap;
+            drawingEngine.SetPenWidth(TrackBarThickness.Value);
+            PictureBoxThickness.Image = drawingEngine.GetPenImage();
         }
 
         // кнопки цвет больше нет, метод надо менять 
@@ -142,12 +130,12 @@ namespace NewPaitnt
 
         private void BtnRectangle_Click(object sender, EventArgs e)
         {
-            Mode = EFigure.Curve; 
+            drawingEngine.SetMode(EFigure.Rectangle);
         }
 
         private void BtnEllipse_Click(object sender, EventArgs e)
         {
-           Mode = EFigure.Ellipse;
+           //Mode = EFigure.Ellipse;
         }
 
         private void BtnFill_Click(object sender, EventArgs e)
@@ -157,7 +145,7 @@ namespace NewPaitnt
 
         private void BtnPoint_Click(object sender, EventArgs e)
         {
-            Mode = EFigure.Dot;
+            //Mode = EFigure.Dot;
         }
 
         private void BtnUndo_Click(object sender, EventArgs e)
@@ -174,54 +162,53 @@ namespace NewPaitnt
 
         private void BtnCurve_Click(object sender, EventArgs e)
         {
-            Mode = EFigure.Curve;
+            //Mode = EFigure.Curve;
         }
 
         private void BtnTriangle_Click(object sender, EventArgs e)
         {
-            Mode = EFigure.Triangle;
+            //Mode = EFigure.Triangle;
         }
 
         private void BtnLine_Click(object sender, EventArgs e)
         {
-            Mode = EFigure.Line;
+            //Mode = EFigure.Line;
         }
 
         private void SmoothCorve(object sender, EventArgs e)
         {
-            Mode = EFigure.SmoothCorv;
+            //Mode = EFigure.SmoothCorv;
         }
 
         private void CheckBoxAntiAliasing_CheckedChanged(object sender, EventArgs e)
         {
             if (CheckBoxAntiAliasing.Checked)
             {
-               SmoothingMode = SmoothingMode.AntiAlias;
+               drawingEngine.SetSmoothingMode(SmoothingMode.AntiAlias);
             }
             else
             {
-               SmoothingMode = SmoothingMode.None;
+                drawingEngine.SetSmoothingMode(SmoothingMode.None);
             }
-            PenPreview.Refresh();
-            PictureBoxThickness.Image = PenPreview.PenBitmap;
+            PictureBoxThickness.Image = drawingEngine.GetPenImage();
         }
 
         private void ComboBoxContour_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (ComboBoxContour.SelectedIndex)
-            {
-                case 0:
-                    Pen.DashStyle = DashStyle.Solid;
-                    break;
-                case 1:
-                    Pen.DashStyle = DashStyle.Dash;
-                    break;
-                case 2:
-                    Pen.DashStyle = DashStyle.DashDot;
-                    break;
-                default:
-                    break;
-            }
+            //switch (ComboBoxContour.SelectedIndex)
+            //{
+            //    case 0:
+            //        Pen.DashStyle = DashStyle.Solid;
+            //        break;
+            //    case 1:
+            //        Pen.DashStyle = DashStyle.Dash;
+            //        break;
+            //    case 2:
+            //        Pen.DashStyle = DashStyle.DashDot;
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         private void PictureBoxPaint_Click(object sender, EventArgs e)

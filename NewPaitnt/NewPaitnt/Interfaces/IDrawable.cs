@@ -13,6 +13,8 @@ namespace NewPaitnt.Interfaces
         SmoothingMode SmoothingMode { get; }
 
         abstract void Draw(ref Graphics graphics);
+        abstract void Draw(ref Graphics graphics,Point end);
+
         void Move(Point from, Point to);
         void ChangePen(Pen pen);
     }

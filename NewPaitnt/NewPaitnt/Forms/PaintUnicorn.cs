@@ -12,6 +12,7 @@ namespace NewPaitnt
         Process currentProcess;
         bool IsBtnFillClicked;
         DrawingEngine drawingEngine;
+        private bool _isFigureCreated;
 
         public MainPaint()
         {
@@ -33,26 +34,30 @@ namespace NewPaitnt
 
             IsBtnFillClicked = false;
 
+            _isFigureCreated =false;
+        // Антон ещё меняет
+        //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+        //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+        //DoubleBuffered = true;
 
-            // Антон ещё меняет
-            //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            //DoubleBuffered = true;
-
-            //// Set the value of the double-buffering style bits to true.
-            //this.SetStyle(ControlStyles.DoubleBuffer |
-            //   ControlStyles.UserPaint |
-            //   ControlStyles.AllPaintingInWmPaint,
-            //   true);
-            //this.UpdateStyles();
-        }
+        //// Set the value of the double-buffering style bits to true.
+        //this.SetStyle(ControlStyles.DoubleBuffer |
+        //   ControlStyles.UserPaint |
+        //   ControlStyles.AllPaintingInWmPaint,
+        //   true);
+        //this.UpdateStyles();
+    }
 
         private void PictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 drawingEngine.NewClick(e.Location);
-                drawingEngine.CreateFigure();
+                if(drawingEngine.GetMode() == EFigure.Dot)
+                {
+                    drawingEngine.CreateFigure();
+                    _isFigureCreated = true;
+                }                
                 drawingEngine.DrawAllFigures();
                 PictureBoxPaint.Image = drawingEngine.MainImage;
             }
@@ -60,11 +65,31 @@ namespace NewPaitnt
 
         private void PictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
-            //PictureBoxPaint.Image = drawingEngine.MainImage;
+            if (e.Button == MouseButtons.Left)
+            {
+                drawingEngine.NewMove(e.Location);
+                if (drawingEngine.GetMode() != EFigure.Dot)
+                {
+                    drawingEngine.CreateFigure();
+                    _isFigureCreated = true;
+                }
+                if (_isFigureCreated == true)
+                {
+                    drawingEngine.RedrawFigure();
+                }
+                else
+                {
+                    drawingEngine.DrawAllFigures();
+                }
+                PictureBoxPaint.Image = drawingEngine.MainImage;
+            }
+            
+
         }
 
         private void PictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
+            _isFigureCreated = false;
             //currentProcess.Refresh();
             //memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
             //mouseHandeler.MouseUp(sender, e);
@@ -110,20 +135,20 @@ namespace NewPaitnt
         //    }
         //}
 
-        //private void BtnColor_Click_1(object sender, EventArgs e)
+        //private void btncolor_click_1(object sender, eventargs e)
         //{
-        //    if (IsBtnFillClicked)
+        //    if (isbtnfillclicked)
         //    {
 
-        //        Settings.Brush = new SolidBrush(((Button)sender).BackColor);
-        //        btnColor.BackColor = ((Button)sender).BackColor;
-        //        IsBtnFillClicked = false;
+        //        settings.brush = new solidbrush(((button)sender).backcolor);
+        //        btncolor.backcolor = ((button)sender).backcolor;
+        //        isbtnfillclicked = false;
         //    }
         //    else
         //    {
-        //        Settings.Pen.Color = ((Button)sender).BackColor;
-        //        PenPreview.Refresh();
-        //        pictureBoxPen.Image = PenPreview.PenBitmap;
+        //        settings.pen.color = ((button)sender).backcolor;
+        //        penpreview.refresh();
+        //        pictureboxpen.image = penpreview.penbitmap;
         //    }
 
         //}
@@ -145,7 +170,7 @@ namespace NewPaitnt
 
         private void BtnPoint_Click(object sender, EventArgs e)
         {
-            //Mode = EFigure.Dot;
+            drawingEngine.SetMode(EFigure.Dot);
         }
 
         private void BtnUndo_Click(object sender, EventArgs e)
@@ -172,7 +197,7 @@ namespace NewPaitnt
 
         private void BtnLine_Click(object sender, EventArgs e)
         {
-            //Mode = EFigure.Line;
+            drawingEngine.SetMode(EFigure.Line);
         }
 
         private void SmoothCorve(object sender, EventArgs e)

@@ -56,5 +56,10 @@ namespace NewPaitnt.VectorModel
             Pen = (Pen)pen.Clone();
             Pen.DashPattern = new float[] { 1f, 1f };
         }
+
+        public void Draw(ref Graphics graphics, Point end)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

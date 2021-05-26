@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
 
 namespace NewPaitnt.Implementation
@@ -28,6 +29,7 @@ namespace NewPaitnt.Implementation
         private Graphics FigureGraphics;
         private Graphics ForegroundGraphics;
 
+       
         private DrawingEngine(int penBoxWidth, int penBoxHeight)
         {
             _settings = Settings.Initialize();
@@ -49,6 +51,8 @@ namespace NewPaitnt.Implementation
             FigureGraphics = Graphics.FromImage(CurrentFigure);
             ForegroundGraphics = Graphics.FromImage(Foreground);
             MainGraphics.Clear(Color.White);
+
+            
         }
 
         public static DrawingEngine Initialize(int penBoxWidth, int penBoxHeight)
@@ -78,6 +82,11 @@ namespace NewPaitnt.Implementation
                     // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new Dot(_click, _settings.Pen, _settings.SmoothingMode));
                     break;
+                case EFigure.Line:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new Line(_previousMove,_move, _settings.Pen, _settings.SmoothingMode));
+                    break;
+
                 default:
                     break;
             }
@@ -162,13 +171,15 @@ namespace NewPaitnt.Implementation
         }
 
         // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
-        public void RedrawFigure(int figurePosition)
+        public void RedrawFigure()
         {
-            _storage.Figures[figurePosition].Draw(ref MainGraphics);
+            _storage.Figures[_storage.Figures.Count -1].Draw(ref MainGraphics, _move);
+
         }
         public void NewClick(Point click)
         {
             _click = click;
+            _previousMove = click;
         }
         public void NewMove(Point move)
         {
@@ -198,6 +209,10 @@ namespace NewPaitnt.Implementation
             _settings.SetSmoothingMode(newMode);
             MainGraphics.SmoothingMode = _settings.SmoothingMode;
             // Нужно будет доработать
+        }
+        public EFigure GetMode()
+        {
+            return _settings.Mode;
         }
     }
 }

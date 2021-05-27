@@ -36,7 +36,7 @@ namespace NewPaitnt.VectorModel
 
             graphics.SmoothingMode = SmoothingMode;
             graphics.DrawPath(Pen, path);
-            //graphics.DrawRectangle(Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
+            
         }
 
         private GraphicsPath GetRoundedRect(RectangleF baseRect,

@@ -256,6 +256,11 @@ namespace NewPaitnt.Implementation
             _settings.SetPenWidth(newWidth);
             _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
         }
+        public void SetPenColor(Color color)
+        {
+            _settings.SetPenColor(color);
+            _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
+        }
         public void SetMode(EFigure newMode)
         {
             _settings.SetMode(newMode);

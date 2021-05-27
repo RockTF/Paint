@@ -4,6 +4,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
+using Button = System.Windows.Forms.Button;
 
 namespace NewPaitnt
 {
@@ -17,6 +20,7 @@ namespace NewPaitnt
         public MainPaint()
         {
             InitializeComponent();
+           
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         }
@@ -122,23 +126,38 @@ namespace NewPaitnt
 
         // кнопок и методов нет - оставила для Наташи
 
-        /*private void btnSave_Click(object sender, EventArgs e)
+        private void MenuSave_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Filter = "JPG(*.JPG)|*.jpg";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (pictureBoxPaint != null)
+                if (PictureBoxPaint != null)
                 {
-                    pictureBoxPaint.Image.Save(saveFileDialog1.FileName);
+                    PictureBoxPaint.Image.Save(saveFileDialog.FileName);
                 }
             }
-        }*/
-
-        /*private void btnClear_Click(object sender, EventArgs e)
+        }
+        private void MenuOpen_Click(object sender, EventArgs e) // очищвется при рисовании нужно добавлять в лист????
         {
-            DrawingEngine.ClearCanvas();
-            pictureBoxPaint.Image = DrawingEngine.MainImage;
-        }*/
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
+
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+               PictureBoxPaint.Image = Image.FromFile(openFileDialog.FileName); 
+                
+
+            }
+        }
+
+        private void MenuClear_Click(object sender, EventArgs e) //очищать лист при вызове метода
+        {
+            drawingEngine.ClearCanvas();
+            PictureBoxPaint.Image = drawingEngine.MainImage;
+        }
 
 
         private void TrackBarThickness_Scroll(object sender, EventArgs e)
@@ -159,23 +178,7 @@ namespace NewPaitnt
         //    }
         //}
 
-        //private void btncolor_click_1(object sender, eventargs e)
-        //{
-        //    if (isbtnfillclicked)
-        //    {
-
-        //        settings.brush = new solidbrush(((button)sender).backcolor);
-        //        btncolor.backcolor = ((button)sender).backcolor;
-        //        isbtnfillclicked = false;
-        //    }
-        //    else
-        //    {
-        //        settings.pen.color = ((button)sender).backcolor;
-        //        penpreview.refresh();
-        //        pictureboxpen.image = penpreview.penbitmap;
-        //    }
-
-        //}
+        
 
         private void BtnRectangle_Click(object sender, EventArgs e)
         {
@@ -303,6 +306,24 @@ namespace NewPaitnt
         private void BtnSguare_Click(object sender, EventArgs e)
         {
             drawingEngine.SetMode(EFigure.RoundedRectangle);
+        }
+
+        private void Color_btn(object sender, EventArgs e)
+        {
+
+            drawingEngine.SetPenColor(((Button)sender).BackColor);
+            PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
+
+        }
+
+        private void PictureBoxColors_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                drawingEngine.SetPenColor (colorDialog1.Color);
+                PictureBoxColorFillFigure.BackColor = colorDialog1.Color;
+             
+           }
         }
     }
 }

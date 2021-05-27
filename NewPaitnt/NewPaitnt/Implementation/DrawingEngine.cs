@@ -87,11 +87,28 @@ namespace NewPaitnt.Implementation
                     // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new Line(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
+                          case EFigure.Rectangle:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Rectangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    break;
+                case EFigure.Triangle:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Triangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    break;
+                case EFigure.Ellipse:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Ellipse(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    break;
+                case EFigure.RoundedRectangle:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.RoundedRectangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    break;
 
                 default:
                     break;
             }
         }
+
 
         public void DrawAllFigures()
         {
@@ -218,6 +235,7 @@ namespace NewPaitnt.Implementation
         {
             _click = click;
             _previousMove = click;
+            _move = click;
         }
         public void NewMove(Point move)
         {

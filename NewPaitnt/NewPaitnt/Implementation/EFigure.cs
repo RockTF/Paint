@@ -15,7 +15,8 @@ namespace NewPaitnt.Implementation
             Triangle,
             Polygon,
             Rectangle,
-            SmoothCorv
+            SmoothCorv,
+            RoundedRectangle
     }
     
 }

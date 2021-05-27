@@ -32,6 +32,7 @@ namespace NewPaitnt
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPaint));
             this.PictureBoxPaint = new System.Windows.Forms.PictureBox();
             this.PanelMenu = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.BtnTransparent = new System.Windows.Forms.Button();
             this.BtnDelete = new System.Windows.Forms.Button();
@@ -93,7 +94,6 @@ namespace NewPaitnt
             this.toolStripMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
             this.listBox2 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxPaint)).BeginInit();
             this.PanelMenu.SuspendLayout();
@@ -183,6 +183,16 @@ namespace NewPaitnt
             this.PanelMenu.Name = "PanelMenu";
             this.PanelMenu.Size = new System.Drawing.Size(1147, 127);
             this.PanelMenu.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(884, 98);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(48, 29);
+            this.button1.TabIndex = 68;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // listBox1
             // 
@@ -352,6 +362,7 @@ namespace NewPaitnt
             this.BtnSguare.Size = new System.Drawing.Size(23, 27);
             this.BtnSguare.TabIndex = 47;
             this.BtnSguare.UseVisualStyleBackColor = true;
+            this.BtnSguare.Click += new System.EventHandler(this.BtnSguare_Click);
             // 
             // BtnRectangle
             // 
@@ -882,16 +893,6 @@ namespace NewPaitnt
             this.toolStripMenuClear.Name = "toolStripMenuClear";
             this.toolStripMenuClear.Size = new System.Drawing.Size(135, 26);
             this.toolStripMenuClear.Text = "Clear";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(884, 98);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(48, 29);
-            this.button1.TabIndex = 68;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // listBox2
             // 

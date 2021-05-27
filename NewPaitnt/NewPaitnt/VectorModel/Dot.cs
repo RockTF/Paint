@@ -59,7 +59,7 @@ namespace NewPaitnt.VectorModel
 
         public void Draw(ref Graphics graphics, Point end)
         {
-            throw new System.NotImplementedException();
+           
         }
     }
 }

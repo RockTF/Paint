@@ -35,18 +35,18 @@ namespace NewPaitnt
             IsBtnFillClicked = false;
 
             _isFigureCreated =false;
-        // Антон ещё меняет
-        //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-        //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-        //DoubleBuffered = true;
+            // Антон ещё меняет
+            //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            //DoubleBuffered = true;
 
-        //// Set the value of the double-buffering style bits to true.
-        //this.SetStyle(ControlStyles.DoubleBuffer |
-        //   ControlStyles.UserPaint |
-        //   ControlStyles.AllPaintingInWmPaint,
-        //   true);
-        //this.UpdateStyles();
-    }
+            // Set the value of the double-buffering style bits to true.
+            this.SetStyle(ControlStyles.DoubleBuffer |
+               ControlStyles.UserPaint |
+               ControlStyles.AllPaintingInWmPaint,
+               true);
+            this.UpdateStyles();
+        }
 
         private void PictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
         {
@@ -57,11 +57,15 @@ namespace NewPaitnt
 
                 if(drawingEngine.GetMode() == EFigure.Dot)
                 {
-                    drawingEngine.CreateFigure();
                     _isFigureCreated = true;
+
+                    drawingEngine.CreateFigure();
+                    drawingEngine.DrawBackgroundOnMain();
+                    drawingEngine.CleanFigure();
+                    drawingEngine.DrawFigure();
+                    drawingEngine.DrawFigureOnMain();
                 }               
-                
-                drawingEngine.DrawAllFigures();
+               
                 PictureBoxPaint.Image = drawingEngine.MainImage;
                 
             }
@@ -69,15 +73,15 @@ namespace NewPaitnt
 
         private void PictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left && drawingEngine.GetMode() != EFigure.Dot)
             {
                 drawingEngine.NewMove(e.Location);
 
-                if (drawingEngine.GetMode() != EFigure.Dot)
-                {
-                    drawingEngine.CreateFigure();
-                    _isFigureCreated = true;
-                }
+                //if (drawingEngine.GetMode() != EFigure.Dot)
+                //{
+                //    drawingEngine.CreateFigure();
+                //    _isFigureCreated = true;
+                //}
 
                 if (!_isFigureCreated)
                 {
@@ -180,7 +184,7 @@ namespace NewPaitnt
 
         private void BtnEllipse_Click(object sender, EventArgs e)
         {
-           //Mode = EFigure.Ellipse;
+            drawingEngine.SetMode(EFigure.Ellipse);
         }
 
         private void BtnFill_Click(object sender, EventArgs e)
@@ -212,7 +216,7 @@ namespace NewPaitnt
 
         private void BtnTriangle_Click(object sender, EventArgs e)
         {
-            //Mode = EFigure.Triangle;
+            drawingEngine.SetMode(EFigure.Triangle);
         }
 
         private void BtnLine_Click(object sender, EventArgs e)
@@ -294,6 +298,11 @@ namespace NewPaitnt
             //}
 
 
+        }
+
+        private void BtnSguare_Click(object sender, EventArgs e)
+        {
+            drawingEngine.SetMode(EFigure.RoundedRectangle);
         }
     }
 }

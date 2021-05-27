@@ -52,14 +52,18 @@ namespace NewPaitnt
         {
             if (e.Button == MouseButtons.Left)
             {
+                drawingEngine.DrawMainOnBackground();
                 drawingEngine.NewClick(e.Location);
+
                 if(drawingEngine.GetMode() == EFigure.Dot)
                 {
                     drawingEngine.CreateFigure();
                     _isFigureCreated = true;
-                }                
+                }               
+                
                 drawingEngine.DrawAllFigures();
                 PictureBoxPaint.Image = drawingEngine.MainImage;
+                
             }
         }
 
@@ -68,36 +72,52 @@ namespace NewPaitnt
             if (e.Button == MouseButtons.Left)
             {
                 drawingEngine.NewMove(e.Location);
+
                 if (drawingEngine.GetMode() != EFigure.Dot)
                 {
                     drawingEngine.CreateFigure();
                     _isFigureCreated = true;
                 }
-                if (_isFigureCreated == true)
+
+                if (!_isFigureCreated)
                 {
-                    drawingEngine.RedrawFigure();
+                    _isFigureCreated = true;
+
+                    drawingEngine.CreateFigure();
+                    drawingEngine.DrawBackgroundOnMain();
+                    drawingEngine.CleanFigure();
+                    drawingEngine.DrawFigure();
+                    drawingEngine.DrawFigureOnMain();
+
                 }
                 else
                 {
-                    drawingEngine.DrawAllFigures();
+                    drawingEngine.DrawBackgroundOnMain();
+                    drawingEngine.CleanFigure();
+                    drawingEngine.RedrawFigure();
+                    drawingEngine.DrawFigureOnMain();
                 }
+
                 PictureBoxPaint.Image = drawingEngine.MainImage;
             }
-            
-
         }
 
         private void PictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
             _isFigureCreated = false;
+            drawingEngine.CleanBackground();
             //currentProcess.Refresh();
             //memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
             //mouseHandeler.MouseUp(sender, e);
             //pictureBoxPaint.Image = drawingEngine.MainImage;
+            listBox2.Items.Clear();
+            listBox2.Items.AddRange(drawingEngine.GetFigureList());
+
         }
 
 
         // кнопок и методов нет - оставила для Наташи
+
         /*private void btnSave_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "JPG(*.JPG)|*.jpg";
@@ -238,6 +258,41 @@ namespace NewPaitnt
 
         private void PictureBoxPaint_Click(object sender, EventArgs e)
         {
+
+        }
+
+        //private void UpdateShapeListComboBox()
+        //{
+        //    this.cb_shapeList.DataSource = null;
+        //    this.cb_shapeList.DataSource = this.shapesList;
+        //    this.cb_shapeList.SelectedIndex = this.shapesList.Count - 1;
+        //}
+
+        //private void BufferToCanvas()
+        //{
+        //    this.DrawShapesToBuffer();
+        //    this.bgGraph.Render(this.canvas.CreateGraphics());
+        //}
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            //MyFill currentFill = null;
+            //if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            //{
+            //    currentFill = new MyFill(e.Location, this.colorChoicer.BColor);
+            //}
+            //this.shapesList.Add(currentFill);
+
+            //this.UpdateShapeListComboBox();
+
+            //this.BufferToCanvas();
+
+            //if (this.cb_shapeList.SelectedIndex == -1 || this.shapesList.Count == 0)
+            //{
+            //    return;
+            //}
+
 
         }
     }

@@ -15,8 +15,10 @@ namespace NewPaitnt.Vector
         public Line(Point start, Point end, Pen pen, SmoothingMode smoothingMode)
         {
             Points = new List<Point>(2);
+
             Points.Add(start);
             Points.Add(end);
+
             Pen = (Pen)pen.Clone();
             SmoothingMode = smoothingMode;
 
@@ -24,8 +26,7 @@ namespace NewPaitnt.Vector
         }
 
         public override void Draw(ref Graphics graphics)
-        {
-            
+        { 
             graphics.SmoothingMode = SmoothingMode;
             graphics.DrawLine(Pen, Points[0], Points[1]);
         }

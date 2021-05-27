@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
@@ -29,7 +30,7 @@ namespace NewPaitnt.Implementation
         private Graphics FigureGraphics;
         private Graphics ForegroundGraphics;
 
-       
+
         private DrawingEngine(int penBoxWidth, int penBoxHeight)
         {
             _settings = Settings.Initialize();
@@ -52,7 +53,7 @@ namespace NewPaitnt.Implementation
             ForegroundGraphics = Graphics.FromImage(Foreground);
             MainGraphics.Clear(Color.White);
 
-            
+
         }
 
         public static DrawingEngine Initialize(int penBoxWidth, int penBoxHeight)
@@ -84,7 +85,7 @@ namespace NewPaitnt.Implementation
                     break;
                 case EFigure.Line:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new Line(_previousMove,_move, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new Line(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
 
                 default:
@@ -170,12 +171,49 @@ namespace NewPaitnt.Implementation
             }
         }
 
+        public void DrawMainOnBackground()
+        {
+            BackgroundGraphics.DrawImage(MainImage, 0, 0);
+        }
+
+        public void DrawBackgroundOnMain()
+        {
+            MainGraphics.DrawImage(Background, 0, 0);
+        }
+
+        public void CleanBackground()
+        {
+            BackgroundGraphics.Clear(BlackTransparrent);
+        }
+
+        public void CleanFigure()
+        {
+            FigureGraphics.Clear(BlackTransparrent);
+        }
+
+        public void DrawFigureOnMain()
+        {
+            MainGraphics.DrawImage(CurrentFigure, 0, 0);
+        }
+
+        public string[] GetFigureList() 
+        {
+            return _storage.FiguresNames.ToArray();
+        }
+
         // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
         public void RedrawFigure()
         {
-            _storage.Figures[_storage.Figures.Count -1].Draw(ref MainGraphics, _move);
+            _storage.Figures[_storage.Figures.Count -1].Draw(ref FigureGraphics, _move);
 
         }
+
+        public void DrawFigure()
+        {
+            _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics);
+
+        }
+
         public void NewClick(Point click)
         {
             _click = click;

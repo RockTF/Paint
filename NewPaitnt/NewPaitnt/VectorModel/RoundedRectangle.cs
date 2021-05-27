@@ -58,7 +58,7 @@ namespace NewPaitnt.VectorModel
             float diameter = radius * 2.0F;
             SizeF sizeF = new SizeF(diameter, diameter);
             RectangleF arc = new RectangleF(baseRect.Location, sizeF);
-            GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            GraphicsPath path = new GraphicsPath();
 
             path.AddArc(arc, 180, 90);
 
@@ -79,7 +79,7 @@ namespace NewPaitnt.VectorModel
         {
             float diameter;
             RectangleF arc;
-            GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            GraphicsPath path = new GraphicsPath();
             try
             {
                 if (baseRect.Width > baseRect.Height)

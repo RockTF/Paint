@@ -214,7 +214,7 @@ namespace NewPaitnt
 
         private void BtnCurve_Click(object sender, EventArgs e)
         {
-            //Mode = EFigure.Curve;
+            drawingEngine.SetMode(EFigure.Curve); 
         }
 
         private void BtnTriangle_Click(object sender, EventArgs e)

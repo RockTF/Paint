@@ -103,6 +103,10 @@ namespace NewPaitnt.Implementation
                     // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new VectorModel.RoundedRectangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
+                case EFigure.Curve:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new Curve (_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    break;
 
                 default:
                     break;

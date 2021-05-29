@@ -16,5 +16,16 @@ namespace NewPaitnt
         {
             InitializeComponent();
         }
+
+        private void Close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnOk_Click(object sender, EventArgs e)
+        {
+           
+            
+        }
     }
 }

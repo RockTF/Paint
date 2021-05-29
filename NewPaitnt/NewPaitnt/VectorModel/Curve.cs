@@ -34,8 +34,9 @@ namespace NewPaitnt.Vector
           
 
             Pen = (Pen)pen.Clone();
-          
-            FigureName = "Curve" + _count++.ToString();
+
+            _count++;
+            FigureName = "Curve" + _count.ToString();
 
             SmoothingMode = smoothingMode;
         }

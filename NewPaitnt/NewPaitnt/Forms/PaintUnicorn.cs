@@ -325,5 +325,18 @@ namespace NewPaitnt
              
            }
         }
+        private void MenuCreate_Click(object sender, EventArgs e) //очищать лист при вызове метода
+        {
+            CreateNewCanvas createNewCanvas = (CreateNewCanvas)Application.OpenForms["CreateNewCanvas"];
+            if (createNewCanvas == null)
+            {
+                createNewCanvas = new CreateNewCanvas();
+                createNewCanvas.Show();
+            }
+            else
+            {
+                createNewCanvas.Activate();
+            }
+        }
     }
 }

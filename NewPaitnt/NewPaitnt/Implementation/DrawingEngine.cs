@@ -75,7 +75,7 @@ namespace NewPaitnt.Implementation
             ForegroundGraphics.Clear(BlackTransparrent);
         }
 
-        public void CreateFigure()
+        public void CreateFigure() //!!! Вынести в шейп фактори 
         {
             switch (_settings.Mode)
             {

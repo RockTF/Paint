@@ -893,6 +893,7 @@ namespace NewPaitnt
             this.toolStripMenuCreate.Name = "toolStripMenuCreate";
             this.toolStripMenuCreate.Size = new System.Drawing.Size(126, 24);
             this.toolStripMenuCreate.Text = "Create";
+            this.toolStripMenuCreate.Click += new System.EventHandler(this.MenuCreate_Click);
             // 
             // toolStripMenuOpen
             // 

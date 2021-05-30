@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
@@ -53,7 +52,6 @@ namespace NewPaitnt.Implementation
             ForegroundGraphics = Graphics.FromImage(Foreground);
             MainGraphics.Clear(Color.White);
 
-
         }
 
         public static DrawingEngine Initialize(int penBoxWidth, int penBoxHeight)
@@ -87,7 +85,7 @@ namespace NewPaitnt.Implementation
                     // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new Line(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
-                          case EFigure.Rectangle:
+                case EFigure.Rectangle:
                     // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new VectorModel.Rectangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
@@ -112,7 +110,6 @@ namespace NewPaitnt.Implementation
                     break;
             }
         }
-
 
         public void DrawAllFigures()
         {
@@ -217,7 +214,7 @@ namespace NewPaitnt.Implementation
             MainGraphics.DrawImage(CurrentFigure, 0, 0);
         }
 
-        public string[] GetFigureList() 
+        public string[] GetFigureList()
         {
             return _storage.FiguresNames.ToArray();
         }
@@ -225,7 +222,7 @@ namespace NewPaitnt.Implementation
         // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
         public void RedrawFigure()
         {
-            _storage.Figures[_storage.Figures.Count -1].Draw(ref FigureGraphics, _move);
+            _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics, _move);
 
         }
 
@@ -279,5 +276,6 @@ namespace NewPaitnt.Implementation
         {
             return _settings.Mode;
         }
+
     }
 }

@@ -1,11 +1,10 @@
-﻿using NewPaitnt.Implementation;
+﻿
+using NewPaitnt.Implementation;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using Button = System.Windows.Forms.Button;
 
 namespace NewPaitnt
@@ -16,7 +15,7 @@ namespace NewPaitnt
         bool IsBtnFillClicked;
         DrawingEngine drawingEngine;
         private bool _isFigureCreated;
-
+       
         public MainPaint()
         {
             InitializeComponent();
@@ -39,6 +38,8 @@ namespace NewPaitnt
             IsBtnFillClicked = false;
 
             _isFigureCreated =false;
+
+
             // Антон ещё меняет
             //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -118,13 +119,16 @@ namespace NewPaitnt
             //memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
             //mouseHandeler.MouseUp(sender, e);
             //pictureBoxPaint.Image = drawingEngine.MainImage;
-            listBox2.Items.Clear();
-            listBox2.Items.AddRange(drawingEngine.GetFigureList());
+            ListBoxDrawingHistory.Items.Clear();
+            ListBoxDrawingHistory.Items.AddRange(drawingEngine.GetFigureList());
 
         }
 
-
-        // кнопок и методов нет - оставила для Наташи
+        private void MenuCreate_Click(object sender, EventArgs e)
+        {
+            CreateNewCanvas createNewCanvas = new CreateNewCanvas();
+            createNewCanvas.ShowDialog();
+        }
 
         private void MenuSave_Click(object sender, EventArgs e)
         {
@@ -138,7 +142,7 @@ namespace NewPaitnt
                 }
             }
         }
-        private void MenuOpen_Click(object sender, EventArgs e) // очищвется при рисовании нужно добавлять в лист????
+        private void MenuOpen_Click(object sender, EventArgs e) // очищается при рисовании нужно добавлять в лист????
         {
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
@@ -148,8 +152,6 @@ namespace NewPaitnt
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                PictureBoxPaint.Image = Image.FromFile(openFileDialog.FileName); 
-                
-
             }
         }
 
@@ -159,26 +161,11 @@ namespace NewPaitnt
             PictureBoxPaint.Image = drawingEngine.MainImage;
         }
 
-
         private void TrackBarThickness_Scroll(object sender, EventArgs e)
         {
             drawingEngine.SetPenWidth(TrackBarThickness.Value);
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
         }
-
-        // кнопки цвет больше нет, метод надо менять 
-        //private void BtnColor_Click(object sender, EventArgs e)
-        //{
-        //    if (colorDialog1.ShowDialog() == DialogResult.OK)
-        //    {
-        //        Settings.Pen.Color = colorDialog1.Color;
-        //        btnColor.BackColor = colorDialog1.Color;
-        //        PenPreview.Refresh();
-        //        pictureBoxPen.Image = PenPreview.PenBitmap;
-        //    }
-        //}
-
-        
 
         private void BtnRectangle_Click(object sender, EventArgs e)
         {
@@ -281,28 +268,6 @@ namespace NewPaitnt
         //    this.bgGraph.Render(this.canvas.CreateGraphics());
         //}
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            //MyFill currentFill = null;
-            //if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            //{
-            //    currentFill = new MyFill(e.Location, this.colorChoicer.BColor);
-            //}
-            //this.shapesList.Add(currentFill);
-
-            //this.UpdateShapeListComboBox();
-
-            //this.BufferToCanvas();
-
-            //if (this.cb_shapeList.SelectedIndex == -1 || this.shapesList.Count == 0)
-            //{
-            //    return;
-            //}
-
-
-        }
-
         private void BtnSguare_Click(object sender, EventArgs e)
         {
             drawingEngine.SetMode(EFigure.RoundedRectangle);
@@ -310,10 +275,8 @@ namespace NewPaitnt
 
         private void Color_btn(object sender, EventArgs e)
         {
-
             drawingEngine.SetPenColor(((Button)sender).BackColor);
             PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
-
         }
 
         private void PictureBoxColors_Click(object sender, EventArgs e)
@@ -322,8 +285,24 @@ namespace NewPaitnt
             {
                 drawingEngine.SetPenColor (colorDialog1.Color);
                 PictureBoxColorFillFigure.BackColor = colorDialog1.Color;
-             
-           }
+            }
+        }
+
+        private void MainPaint_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Save changes before exiting the program?", "Mesage", MessageBoxButtons.YesNoCancel);
+
+            switch (result)
+            {
+                case DialogResult.No: break;
+                case DialogResult.Yes: MenuSave_Click(sender, e);
+                    break;
+                case DialogResult.Cancel:
+                    this.Show();
+                    break;
+                default:
+                    break;
+            }
         }
         private void MenuCreate_Click(object sender, EventArgs e) //очищать лист при вызове метода
         {

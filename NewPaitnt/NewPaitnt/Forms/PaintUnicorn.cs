@@ -77,7 +77,7 @@ namespace NewPaitnt
 
         private void PictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && drawingEngine.GetMode() != EFigure.Dot)
+            if (e.Button == MouseButtons.Left && drawingEngine.GetMode() != EFigure.Dot && drawingEngine.GetMode() != EFigure.Move)
             {
                 drawingEngine.NewMove(e.Location);
 
@@ -108,6 +108,14 @@ namespace NewPaitnt
 
                 PictureBoxPaint.Image = drawingEngine.MainImage;
             }
+            else if (e.Button == MouseButtons.Left && drawingEngine.GetMode() == EFigure.Move)
+            {
+                drawingEngine.NewMove(e.Location);
+
+                drawingEngine.MoveFigure();
+
+                PictureBoxPaint.Image = drawingEngine.MainImage;
+            }
         }
 
         private void PictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
@@ -118,8 +126,8 @@ namespace NewPaitnt
             //memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
             //mouseHandeler.MouseUp(sender, e);
             //pictureBoxPaint.Image = drawingEngine.MainImage;
-            listBox2.Items.Clear();
-            listBox2.Items.AddRange(drawingEngine.GetFigureList());
+            FiguresListBox.Items.Clear();
+            FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
 
         }
 
@@ -337,6 +345,16 @@ namespace NewPaitnt
             {
                 createNewCanvas.Activate();
             }
+        }
+
+        private void FiguresListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            drawingEngine.SelectFigure((sender as ListBox).SelectedIndex);
+        }
+
+        private void BtnMove_Click(object sender, EventArgs e)
+        {
+            drawingEngine.SetMode(EFigure.Move);
         }
     }
 }

@@ -7,19 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewPaitnt.Vector
+namespace NewPaitnt.VectorModel
 {
-    public class Curve : IDrawable
+    public class Curve : Figure
     {
-        public string FigureName { get; private set; }
-
-        public List<Point> Points { get; set; }
-
-        public Pen Pen { get; set; }
-
-        public Brush Brush { get; set; }
-
-        public SmoothingMode SmoothingMode { get; private set; }
         private static int _count = 0;
 
         public Curve(Point start, Point move, Pen pen, SmoothingMode smoothingMode)
@@ -40,20 +31,14 @@ namespace NewPaitnt.Vector
 
             SmoothingMode = smoothingMode;
         }
-        public void ChangePen(Pen pen)
-        {
-            Pen = (Pen)pen.Clone();
-            Pen.DashPattern = new float[] { 1f, 1f };
-           
-        }
 
-        public void Draw(ref Graphics graphics)
+        public override void Draw(ref Graphics graphics)
         {
             graphics.SmoothingMode = SmoothingMode;
             graphics.DrawCurve(Pen, Points.ToArray());
         }
 
-        public void Draw(ref Graphics graphics, Point end)
+        public override void Draw(ref Graphics graphics, Point end)
         {
 
             Points.Add(new Point(end.X, end.Y));
@@ -61,7 +46,7 @@ namespace NewPaitnt.Vector
             graphics.DrawCurve(Pen, Points.ToArray());
         }
 
-        public void Move(Point from, Point to)
+        public override void Refresh(ref Graphics graphics)
         {
             throw new NotImplementedException();
         }

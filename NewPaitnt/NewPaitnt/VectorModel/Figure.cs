@@ -67,7 +67,7 @@ namespace NewPaitnt.VectorModel
 
         public void ChangePen(Pen pen)
         {
-            throw new NotImplementedException();
+            Pen = (Pen)pen.Clone();
         }
 
         public abstract void Draw(ref Graphics graphics, Point end);

@@ -16,7 +16,9 @@ namespace NewPaitnt.Implementation
             Polygon,
             Rectangle,
             SmoothCorv,
-            RoundedRectangle
+            RoundedRectangle,
+            // Добавил для перемещения, надо обсудить
+            Move
     }
     
 }

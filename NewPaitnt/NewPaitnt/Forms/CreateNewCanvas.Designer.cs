@@ -30,13 +30,8 @@ namespace NewPaitnt
         private void InitializeComponent()
         {
             this.PanelCreate = new System.Windows.Forms.Panel();
-<<<<<<< Updated upstream
             this.Close = new System.Windows.Forms.Button();
             this.BtnOk = new System.Windows.Forms.Button();
-=======
-            this.BtnCancel = new System.Windows.Forms.Button();
-            this.BtnOK = new System.Windows.Forms.Button();
->>>>>>> Stashed changes
             this.NumericUpDownHeight = new System.Windows.Forms.NumericUpDown();
             this.LabelHeight = new System.Windows.Forms.Label();
             this.NumericUpDownWidth = new System.Windows.Forms.NumericUpDown();
@@ -50,13 +45,8 @@ namespace NewPaitnt
             // PanelCreate
             // 
             this.PanelCreate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-<<<<<<< Updated upstream
             this.PanelCreate.Controls.Add(this.Close);
             this.PanelCreate.Controls.Add(this.BtnOk);
-=======
-            this.PanelCreate.Controls.Add(this.BtnCancel);
-            this.PanelCreate.Controls.Add(this.BtnOK);
->>>>>>> Stashed changes
             this.PanelCreate.Controls.Add(this.NumericUpDownHeight);
             this.PanelCreate.Controls.Add(this.LabelHeight);
             this.PanelCreate.Controls.Add(this.NumericUpDownWidth);
@@ -67,7 +57,6 @@ namespace NewPaitnt
             this.PanelCreate.Size = new System.Drawing.Size(216, 177);
             this.PanelCreate.TabIndex = 0;
             // 
-<<<<<<< Updated upstream
             // Close
             // 
             this.Close.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
@@ -100,49 +89,9 @@ namespace NewPaitnt
             // 
             this.NumericUpDownHeight.Location = new System.Drawing.Point(101, 67);
             this.NumericUpDownHeight.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-=======
-            // BtnCancel
-            // 
-            this.BtnCancel.Location = new System.Drawing.Point(98, 95);
-            this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(70, 25);
-            this.BtnCancel.TabIndex = 5;
-            this.BtnCancel.Text = "Cancel";
-            this.BtnCancel.UseVisualStyleBackColor = true;
-            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
-            // 
-            // BtnOK
-            // 
-            this.BtnOK.Location = new System.Drawing.Point(22, 95);
-            this.BtnOK.Name = "BtnOK";
-            this.BtnOK.Size = new System.Drawing.Size(70, 25);
-            this.BtnOK.TabIndex = 4;
-            this.BtnOK.Text = "OK";
-            this.BtnOK.UseVisualStyleBackColor = true;
-            this.BtnOK.Click += new System.EventHandler(this.BtnOK_Click);
-            // 
-            // NumericUpDownHeight
-            // 
-            this.NumericUpDownHeight.Location = new System.Drawing.Point(88, 53);
-            this.NumericUpDownHeight.Maximum = new decimal(new int[] {
-            2500,
-            0,
-            0,
-            0});
-            this.NumericUpDownHeight.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
->>>>>>> Stashed changes
             this.NumericUpDownHeight.Name = "NumericUpDownHeight";
             this.NumericUpDownHeight.Size = new System.Drawing.Size(73, 26);
             this.NumericUpDownHeight.TabIndex = 3;
-            this.NumericUpDownHeight.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
             // 
             // LabelHeight
             // 
@@ -155,30 +104,11 @@ namespace NewPaitnt
             // 
             // NumericUpDownWidth
             // 
-<<<<<<< Updated upstream
             this.NumericUpDownWidth.Location = new System.Drawing.Point(101, 27);
             this.NumericUpDownWidth.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-=======
-            this.NumericUpDownWidth.Location = new System.Drawing.Point(88, 21);
-            this.NumericUpDownWidth.Maximum = new decimal(new int[] {
-            2500,
-            0,
-            0,
-            0});
-            this.NumericUpDownWidth.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
->>>>>>> Stashed changes
             this.NumericUpDownWidth.Name = "NumericUpDownWidth";
             this.NumericUpDownWidth.Size = new System.Drawing.Size(73, 26);
             this.NumericUpDownWidth.TabIndex = 1;
-            this.NumericUpDownWidth.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
             // 
             // LabelWidth
             // 
@@ -207,7 +137,7 @@ namespace NewPaitnt
             this.Controls.Add(this.PanelCreate);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "CreateNewCanvas";
-            this.Load += new System.EventHandler(this.CreateNewCanvas_Load);
+            this.Text = "CreateNewCanvas";
             this.PanelCreate.ResumeLayout(false);
             this.PanelCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownHeight)).EndInit();
@@ -220,16 +150,12 @@ namespace NewPaitnt
         #endregion
 
         private System.Windows.Forms.Panel PanelCreate;
+        private System.Windows.Forms.Button BtnOk;
         private System.Windows.Forms.NumericUpDown NumericUpDownHeight;
         private System.Windows.Forms.Label LabelHeight;
         private System.Windows.Forms.NumericUpDown NumericUpDownWidth;
         private System.Windows.Forms.Label LabelWidth;
         private System.Windows.Forms.Label LabelCanvassize;
-<<<<<<< Updated upstream
         private System.Windows.Forms.Button Close;
-=======
-        private System.Windows.Forms.Button BtnCancel;
-        private System.Windows.Forms.Button BtnOK;
->>>>>>> Stashed changes
     }
 }

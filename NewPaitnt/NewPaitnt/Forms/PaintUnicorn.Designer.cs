@@ -32,6 +32,8 @@ namespace NewPaitnt
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPaint));
             this.PictureBoxPaint = new System.Windows.Forms.PictureBox();
             this.PanelMenu = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.BtnTransparent = new System.Windows.Forms.Button();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnMove = new System.Windows.Forms.Button();
@@ -121,7 +123,7 @@ namespace NewPaitnt
             this.PictureBoxPaint.Location = new System.Drawing.Point(11, 131);
             this.PictureBoxPaint.Margin = new System.Windows.Forms.Padding(0);
             this.PictureBoxPaint.Name = "PictureBoxPaint";
-            this.PictureBoxPaint.Size = new System.Drawing.Size(1135, 730);
+            this.PictureBoxPaint.Size = new System.Drawing.Size(993, 576);
             this.PictureBoxPaint.TabIndex = 0;
             this.PictureBoxPaint.TabStop = false;
             this.PictureBoxPaint.Click += new System.EventHandler(this.PictureBoxPaint_Click);
@@ -132,6 +134,8 @@ namespace NewPaitnt
             // PanelMenu
             // 
             this.PanelMenu.BackColor = System.Drawing.SystemColors.Control;
+            this.PanelMenu.Controls.Add(this.button1);
+            this.PanelMenu.Controls.Add(this.listBox1);
             this.PanelMenu.Controls.Add(this.BtnTransparent);
             this.PanelMenu.Controls.Add(this.BtnDelete);
             this.PanelMenu.Controls.Add(this.BtnMove);
@@ -182,9 +186,10 @@ namespace NewPaitnt
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(884, 93);
+            this.button1.Location = new System.Drawing.Point(774, 73);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(48, 28);
+            this.button1.Size = new System.Drawing.Size(42, 22);
             this.button1.TabIndex = 68;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -194,11 +199,10 @@ namespace NewPaitnt
             // 
             this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 19;
-            this.listBox1.Location = new System.Drawing.Point(1039, 136);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(909, 107);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(86, 285);
+            this.listBox1.Size = new System.Drawing.Size(75, 225);
             this.listBox1.TabIndex = 66;
             // 
             // BtnTransparent
@@ -235,8 +239,7 @@ namespace NewPaitnt
             this.BtnMove.FlatAppearance.BorderSize = 0;
             this.BtnMove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnMove.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnMove.Location = new System.Drawing.Point(696, 16);
-            this.BtnMove.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnMove.Location = new System.Drawing.Point(609, 13);
             this.BtnMove.Name = "BtnMove";
             this.BtnMove.Size = new System.Drawing.Size(45, 23);
             this.BtnMove.TabIndex = 63;
@@ -268,8 +271,7 @@ namespace NewPaitnt
             // PictureBoxMove
             // 
             this.PictureBoxMove.Image = ((System.Drawing.Image)(resources.GetObject("PictureBoxMove.Image")));
-            this.PictureBoxMove.Location = new System.Drawing.Point(671, 18);
-            this.PictureBoxMove.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.PictureBoxMove.Location = new System.Drawing.Point(587, 14);
             this.PictureBoxMove.Name = "PictureBoxMove";
             this.PictureBoxMove.Size = new System.Drawing.Size(20, 21);
             this.PictureBoxMove.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -320,7 +322,7 @@ namespace NewPaitnt
             this.LabelFigures.BackColor = System.Drawing.Color.Transparent;
             this.LabelFigures.Location = new System.Drawing.Point(348, 9);
             this.LabelFigures.Name = "LabelFigures";
-            this.LabelFigures.Size = new System.Drawing.Size(53, 19);
+            this.LabelFigures.Size = new System.Drawing.Size(47, 15);
             this.LabelFigures.TabIndex = 56;
             this.LabelFigures.Text = "Figures";
             // 
@@ -483,7 +485,7 @@ namespace NewPaitnt
             this.CheckBoxAntiAliasing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.CheckBoxAntiAliasing.Location = new System.Drawing.Point(222, 62);
             this.CheckBoxAntiAliasing.Name = "CheckBoxAntiAliasing";
-            this.CheckBoxAntiAliasing.Size = new System.Drawing.Size(94, 21);
+            this.CheckBoxAntiAliasing.Size = new System.Drawing.Size(86, 17);
             this.CheckBoxAntiAliasing.TabIndex = 44;
             this.CheckBoxAntiAliasing.Text = "AntiAliasing";
             this.CheckBoxAntiAliasing.UseVisualStyleBackColor = true;
@@ -767,7 +769,7 @@ namespace NewPaitnt
             this.LabelSize.BackColor = System.Drawing.Color.Transparent;
             this.LabelSize.Location = new System.Drawing.Point(251, 16);
             this.LabelSize.Name = "LabelSize";
-            this.LabelSize.Size = new System.Drawing.Size(32, 19);
+            this.LabelSize.Size = new System.Drawing.Size(30, 15);
             this.LabelSize.TabIndex = 5;
             this.LabelSize.Text = "Size";
             // 
@@ -802,7 +804,7 @@ namespace NewPaitnt
             this.footer.BackColor = System.Drawing.SystemColors.Control;
             this.footer.Controls.Add(this.memoryLabel);
             this.footer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.footer.Location = new System.Drawing.Point(0, 895);
+            this.footer.Location = new System.Drawing.Point(0, 706);
             this.footer.Margin = new System.Windows.Forms.Padding(0);
             this.footer.Name = "footer";
             this.footer.Size = new System.Drawing.Size(1004, 21);
@@ -814,7 +816,7 @@ namespace NewPaitnt
             this.memoryLabel.Location = new System.Drawing.Point(11, 3);
             this.memoryLabel.Margin = new System.Windows.Forms.Padding(0);
             this.memoryLabel.Name = "memoryLabel";
-            this.memoryLabel.Size = new System.Drawing.Size(152, 19);
+            this.memoryLabel.Size = new System.Drawing.Size(134, 15);
             this.memoryLabel.TabIndex = 0;
             this.memoryLabel.Text = "Memory usage: 0,0 MB";
             // 
@@ -837,46 +839,48 @@ namespace NewPaitnt
             this.toolStripMenuSave,
             this.toolStripMenuClear});
             this.toolStripMenuFile.Name = "toolStripMenuFile";
-            this.toolStripMenuFile.Size = new System.Drawing.Size(43, 23);
+            this.toolStripMenuFile.Size = new System.Drawing.Size(38, 20);
             this.toolStripMenuFile.Text = "File";
             // 
             // toolStripMenuCreate
             // 
             this.toolStripMenuCreate.Name = "toolStripMenuCreate";
-            this.toolStripMenuCreate.Size = new System.Drawing.Size(126, 24);
+            this.toolStripMenuCreate.Size = new System.Drawing.Size(111, 22);
             this.toolStripMenuCreate.Text = "Create";
             this.toolStripMenuCreate.Click += new System.EventHandler(this.MenuCreate_Click);
             // 
             // toolStripMenuOpen
             // 
             this.toolStripMenuOpen.Name = "toolStripMenuOpen";
-            this.toolStripMenuOpen.Size = new System.Drawing.Size(126, 24);
+            this.toolStripMenuOpen.Size = new System.Drawing.Size(111, 22);
             this.toolStripMenuOpen.Text = "Open";
             this.toolStripMenuOpen.Click += new System.EventHandler(this.MenuOpen_Click);
             // 
             // toolStripMenuSave
             // 
             this.toolStripMenuSave.Name = "toolStripMenuSave";
-            this.toolStripMenuSave.Size = new System.Drawing.Size(126, 24);
+            this.toolStripMenuSave.Size = new System.Drawing.Size(111, 22);
             this.toolStripMenuSave.Text = "Save";
             this.toolStripMenuSave.Click += new System.EventHandler(this.MenuSave_Click);
             // 
             // toolStripMenuClear
             // 
             this.toolStripMenuClear.Name = "toolStripMenuClear";
-            this.toolStripMenuClear.Size = new System.Drawing.Size(126, 24);
+            this.toolStripMenuClear.Size = new System.Drawing.Size(111, 22);
             this.toolStripMenuClear.Text = "Clear";
             this.toolStripMenuClear.Click += new System.EventHandler(this.MenuClear_Click);
             // 
-            // listBox2
+            // FiguresListBox
             // 
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 19;
-            this.listBox2.Location = new System.Drawing.Point(997, 150);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(150, 745);
-            this.listBox2.TabIndex = 4;
+            this.FiguresListBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.FiguresListBox.FormattingEnabled = true;
+            this.FiguresListBox.ItemHeight = 15;
+            this.FiguresListBox.Location = new System.Drawing.Point(872, 120);
+            this.FiguresListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.FiguresListBox.Name = "FiguresListBox";
+            this.FiguresListBox.Size = new System.Drawing.Size(132, 586);
+            this.FiguresListBox.TabIndex = 4;
+            this.FiguresListBox.SelectedIndexChanged += new System.EventHandler(this.FiguresListBox_SelectedIndexChanged);
             // 
             // openFileDialog
             // 
@@ -887,8 +891,8 @@ namespace NewPaitnt
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
-            this.ClientSize = new System.Drawing.Size(1147, 921);
-            this.Controls.Add(this.listBox2);
+            this.ClientSize = new System.Drawing.Size(1004, 727);
+            this.Controls.Add(this.FiguresListBox);
             this.Controls.Add(this.footer);
             this.Controls.Add(this.PanelMenu);
             this.Controls.Add(this.PictureBoxPaint);
@@ -897,7 +901,6 @@ namespace NewPaitnt
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainPaint";
             this.Text = "Paint";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainPaint_FormClosing);
             this.Load += new System.EventHandler(this.MainPaint_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxPaint)).EndInit();
             this.PanelMenu.ResumeLayout(false);
@@ -925,7 +928,7 @@ namespace NewPaitnt
 
         #endregion
 
-        public System.Windows.Forms.PictureBox PictureBoxPaint;
+        private System.Windows.Forms.PictureBox PictureBoxPaint;
         private System.Windows.Forms.Panel PanelMenu;
         private System.Windows.Forms.ComboBox ComboBoxContour;
         private System.Windows.Forms.Button BtnRed;
@@ -991,7 +994,7 @@ namespace NewPaitnt
         private System.Windows.Forms.Button BtnMove;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox FiguresListBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }

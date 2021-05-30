@@ -1,310 +1,295 @@
-﻿using NewPaitnt.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using NewPaitnt.Vector;
+using NewPaitnt.VectorModel;
 
 namespace NewPaitnt.Implementation
 {
-    public static class DrawingEngine
+    public class DrawingEngine
     {
-        public static int Xclick { get; set; }
-        public static int Yclick { get; set; }
-        public static int Xmove { get; set; }
-        public static int Ymove { get; set; }
-        public static int Xstart { get; set; }
-        public static int Ystart { get; set; }
-        public static int Xend { get; set; }
-        public static int Yend { get; set; }
-        public static int UndoIndex { get; set; }
+        private static DrawingEngine _drawingEngine;
+        // Остальные компоненты СинглТоны
+        private Settings _settings;
+        private Storage _storage;
+        private PenPreview _penPreview;
+        private Service _service;
+        // Отслеживание мыши
+        private Point _click;
+        private Point _previousMove;
+        private Point _move;
+        private Point _rightClick;
+        // Графика
+        public Bitmap MainImage;
+        private Bitmap Background;
+        private Bitmap CurrentFigure;
+        private Bitmap Foreground;
+        private Color BlackTransparrent = Color.FromArgb(0, 0, 0, 0);
+        private Graphics MainGraphics;
+        private Graphics BackgroundGraphics;
+        private Graphics FigureGraphics;
+        private Graphics ForegroundGraphics;
+        // Внутренние приватные переменные
+        private int _selectedFigureIndex;
 
-        public static bool IsLineFinished { get; set; }
-        public static bool AddNextPoint { get; set; }
 
-        public static Bitmap MainImage { get; set; }
-        public static Bitmap TempImage { get; set; }
-        public static Bitmap Figure { get ; set; }
-        public static Bitmap Transparent { get; set; }
-        public static Bitmap ClearTransparent { get; set; }
-        
-        // Прозрачный черный цвет для очистки изображения фигуры
-        public static Color BlackTrasparent { get; set; }
-        public static Graphics MainGraphics { get; set; }
-        
-        // Обьект графики для работы с временным изображением - чтобы перерисовывать а не копировать
-        public static Graphics TempGraphics { get; set; }
-        public static Graphics FigureGraphics { get; set; }
-        public static List<Point> CurvePoints { get; set; }
-        public static List<Point> SmoothCurvePoints { get; set; }
-        public static List<Point> Triangle { get; set; }
-        public static List<Point> Line { get; set; }
-        public static List<Bitmap> History { get; set; }
-        public enum Buttons // переместил для читабельности
+        private DrawingEngine(int penBoxWidth, int penBoxHeight)
         {
-            point,
-            curve,
-            rectangle,
-            ellipse,
-            triangle,
-            line,
-            smoothCorv
-        }
-        // Временный тип штриха для рисования точек (возможно костыль)
-        public static DashStyle TempDashStyle { get; set; }
+            _settings = Settings.Initialize();
+            _storage = Storage.Initialize();
+            _penPreview = PenPreview.Initialize(_settings.Pen, penBoxWidth, penBoxHeight);
+            _service = Service.Initialize();
 
+            _click = new Point(0, 0);
+            _previousMove = new Point(0, 0);
+            _move = new Point(0, 0);
+            _rightClick = new Point(0, 0);
 
-       
-        public static void Initialize()
-
-        {
-            MainImage = new Bitmap(Settings.ImageWidth, Settings.ImageHeight); // создавание основного изображения области рисования
-            TempImage = new Bitmap(Settings.ImageWidth, Settings.ImageHeight); // создавание временного изображения
-            Transparent = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);  // создавание второй области рисования для того чтобы мы смогли таскать фигуру по форме
-            ClearTransparent = new Bitmap(Settings.ImageWidth, Settings.ImageHeight);  // создавание второй области рисования для того чтобы мы смогли таскать фигуру по форме
-            BlackTrasparent = Color.FromArgb(0, 0, 0, 0); // Прозрачный черный цвет
-
-            MainGraphics = Graphics.FromImage(MainImage); // создание основного обьекта графики
-            TempGraphics = Graphics.FromImage(TempImage); // создание обьекта графики для работы с временным изображением
-            MainGraphics.Clear(Color.White);  // установка белого цвета
-            FigureGraphics = Graphics.FromImage(Transparent); // создание обьекта графики фигуры
-
-            History = new List<Bitmap>();  // создание списка истории изменения изображения 
-            History.Add((Bitmap)MainImage.Clone());  // добавление исходного изображения в историю
-            UndoIndex = 0;  // текущий индекс отмены для истории
-
-            CurvePoints = new List<Point>();  // создавание пустого списка для точек
-
-            IsLineFinished = true;  // установка флага окончания рисования кривой
-            AddNextPoint = false;  // установка флага на добавление следующей точки в список
-
-            SmoothCurvePoints = new List<Point>();  // создавание списка для сглаженной кривой
-        }
-        
-        public static void ClearCanvas()
-        {
+            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            MainGraphics = Graphics.FromImage(MainImage);
+            BackgroundGraphics = Graphics.FromImage(Background);
+            FigureGraphics = Graphics.FromImage(CurrentFigure);
+            ForegroundGraphics = Graphics.FromImage(Foreground);
             MainGraphics.Clear(Color.White);
+
+            _selectedFigureIndex = -1;
         }
 
-        public static void CalculateCoordinates(int Xcurrent, int Ycurrent)
+        public static DrawingEngine Initialize(int penBoxWidth, int penBoxHeight)
         {
-            Xstart = (Xclick < Xcurrent) ? Xclick : Xcurrent;  
-            Xend = (Xclick < Xcurrent) ? Xcurrent : Xclick;
-            Ystart = (Yclick < Ycurrent) ? Yclick : Ycurrent;
-            Yend = (Yclick < Ycurrent) ? Ycurrent : Yclick;
-        }
-
-        public static void Draw()
-        {
-            switch(Settings.Mode)
+            if (_drawingEngine == null)
             {
-                case Buttons.point:
-                    DrawPoint();
+                _drawingEngine = new DrawingEngine(penBoxWidth, penBoxHeight);
+            }
+            return _drawingEngine;
+        }
+
+        public void ClearCanvas()
+        {
+            // Чистим список фигур и графику
+            _storage.Clear();
+            MainGraphics.Clear(Color.White);
+            BackgroundGraphics.Clear(BlackTransparrent);
+            FigureGraphics.Clear(BlackTransparrent);
+            ForegroundGraphics.Clear(BlackTransparrent);
+        }
+
+        public void CreateFigure() //!!! Вынести в шейп фактори 
+        {
+            switch (_settings.Mode)
+            {
+                case EFigure.Dot:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new Dot(_click, _settings.Pen, _settings.SmoothingMode));
                     break;
-                case Buttons.curve:
-                    DrawCurve();
+                case EFigure.Line:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new Line(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
-                case Buttons.rectangle:
-                    DrawRectangle();
+                case EFigure.Rectangle:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Rectangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
-                case Buttons.ellipse:
-                    DrawEllipse();
+                case EFigure.Triangle:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Triangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
-                case Buttons.triangle:
-                    DrawTriangle();
+                case EFigure.Ellipse:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Ellipse(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
-                case Buttons.line:
-                    DrawLine();
+                case EFigure.RoundedRectangle:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.RoundedRectangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
-                case Buttons.smoothCorv:
-                    DrawSmoothCurve();
+                case EFigure.Curve:
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new Curve (_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
                     break;
+
                 default:
                     break;
             }
         }
 
-        public static void DrawCurve() // Найден баг - если рисовать очень активно, в какой то момент перестает рисовать,
-                                       // а при отпускании кнопки мыши все оставшееся отрисовывается
+        public void DrawAllFigures()
         {
-            RefreshDrawingProcess();
-            if (CurvePoints.Count == 0)
+            // Очищаем основное изображение
+            MainGraphics.Clear(Color.White);
+            // Отрисовываем на нем последовательно все что есть в списке фигур
+            foreach (var figure in _storage.Figures)
             {
-                // Добавляем кординаты клика (сохраненные на mouseDown) если список пустой
-                CurvePoints.Add(new Point(Xclick, Yclick));
+                figure.Draw(ref MainGraphics);
             }
-            // На каджом перемещении мыши добавляем точку движения в список
-            CurvePoints.Add(new Point(Xmove, Ymove));
-            // Отрисовывем кривую по всем точкам в списке, список приводим к массиву
-            FigureGraphics.DrawCurve(Settings.Pen, CurvePoints.ToArray());
-            MainGraphics.DrawImage(Transparent, 0, 0);
         }
 
-        public static void DrawTriangle()
+        // Расписан ниже самый распространенный случай
+        public void SelectFigure()
         {
-            RefreshDrawingProcess();
-
-            Triangle = new List<Point>();
-
-            Triangle.Add(new Point(Xend, Yend));
-            Triangle.Add(new Point(Xstart,Yend));
-            Triangle.Add(new Point((Xstart + Xend) / 2, Ystart));
-
-            FigureGraphics.FillPolygon(Settings.Brush, Triangle.ToArray());
-            FigureGraphics.DrawPolygon(Settings.Pen, Triangle.ToArray());
-
-            MainGraphics.DrawImage(Transparent, 0, 0);
-        }
-
-        public static void DrawEllipse()
-        {
-            RefreshDrawingProcess();
-            FigureGraphics.FillEllipse(Settings.Brush, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
-            FigureGraphics.DrawEllipse(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
-            MainGraphics.DrawImage(Transparent, 0, 0);
-        }
-
-        public static void DrawLine()
-        {
-            RefreshDrawingProcess();
-
-            Line = new List<Point>();
-
-            Line.Add(new Point(Xclick, Yclick));
-            Line.Add(new Point(Xmove, Ymove));
-
-            FigureGraphics.DrawLines(Settings.Pen, Line.ToArray());
-            MainGraphics.DrawImage(Transparent, 0, 0);
-        }
-
-        public static void DrawPoint() // переделал - убрал клонирование Pen для экономии памяти
-        {
-            TempDashStyle = Settings.Pen.DashStyle;
-            Settings.Pen.DashPattern = new float[] { 1f, 1f }; // временно меняем стиль штриха карандашу для отрисовки точки
-            MainGraphics.SmoothingMode = Settings.SmoothingMode;  // устанавливаем обьекту графики свойство сглаживания
-            MainGraphics.DrawLine(Settings.Pen, Xclick, Yclick, Xclick + 1, Yclick + 1);  // рисуется линия, но из за штриха - фактически в первой точке
-            Settings.Pen.DashStyle = TempDashStyle;
-        }
-
-        public static void DrawRectangle() // Баг - при рисовании малого прямоугольника большим пером серидина не окрашивается, в других фигурах то же самое
-        {
-            RefreshDrawingProcess();
-            // Собственно, рисование фигуры
-            FigureGraphics.FillRectangle(Settings.Brush, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
-            FigureGraphics.DrawRectangle(Settings.Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
-            // Отрисовка фигуры по основному изображению
-            MainGraphics.DrawImage(Transparent, 0, 0);
-        
-           
-
-        }
-
-        public static void DrawSmoothCurve()
-        {
-            RefreshDrawingProcess();
-
-            if (SmoothCurvePoints.Count == 0)
+            if (_selectedFigureIndex == 0)
             {
-                SmoothCurvePoints.Add(new Point(Xclick, Yclick));
+                MainGraphics.Clear(Color.White);
+
+                BackgroundGraphics.Clear(BlackTransparrent);
+
+                FigureGraphics.Clear(BlackTransparrent);
+                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
+
+                ForegroundGraphics.Clear(BlackTransparrent);
+                for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count; i++)
+                {
+                    _storage.Figures[i].Draw(ref ForegroundGraphics);
+                }
+
+                MainGraphics.DrawImage(Background, 0, 0);
+                MainGraphics.DrawImage(CurrentFigure, 0, 0);
+                MainGraphics.DrawImage(Foreground, 0, 0);
             }
-
-                if (AddNextPoint)
-                {
-                    SmoothCurvePoints.Add(new Point(Xmove, Ymove));
-                }
-                else
-                {
-                    SmoothCurvePoints[SmoothCurvePoints.Count - 1] = new Point(Xmove, Ymove);
-                }
-
-                if (IsLineFinished)
-                {
-                    SmoothCurvePoints.Add(new Point(Xend, Yend));
-                }
-           
-            FigureGraphics.DrawCurve(Settings.Pen, SmoothCurvePoints.ToArray());
-            MainGraphics.DrawImage(Transparent, 0, 0);
-        }
-
-        public static void MainImageToTemporary()
-        {
-            // Копирование текущего изображения во временное для того, чтобы не затронуть его, пока нажата кнопка мыши
-            // и фигура динамически изменяется
-            // только для старого метода RefreshDrawingProcess
-            //TempImage = (Bitmap)MainImage.Clone();
-
-            // Заменено на перерисовывание вместо клонирования, чтобы не создавать новые тяжелые обьекты Bitmap
-            TempGraphics.DrawImage(MainImage, 0, 0);
-        }
-
-        public static void SaveToHistory()
-        {
-            if (History.Count < 32)
+            else if (_selectedFigureIndex == _storage.Figures.Count - 1)
             {
-                History.Add((Bitmap)MainImage.Clone());
+                MainGraphics.Clear(Color.White);
+
+                BackgroundGraphics.Clear(BlackTransparrent);
+                for (int i = 0; i < _selectedFigureIndex; i++)
+                {
+                    _storage.Figures[i].Draw(ref BackgroundGraphics);
+                }
+
+                FigureGraphics.Clear(BlackTransparrent);
+                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
+
+                ForegroundGraphics.Clear(BlackTransparrent);
+
+                MainGraphics.DrawImage(Background, 0, 0);
+                MainGraphics.DrawImage(CurrentFigure, 0, 0);
+                MainGraphics.DrawImage(Foreground, 0, 0);
             }
             else
             {
-                History.RemoveAt(0);
-                History.Add((Bitmap)MainImage.Clone());
-            }
-            UndoIndex = History.Count - 1;
-        }
-
-        public static void Undo()
-        {
-            UndoIndex = (UndoIndex > 0) ? UndoIndex - 1 : UndoIndex;
-            MainGraphics.DrawImage(History[UndoIndex], 0, 0);
-        }
-
-        public static void Redo()
-        {
-            UndoIndex = (UndoIndex < History.Count - 1) ? UndoIndex + 1 : UndoIndex;
-            MainGraphics.DrawImage(History[UndoIndex], 0, 0);
-        }
-
-        public static void ClearUnnecessaryHistory()
-        {
-            if (UndoIndex == History.Count - 1)
-            {
-                return;
-            }
-            else
-            {
-                History.RemoveRange(UndoIndex + 1, History.Count - 1 - UndoIndex);
+                // Очищаем основное изображение
+                MainGraphics.Clear(Color.White);
+                // Отрисовиваем все фигуры ниже выделенной на отдельном прозрачном изображении
+                BackgroundGraphics.Clear(BlackTransparrent);
+                for (int i = 0; i < _selectedFigureIndex; i++)
+                {
+                    _storage.Figures[i].Draw(ref BackgroundGraphics);
+                }
+                // Отрисовываем текущую фигуру на отдельном прозрачном изображении
+                FigureGraphics.Clear(BlackTransparrent);
+                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
+                // Отрисовываем все фигуры выше выделенной на отдельном прозрачном изображении
+                ForegroundGraphics.Clear(BlackTransparrent);
+                for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count; i++)
+                {
+                    _storage.Figures[i].Draw(ref ForegroundGraphics);
+                }
+                // Совмещаем все три созданных изображения на основном
+                MainGraphics.DrawImage(Background, 0, 0);
+                MainGraphics.DrawImage(CurrentFigure, 0, 0);
+                MainGraphics.DrawImage(Foreground, 0, 0);
             }
         }
 
-        public static void RefreshDrawingProcess()
+        public void MoveFigure()
         {
-            // Новый метод, не требует большого количества памяти, но дергается при резком рывке указателя мыши после простоя
-            // Отрисовываем временное изображение в основном для обновления в процессе рисования
-            MainGraphics.DrawImage(TempImage, 0, 0);
-            // Очищаем изображение с фигурой
-            FigureGraphics.Clear(BlackTrasparent);
-            // Устанавливаем режим сглаживания обьекту графики с фигурой
-            FigureGraphics.SmoothingMode = Settings.SmoothingMode; //требует доработки чтобы не пересечивать постоянно
+            MainGraphics.Clear(Color.White);
+            FigureGraphics.Clear(BlackTransparrent);
+            _storage.Figures[_selectedFigureIndex].Move(_previousMove, _move);
+            _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
 
-            //Старая версия метода, по ощущениям самая плавная
-            // Копирование временного изображения в основное каждый раз при перемещении указателя мыши
-            // для динамической отрисовки фигуры
-            //MainImage = (Bitmap)TempImage.Clone();
-            // Пересоздание основного обьекта графики на основе основного изображения
-            // так как существующий обьект графики продолжает ссылаться в памяти на старое изображение
-            //MainGraphics = Graphics.FromImage(MainImage);
-            // Пересоздание основы для рисования фигуры на основе прозрачного изображения
-            // для того, чтобы на каждом движении мыши с зажатой кнопкой отрисовывать фигуру по чистому прозрачному изображению
-            //Transparent = (Bitmap)ClearTransparent.Clone();
-            // Пересоздание обьекта графики фигуры на основе прозрачного изображения
-            // причина аналогичная
-            //FigureGraphics = Graphics.FromImage(Transparent);
-            // Задаем новому обьекту графики фигуры режим сглаживания
-            //FigureGraphics.SmoothingMode = Settings.SmoothingMode;
-            
-            // В методе рисования необходимо явно вызывать сборщик мусора
+            MainGraphics.DrawImage(Background, 0, 0);
+            MainGraphics.DrawImage(CurrentFigure, 0, 0);
+            MainGraphics.DrawImage(Foreground, 0, 0);
+        }
+
+        public void DrawMainOnBackground()
+        {
+            BackgroundGraphics.DrawImage(MainImage, 0, 0);
+        }
+
+        public void DrawBackgroundOnMain()
+        {
+            MainGraphics.DrawImage(Background, 0, 0);
+        }
+
+        public void CleanBackground()
+        {
+            BackgroundGraphics.Clear(BlackTransparrent);
+        }
+
+        public void CleanFigure()
+        {
+            FigureGraphics.Clear(BlackTransparrent);
+        }
+
+        public void DrawFigureOnMain()
+        {
+            MainGraphics.DrawImage(CurrentFigure, 0, 0);
+        }
+
+        public string[] GetFigureList()
+        {
+            return _storage.FiguresNames.ToArray();
+        }
+
+        // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
+        public void RedrawFigure()
+        {
+            _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics, _move);
+
+        }
+
+        public void DrawFigure()
+        {
+            _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics);
+
+        }
+
+        public void NewClick(Point click)
+        {
+            _click = click;
+            _previousMove = click;
+            _move = click;
+        }
+        public void NewMove(Point move)
+        {
+            _previousMove = _move;
+            _move = move;
+        }
+        public void NewRightClick(Point rightClick)
+        {
+            _rightClick = rightClick;
+        }
+        public Bitmap GetPenImage()
+        {
+            _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
+            return _penPreview.PenBitmap;
+        }
+        public void SetPenWidth(float newWidth)
+        {
+            _settings.SetPenWidth(newWidth);
+            _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
+        }
+        public void SetPenColor(Color color)
+        {
+            _settings.SetPenColor(color);
+            _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
+        }
+        public void SetMode(EFigure newMode)
+        {
+            _settings.SetMode(newMode);
+        }
+        public void SetSmoothingMode(SmoothingMode newMode)
+        {
+            _settings.SetSmoothingMode(newMode);
+            MainGraphics.SmoothingMode = _settings.SmoothingMode;
+            // Нужно будет доработать
+        }
+        public EFigure GetMode()
+        {
+            return _settings.Mode;
         }
     }
 }

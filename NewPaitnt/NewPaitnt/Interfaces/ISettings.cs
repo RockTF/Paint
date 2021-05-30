@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Interfaces
 {
-    interface ISettings
+    public interface ISettings
     {
         ushort ImageWidth { get; set; }
         ushort ImageHeight { get; set; }

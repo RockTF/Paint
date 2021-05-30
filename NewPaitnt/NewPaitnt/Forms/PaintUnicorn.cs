@@ -68,7 +68,11 @@ namespace NewPaitnt
                     drawingEngine.CleanFigure();
                     drawingEngine.DrawFigure();
                     drawingEngine.DrawFigureOnMain();
-                }               
+                }
+                else if(drawingEngine.GetMode() == EFigure.Move)
+                {
+                    drawingEngine.SelectFigure();
+                }
                
                 PictureBoxPaint.Image = drawingEngine.MainImage;
                 
@@ -349,7 +353,7 @@ namespace NewPaitnt
 
         private void FiguresListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            drawingEngine.SelectFigure((sender as ListBox).SelectedIndex);
+            drawingEngine.SetSelectedFigure((sender as ListBox).SelectedIndex);
         }
 
         private void BtnMove_Click(object sender, EventArgs e)

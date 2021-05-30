@@ -128,9 +128,8 @@ namespace NewPaitnt.Implementation
         }
 
         // Расписан ниже самый распространенный случай
-        public void SelectFigure(int figurePosition)
+        public void SelectFigure()
         {
-            _selectedFigureIndex = figurePosition;
             if (_selectedFigureIndex == 0)
             {
                 MainGraphics.Clear(Color.White);
@@ -141,7 +140,7 @@ namespace NewPaitnt.Implementation
                 _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
 
                 ForegroundGraphics.Clear(BlackTransparrent);
-                for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count - 1; i++)
+                for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count; i++)
                 {
                     _storage.Figures[i].Draw(ref ForegroundGraphics);
                 }
@@ -184,7 +183,7 @@ namespace NewPaitnt.Implementation
                 _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
                 // Отрисовываем все фигуры выше выделенной на отдельном прозрачном изображении
                 ForegroundGraphics.Clear(BlackTransparrent);
-                for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count - 1; i++)
+                for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count; i++)
                 {
                     _storage.Figures[i].Draw(ref ForegroundGraphics);
                 }
@@ -293,6 +292,11 @@ namespace NewPaitnt.Implementation
         public EFigure GetMode()
         {
             return _settings.Mode;
+        }
+
+        public void SetSelectedFigure(int figureIndex)
+        {
+            _selectedFigureIndex = figureIndex;
         }
     }
 }

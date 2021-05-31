@@ -13,6 +13,7 @@ namespace NewPaitnt
     public partial class MainPaint : Form
     {
         Process currentProcess;
+        Settings settings;
         bool IsBtnFillClicked;
         DrawingEngine drawingEngine;
         private bool _isFigureCreated;
@@ -50,6 +51,8 @@ namespace NewPaitnt
                ControlStyles.AllPaintingInWmPaint,
                true);
             this.UpdateStyles();
+
+            settings = Settings.Initialize();
         }
 
         private void PictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
@@ -259,20 +262,20 @@ namespace NewPaitnt
 
         private void ComboBoxContour_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //switch (ComboBoxContour.SelectedIndex)
-            //{
-            //    case 0:
-            //        Pen.DashStyle = DashStyle.Solid;
-            //        break;
-            //    case 1:
-            //        Pen.DashStyle = DashStyle.Dash;
-            //        break;
-            //    case 2:
-            //        Pen.DashStyle = DashStyle.DashDot;
-            //        break;
-            //    default:
-            //        break;
-            //}
+            switch (ComboBoxContour.SelectedIndex)
+            {
+                case 0:
+                    settings.Pen.DashStyle = DashStyle.Solid;
+                    break;
+                case 1:
+                    settings.Pen.DashStyle = DashStyle.Dash;
+                    break;
+                case 2:
+                    settings.Pen.DashStyle = DashStyle.DashDot;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void PictureBoxPaint_Click(object sender, EventArgs e)

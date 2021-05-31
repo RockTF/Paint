@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using Button = System.Windows.Forms.Button;
 
 namespace NewPaitnt
@@ -14,8 +12,8 @@ namespace NewPaitnt
     {
         Process currentProcess;
         Settings settings;
-        bool IsBtnFillClicked;
         DrawingEngine drawingEngine;
+        private bool _isBtnFillClicked;
         private bool _isFigureCreated;
 
         public MainPaint()
@@ -28,6 +26,7 @@ namespace NewPaitnt
 
         private void MainPaint_Load(object sender, EventArgs e)
         {
+            settings = Settings.Initialize();
             drawingEngine = DrawingEngine.Initialize(PictureBoxThickness.Width, PictureBoxThickness.Height);
 
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
@@ -35,10 +34,10 @@ namespace NewPaitnt
 
             currentProcess = Process.GetCurrentProcess();
             currentProcess.Refresh();
-            memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
-
-            IsBtnFillClicked = false;
-
+            memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + "MB";
+            
+            _isBtnFillClicked = false;
+            
             _isFigureCreated =false;
             // Антон ещё меняет
             //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
@@ -46,13 +45,8 @@ namespace NewPaitnt
             //DoubleBuffered = true;
 
             // Set the value of the double-buffering style bits to true.
-            this.SetStyle(ControlStyles.DoubleBuffer |
-               ControlStyles.UserPaint |
-               ControlStyles.AllPaintingInWmPaint,
-               true);
+            this.SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.UpdateStyles();
-
-            settings = Settings.Initialize();
         }
 
         private void PictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
@@ -78,7 +72,6 @@ namespace NewPaitnt
                 }
                
                 PictureBoxPaint.Image = drawingEngine.MainImage;
-                
             }
         }
 
@@ -138,8 +131,19 @@ namespace NewPaitnt
 
         }
 
-
-        // кнопок и методов нет - оставила для Наташи
+        private void MenuCreate_Click(object sender, EventArgs e) //очищать лист при вызове метода
+        {
+            CreateNewCanvas createNewCanvas = (CreateNewCanvas)Application.OpenForms["CreateNewCanvas"];
+            if (createNewCanvas == null)
+            {
+                createNewCanvas = new CreateNewCanvas();
+                createNewCanvas.Show();
+            }
+            else
+            {
+                createNewCanvas.Activate();
+            }
+        }
 
         private void MenuSave_Click(object sender, EventArgs e)
         {
@@ -153,7 +157,7 @@ namespace NewPaitnt
                 }
             }
         }
-        private void MenuOpen_Click(object sender, EventArgs e) // очищвется при рисовании нужно добавлять в лист????
+        private void MenuOpen_Click(object sender, EventArgs e) // очищaется при рисовании нужно добавлять в лист????
         {
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
@@ -163,8 +167,6 @@ namespace NewPaitnt
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                PictureBoxPaint.Image = Image.FromFile(openFileDialog.FileName); 
-                
-
             }
         }
 
@@ -174,26 +176,34 @@ namespace NewPaitnt
             PictureBoxPaint.Image = drawingEngine.MainImage;
         }
 
-
         private void TrackBarThickness_Scroll(object sender, EventArgs e)
         {
             drawingEngine.SetPenWidth(TrackBarThickness.Value);
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
         }
 
-        // кнопки цвет больше нет, метод надо менять 
-        //private void BtnColor_Click(object sender, EventArgs e)
-        //{
-        //    if (colorDialog1.ShowDialog() == DialogResult.OK)
-        //    {
-        //        Settings.Pen.Color = colorDialog1.Color;
-        //        btnColor.BackColor = colorDialog1.Color;
-        //        PenPreview.Refresh();
-        //        pictureBoxPen.Image = PenPreview.PenBitmap;
-        //    }
-        //}
+        private void BtnFill_Click(object sender, EventArgs e)
+        {
+            _isBtnFillClicked = true;
+        }
 
-        
+        private void BtnUndo_Click(object sender, EventArgs e)
+        {
+            
+            //DrawingEngine.Undo();
+            //PictureBoxPaint.Image = DrawingEngine.MainImage;
+        }
+
+        private void BtnRedo_Click(object sender, EventArgs e)
+        {
+            //DrawingEngine.Redo();
+            //PictureBoxPaint.Image = DrawingEngine.MainImage;
+        }
+
+        private void BtnPoint_Click(object sender, EventArgs e)
+        {
+            drawingEngine.SetMode(EFigure.Dot);
+        }
 
         private void BtnRectangle_Click(object sender, EventArgs e)
         {
@@ -203,28 +213,6 @@ namespace NewPaitnt
         private void BtnEllipse_Click(object sender, EventArgs e)
         {
             drawingEngine.SetMode(EFigure.Ellipse);
-        }
-
-        private void BtnFill_Click(object sender, EventArgs e)
-        {
-            IsBtnFillClicked = true;
-        }
-
-        private void BtnPoint_Click(object sender, EventArgs e)
-        {
-            drawingEngine.SetMode(EFigure.Dot);
-        }
-
-        private void BtnUndo_Click(object sender, EventArgs e)
-        {
-            //DrawingEngine.Undo();
-            //PictureBoxPaint.Image = DrawingEngine.MainImage;
-        }
-
-        private void BtnRedo_Click(object sender, EventArgs e)
-        {
-            //DrawingEngine.Redo();
-            //PictureBoxPaint.Image = DrawingEngine.MainImage;
         }
 
         private void BtnCurve_Click(object sender, EventArgs e)
@@ -244,14 +232,19 @@ namespace NewPaitnt
 
         private void SmoothCorve(object sender, EventArgs e)
         {
-            //Mode = EFigure.SmoothCorv;
+            drawingEngine.SetMode(EFigure.SmoothCorv);
+        }
+
+        private void BtnSguare_Click(object sender, EventArgs e)
+        {
+            drawingEngine.SetMode(EFigure.RoundedRectangle);
         }
 
         private void CheckBoxAntiAliasing_CheckedChanged(object sender, EventArgs e)
         {
             if (CheckBoxAntiAliasing.Checked)
             {
-               drawingEngine.SetSmoothingMode(SmoothingMode.AntiAlias);
+                drawingEngine.SetSmoothingMode(SmoothingMode.AntiAlias);
             }
             else
             {
@@ -278,57 +271,10 @@ namespace NewPaitnt
             }
         }
 
-        private void PictureBoxPaint_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        //private void UpdateShapeListComboBox()
-        //{
-        //    this.cb_shapeList.DataSource = null;
-        //    this.cb_shapeList.DataSource = this.shapesList;
-        //    this.cb_shapeList.SelectedIndex = this.shapesList.Count - 1;
-        //}
-
-        //private void BufferToCanvas()
-        //{
-        //    this.DrawShapesToBuffer();
-        //    this.bgGraph.Render(this.canvas.CreateGraphics());
-        //}
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            //MyFill currentFill = null;
-            //if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            //{
-            //    currentFill = new MyFill(e.Location, this.colorChoicer.BColor);
-            //}
-            //this.shapesList.Add(currentFill);
-
-            //this.UpdateShapeListComboBox();
-
-            //this.BufferToCanvas();
-
-            //if (this.cb_shapeList.SelectedIndex == -1 || this.shapesList.Count == 0)
-            //{
-            //    return;
-            //}
-
-
-        }
-
-        private void BtnSguare_Click(object sender, EventArgs e)
-        {
-            drawingEngine.SetMode(EFigure.RoundedRectangle);
-        }
-
         private void Color_btn(object sender, EventArgs e)
         {
-
             drawingEngine.SetPenColor(((Button)sender).BackColor);
             PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
-
         }
 
         private void PictureBoxColors_Click(object sender, EventArgs e)
@@ -337,20 +283,6 @@ namespace NewPaitnt
             {
                 drawingEngine.SetPenColor (colorDialog1.Color);
                 PictureBoxColorFillFigure.BackColor = colorDialog1.Color;
-             
-           }
-        }
-        private void MenuCreate_Click(object sender, EventArgs e) //очищать лист при вызове метода
-        {
-            CreateNewCanvas createNewCanvas = (CreateNewCanvas)Application.OpenForms["CreateNewCanvas"];
-            if (createNewCanvas == null)
-            {
-                createNewCanvas = new CreateNewCanvas();
-                createNewCanvas.Show();
-            }
-            else
-            {
-                createNewCanvas.Activate();
             }
         }
 
@@ -363,5 +295,20 @@ namespace NewPaitnt
         {
             drawingEngine.SetMode(EFigure.Move);
         }
+
+        private void MainPaint_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (PictureBoxPaint.Image != null)
+            {
+                var result = MessageBox.Show("Save your changes before exiting?", "Attention", MessageBoxButtons.YesNoCancel);
+                switch (result)
+                {
+                    case DialogResult.No: break;
+                    case DialogResult.Yes: MenuSave_Click(sender, e); break;
+                    case DialogResult.Cancel: return;
+                }
+            }
+        }
+
     }
 }

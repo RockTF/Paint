@@ -1,11 +1,8 @@
 ﻿using NewPaitnt.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NewPaitnt.Implementation
 {
@@ -31,7 +28,6 @@ namespace NewPaitnt.Implementation
             using (file = new FileStream("Figuras.json", FileMode.OpenOrCreate)) 
             {
                 var _storege = jsonFormatter.ReadObject(file) as List<IDrawable>; //Это передать в нью сторедж 
-
             }
 
         }

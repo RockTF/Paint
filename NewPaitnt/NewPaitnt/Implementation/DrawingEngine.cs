@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
@@ -31,7 +30,6 @@ namespace NewPaitnt.Implementation
         private Graphics ForegroundGraphics;
         // Внутренние приватные переменные
         private int _selectedFigureIndex;
-
 
         private DrawingEngine(int penBoxWidth, int penBoxHeight)
         {
@@ -114,6 +112,10 @@ namespace NewPaitnt.Implementation
                     break;
             }
         }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         public void DrawAllFigures()
         {
             // Очищаем основное изображение
@@ -237,14 +239,22 @@ namespace NewPaitnt.Implementation
         // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
         public void RedrawFigure()
         {
+<<<<<<< Updated upstream
             _storage.Figures[_storage.Figures.Count -1].Draw(ref FigureGraphics, _move); // Сделать в Storage GetFigureLast()
 
+=======
+            _storage.Figures[_storage.Figures.Count -1].Draw(ref FigureGraphics, _move);
+>>>>>>> Stashed changes
         }
 
         public void DrawFigure()
         {
+<<<<<<< Updated upstream
             _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics); // Сделать в Storage 
 
+=======
+            _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics);
+>>>>>>> Stashed changes
         }
 
         public void NewClick(Point click)
@@ -253,6 +263,7 @@ namespace NewPaitnt.Implementation
             _previousMove = click;
             _move = click;
         }
+
         public void NewMove(Point move)
         {
             _previousMove = _move;
@@ -262,31 +273,37 @@ namespace NewPaitnt.Implementation
         {
             _rightClick = rightClick;
         }
+
         public Bitmap GetPenImage()
         {
             _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
             return _penPreview.PenBitmap;
         }
+
         public void SetPenWidth(float newWidth)
         {
             _settings.SetPenWidth(newWidth);
             _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
         }
+
         public void SetPenColor(Color color)
         {
             _settings.SetPenColor(color);
             _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
         }
+
         public void SetMode(EFigure newMode)
         {
             _settings.SetMode(newMode);
         }
+
         public void SetSmoothingMode(SmoothingMode newMode)
         {
             _settings.SetSmoothingMode(newMode);
             MainGraphics.SmoothingMode = _settings.SmoothingMode;
             // Нужно будет доработать
         }
+
         public EFigure GetMode()
         {
             return _settings.Mode;
@@ -295,6 +312,22 @@ namespace NewPaitnt.Implementation
         public void SetSelectedFigure(int figureIndex)
         {
             _selectedFigureIndex = figureIndex;
+        }
+
+        public void Undo(int figureIndex)
+        {
+           //if (_storage.Figures.Count != 0 && figureIndex != 0)
+           //{
+           //     MainGraphics = new MainGraphics(_storage.Figures[--figureIndex]);
+           //}
+        }
+
+        public void Redo(int figureIndex)
+        {
+            //if (figureIndex < _storage.Figures.Count - 1)
+            //{
+            //    MainGraphics = _storage.Figures[++figureIndex];
+            //}
         }
     }
 }

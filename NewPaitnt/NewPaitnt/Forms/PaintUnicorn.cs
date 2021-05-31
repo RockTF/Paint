@@ -13,6 +13,7 @@ namespace NewPaitnt
         Process currentProcess;
         Settings settings;
         DrawingEngine drawingEngine;
+        MouseHandler mouseHandler;
         private bool _isBtnFillClicked;
         private bool _isFigureCreated;
 
@@ -23,9 +24,11 @@ namespace NewPaitnt
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         }
+    
 
         private void MainPaint_Load(object sender, EventArgs e)
         {
+            mouseHandler = MouseHandler.Initialize();
             settings = Settings.Initialize();
             drawingEngine = DrawingEngine.Initialize(PictureBoxThickness.Width, PictureBoxThickness.Height);
 
@@ -54,17 +57,13 @@ namespace NewPaitnt
             if (e.Button == MouseButtons.Left)
             {
                 drawingEngine.DrawMainOnBackground();
-                drawingEngine.NewClick(e.Location);
+                mouseHandler.NewClick(e.Location);
 
                 if(drawingEngine.GetMode() == EFigure.Dot)
                 {
                     _isFigureCreated = true;
 
-                    drawingEngine.CreateFigure();
-                    drawingEngine.DrawBackgroundOnMain();
-                    drawingEngine.CleanFigure();
-                    drawingEngine.DrawFigure();
-                    drawingEngine.DrawFigureOnMain();
+                    drawingEngine.DrawNewFigure();
                 }
                 else if(drawingEngine.GetMode() == EFigure.Move)
                 {
@@ -79,38 +78,24 @@ namespace NewPaitnt
         {
             if (e.Button == MouseButtons.Left && drawingEngine.GetMode() != EFigure.Dot && drawingEngine.GetMode() != EFigure.Move)
             {
-                drawingEngine.NewMove(e.Location);
-
-                //if (drawingEngine.GetMode() != EFigure.Dot)
-                //{
-                //    drawingEngine.CreateFigure();
-                //    _isFigureCreated = true;
-                //}
+                mouseHandler.NewMove(e.Location);
 
                 if (!_isFigureCreated)
                 {
                     _isFigureCreated = true;
 
-                    drawingEngine.CreateFigure();
-                    drawingEngine.DrawBackgroundOnMain();
-                    drawingEngine.CleanFigure();
-                    drawingEngine.DrawFigure();
-                    drawingEngine.DrawFigureOnMain();
-
+                    drawingEngine.DrawNewFigure();
                 }
                 else
                 {
-                    drawingEngine.DrawBackgroundOnMain();
-                    drawingEngine.CleanFigure();
-                    drawingEngine.RedrawFigure();
-                    drawingEngine.DrawFigureOnMain();
+                    drawingEngine.RedrawNewFigure();
                 }
 
                 PictureBoxPaint.Image = drawingEngine.MainImage;
             }
             else if (e.Button == MouseButtons.Left && drawingEngine.GetMode() == EFigure.Move)
             {
-                drawingEngine.NewMove(e.Location);
+                mouseHandler.NewMove(e.Location);
 
                 drawingEngine.MoveFigure();
 
@@ -136,6 +121,10 @@ namespace NewPaitnt
             CreateNewCanvas createNewCanvas = (CreateNewCanvas)Application.OpenForms["CreateNewCanvas"];
             if (createNewCanvas == null)
             {
+                if (BtnMove.Enabled)
+                {
+                    settings.SetMode(EFigure.Curve);
+                }
                 createNewCanvas = new CreateNewCanvas();
                 createNewCanvas.Show();
             }
@@ -320,5 +309,9 @@ namespace NewPaitnt
             }
         }
 
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            drawingEngine.DeleteFigure();
+        }
     }
 }

@@ -39,8 +39,12 @@ namespace NewPaitnt.Implementation
             }
             else
             {
-                throw new IndexOutOfRangeException(); // срабатывает после очистки если включен Move
+               throw new IndexOutOfRangeException(); 
             }
+        }
+        public IDrawable GetLastFigure()
+        {
+            return _figures[_count - 1];
         }
         public List<IDrawable> GetAllFigures()
         {

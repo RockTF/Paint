@@ -13,11 +13,8 @@ namespace NewPaitnt.Implementation
         private Storage _storage;
         private PenPreview _penPreview;
         private Service _service;
-        // Отслеживание мыши
-        private Point _click;
-        private Point _previousMove;
-        private Point _move;
-        private Point _rightClick;
+        private MouseHandler _mouseHandler;
+              
         // Графика
         public Bitmap Canvas;
         public Bitmap MainImage;
@@ -38,23 +35,20 @@ namespace NewPaitnt.Implementation
             _storage = Storage.Initialize();
             _penPreview = PenPreview.Initialize(_settings.Pen, penBoxWidth, penBoxHeight);
             _service = Service.Initialize();
+            _mouseHandler = MouseHandler.Initialize();
 
-            _click = new Point(0, 0);
-            _previousMove = new Point(0, 0);
-            _move = new Point(0, 0);
-            _rightClick = new Point(0, 0);
 
             Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
             MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
             Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
             CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
             Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+
             MainGraphics = Graphics.FromImage(MainImage);
             BackgroundGraphics = Graphics.FromImage(Background);
             FigureGraphics = Graphics.FromImage(CurrentFigure);
             ForegroundGraphics = Graphics.FromImage(Foreground);
             MainGraphics.Clear(Color.White);
-
             Canvas = (Bitmap)MainImage.Clone();
 
             _selectedFigureIndex = -1;
@@ -82,31 +76,31 @@ namespace NewPaitnt.Implementation
             {
                 case EFigure.Dot:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new Dot(_click, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new Dot(_mouseHandler.GetClick(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Line:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new Line(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                           case EFigure.Rectangle:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Rectangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Triangle:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Triangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Ellipse:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Ellipse(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.RoundedRectangle:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.RoundedRectangle(_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Curve:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new Curve (_previousMove, _move, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new Curve (_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
 
                 default:
@@ -158,11 +152,25 @@ namespace NewPaitnt.Implementation
             {
                 MainGraphics.DrawImage(Canvas, 0, 0);
                 FigureGraphics.Clear(BlackTransparrent);
-                _storage.GetFigure(_selectedFigureIndex).Move(_previousMove, _move);
+                _storage.GetFigure(_selectedFigureIndex).Move(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove());
                 _storage.GetFigure(_selectedFigureIndex).Draw(ref FigureGraphics);
                 DrawLayers();
             }
         }
+        public void DeleteFigure()
+        {
+            if (_selectedFigureIndex >= 0)
+            {
+                MainGraphics.DrawImage(Canvas, 0, 0);
+                FigureGraphics.Clear(BlackTransparrent);
+                _storage.GetFigure(_selectedFigureIndex);
+                _storage.RemoveFigureAt(_selectedFigureIndex);
+                //_storage.GetFigure(_selectedFigureIndex).Draw(ref FigureGraphics);
+                DrawLayers();
+
+            }
+        }
+
 
         public void DrawMainOnBackground()
         {
@@ -197,30 +205,14 @@ namespace NewPaitnt.Implementation
         // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
         public void RedrawFigure()
         {
-            _storage.GetFigure(_storage.GetCount() - 1).Draw(ref FigureGraphics, _move);
+            _storage.GetLastFigure().Draw(ref FigureGraphics, _mouseHandler.GetMove());
         }
 
         public void DrawFigure()
         {
-            _storage.GetFigure(_storage.GetCount() - 1).Draw(ref FigureGraphics);
+            _storage.GetLastFigure().Draw(ref FigureGraphics);
         }
 
-        public void NewClick(Point click)
-        {
-            _click = click;
-            _previousMove = click;
-            _move = click;
-        }
-
-        public void NewMove(Point move)
-        {
-            _previousMove = _move;
-            _move = move;
-        }
-        public void NewRightClick(Point rightClick)
-        {
-            _rightClick = rightClick;
-        }
 
         public Bitmap GetPenImage()
         {
@@ -280,6 +272,38 @@ namespace NewPaitnt.Implementation
         public void ClearStorage()
         {
             _storage.Clear();
+        }
+        public void NewImageSize()
+        {
+            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+
+            MainGraphics = Graphics.FromImage(MainImage);
+            BackgroundGraphics = Graphics.FromImage(Background);
+            FigureGraphics = Graphics.FromImage(CurrentFigure);
+            ForegroundGraphics = Graphics.FromImage(Foreground);
+            MainGraphics.Clear(Color.White);
+            Canvas = (Bitmap)MainImage.Clone();
+
+            ClearCanvas();
+        }
+        public void DrawNewFigure()
+        {
+            CreateFigure();
+            DrawBackgroundOnMain();
+            CleanFigure();
+            DrawFigure();
+            DrawFigureOnMain();
+        }
+        public void RedrawNewFigure()
+        {
+            DrawBackgroundOnMain();
+            CleanFigure();
+            RedrawFigure();
+            DrawFigureOnMain();
         }
     }
 }

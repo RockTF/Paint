@@ -10,6 +10,7 @@ namespace NewPaitnt.Interfaces
     {
         public void AddFigure(IDrawable figure);
         public IDrawable GetFigure(int position);
+        public IDrawable GetLastFigure();
         public List<IDrawable> GetAllFigures();
         public string GetFigureName(int position);
         public List<string> GetFiguresNames();

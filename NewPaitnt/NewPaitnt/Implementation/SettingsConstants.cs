@@ -6,7 +6,7 @@ namespace NewPaitnt.Implementation
     {
         public const int DefaultImageWidth = 928;
         public const int DefaultImageHeight = 560;
-        public const EFigure DefaultMode = EFigure.Dot;
+        public const EFigure DefaultMode = EFigure.Curve;
         public const SmoothingMode DefaultSmoothingMode = SmoothingMode.None;
     }
 }

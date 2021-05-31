@@ -119,7 +119,7 @@ namespace NewPaitnt.Implementation
             // Очищаем основное изображение
             MainGraphics.DrawImage(Canvas, 0, 0);
             // Отрисовываем на нем последовательно все что есть в списке фигур
-            foreach (var figure in _storage.Figures)
+            foreach (var figure in _storage.GetAllFigures())
             {
                 figure.Draw(ref MainGraphics);
             }
@@ -131,10 +131,10 @@ namespace NewPaitnt.Implementation
             {
                 ClearLayers();
                 DrawSelectedFigure();
-                DrawFigureSequence(_selectedFigureIndex + 1, _storage.Figures.Count);
+                DrawFigureSequence(_selectedFigureIndex + 1, _storage.GetCount());
                 DrawLayers();
             }
-            else if (_selectedFigureIndex == _storage.Figures.Count - 1)
+            else if (_selectedFigureIndex == _storage.GetCount() - 1)
             {
                 ClearLayers();
                 DrawFigureSequence(0, _selectedFigureIndex);
@@ -146,8 +146,8 @@ namespace NewPaitnt.Implementation
                 ClearLayers();
                 DrawFigureSequence(0, _selectedFigureIndex);
                 DrawSelectedFigure();
-                for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count; i++)
-                DrawFigureSequence(_selectedFigureIndex + 1, _storage.Figures.Count);
+                for (int i = _selectedFigureIndex + 1; i < _storage.GetCount(); i++)
+                DrawFigureSequence(_selectedFigureIndex + 1, _storage.GetCount());
                 DrawLayers();
             }
         }
@@ -158,8 +158,8 @@ namespace NewPaitnt.Implementation
             {
                 MainGraphics.DrawImage(Canvas, 0, 0);
                 FigureGraphics.Clear(BlackTransparrent);
-                _storage.Figures[_selectedFigureIndex].Move(_previousMove, _move);
-                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
+                _storage.GetFigure(_selectedFigureIndex).Move(_previousMove, _move);
+                _storage.GetFigure(_selectedFigureIndex).Draw(ref FigureGraphics);
                 DrawLayers();
             }
         }
@@ -191,18 +191,18 @@ namespace NewPaitnt.Implementation
 
         public string[] GetFigureList() 
         {
-            return _storage.FiguresNames.ToArray();
+            return _storage.GetFiguresNames().ToArray();
         }
 
         // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
         public void RedrawFigure()
         {
-            _storage.Figures[_storage.Figures.Count -1].Draw(ref FigureGraphics, _move);
+            _storage.GetFigure(_storage.GetCount() - 1).Draw(ref FigureGraphics, _move);
         }
 
         public void DrawFigure()
         {
-            _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics);
+            _storage.GetFigure(_storage.GetCount() - 1).Draw(ref FigureGraphics);
         }
 
         public void NewClick(Point click)
@@ -226,30 +226,6 @@ namespace NewPaitnt.Implementation
         {
             _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
             return _penPreview.PenBitmap;
-        }
-
-        public void SetPenWidth(float newWidth)
-        {
-            _settings.SetPenWidth(newWidth);
-            _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
-        }
-
-        public void SetPenColor(Color color)
-        {
-            _settings.SetPenColor(color);
-            _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
-        }
-
-        public void SetMode(EFigure newMode)
-        {
-            _settings.SetMode(newMode);
-        }
-
-        public void SetSmoothingMode(SmoothingMode newMode)
-        {
-            _settings.SetSmoothingMode(newMode);
-            MainGraphics.SmoothingMode = _settings.SmoothingMode;
-            // Нужно будет доработать
         }
 
         public EFigure GetMode()
@@ -289,7 +265,7 @@ namespace NewPaitnt.Implementation
         {
             if (_selectedFigureIndex >= 0)
             {
-                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
+                _storage.GetFigure(_selectedFigureIndex).Draw(ref FigureGraphics);
             }
         }
 
@@ -297,8 +273,13 @@ namespace NewPaitnt.Implementation
         {
             for (int i = startIndex; i < endIndex; i++)
             {
-                _storage.Figures[i].Draw(ref ForegroundGraphics);
+                _storage.GetFigure(i).Draw(ref ForegroundGraphics);
             }
+        }
+
+        public void ClearStorage()
+        {
+            _storage.Clear();
         }
     }
 }

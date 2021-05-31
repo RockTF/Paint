@@ -1,20 +1,21 @@
-﻿using NewPaitnt.Interfaces;
+﻿using System;
+using NewPaitnt.Interfaces;
 using System.Collections.Generic;
 
 namespace NewPaitnt.Implementation
 {
-    public class Storage
+    public class Storage : IStorage
     {
         private static Storage _storage;
 
-        // Создвть интерфейс
-
-        public List<IDrawable> Figures { get; private set; } //private _figures
-        public List<string> FiguresNames { get; private set; } //private _figuresNames
+        private int _count;
+        private List<IDrawable> _figures;
+        private List<string> _figuresNames;
         private Storage()
         {
-            Figures = new List<IDrawable>();
-            FiguresNames = new List<string>();
+            _count = 0;
+            _figures = new List<IDrawable>();
+            _figuresNames = new List<string>();
         }
         public static Storage Initialize()
         {
@@ -26,19 +27,62 @@ namespace NewPaitnt.Implementation
         }
         public void AddFigure(IDrawable figure)
         {
-            Figures.Add(figure);
-            FiguresNames.Add(figure.FigureName);
+            _count++;
+            _figures.Add(figure);
+            _figuresNames.Add(figure.FigureName);
+        }
+        public IDrawable GetFigure(int position)
+        {
+            if (position >= 0 && position < _figures.Count)
+            {
+                return _figures[position];
+            }
+            else
+            {
+                throw new IndexOutOfRangeException(); // срабатывает после очистки если включен Move
+            }
+        }
+        public List<IDrawable> GetAllFigures()
+        {
+            return _figures;
+        }
+        public string GetFigureName(int position)
+        {
+            if (position >= 0 && position < _figures.Count)
+            {
+                return _figuresNames[position];
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+        public List<string> GetFiguresNames()
+        {
+            return _figuresNames;
+        }
+        public int GetCount()
+        {
+            return _count;
         }
         public void RemoveFigureAt(int position)
         {
-            Figures.RemoveAt(position);
-            FiguresNames.RemoveAt(position);
+            if (position >= 0 && position < _figures.Count)
+            {
+                _count--;
+                _figures.RemoveAt(position);
+                _figuresNames.RemoveAt(position);
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
-
         public void Clear()
         {
-            Figures.Clear();
-            FiguresNames.Clear();
+            _count = 0;
+            _figures.Clear();
+            _figuresNames.Clear();
         }
     }
 }

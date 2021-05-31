@@ -176,13 +176,17 @@ namespace NewPaitnt
 
         private void MenuClear_Click(object sender, EventArgs e)
         {
+            drawingEngine.ClearStorage();
             drawingEngine.ClearCanvas();
             PictureBoxPaint.Image = drawingEngine.MainImage;
+            FiguresListBox.Items.Clear();
+            FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
+            settings.SetMode(SettingsConstants.DefaultMode);
         }
 
         private void TrackBarThickness_Scroll(object sender, EventArgs e)
         {
-            drawingEngine.SetPenWidth(TrackBarThickness.Value);
+            settings.SetPenWidth(TrackBarThickness.Value);
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
         }
 
@@ -206,53 +210,53 @@ namespace NewPaitnt
 
         private void BtnPoint_Click(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.Dot);
+            settings.SetMode(EFigure.Dot);
         }
 
         private void BtnRectangle_Click(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.Rectangle);
+            settings.SetMode(EFigure.Rectangle);
         }
 
         private void BtnEllipse_Click(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.Ellipse);
+            settings.SetMode(EFigure.Ellipse);
         }
 
         private void BtnCurve_Click(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.Curve); 
+            settings.SetMode(EFigure.Curve); 
         }
 
         private void BtnTriangle_Click(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.Triangle);
+            settings.SetMode(EFigure.Triangle);
         }
 
         private void BtnLine_Click(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.Line);
+            settings.SetMode(EFigure.Line);
         }
 
         private void SmoothCorve(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.SmoothCorv);
+            settings.SetMode(EFigure.SmoothCorv);
         }
 
         private void BtnSguare_Click(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.RoundedRectangle);
+            settings.SetMode(EFigure.RoundedRectangle);
         }
 
         private void CheckBoxAntiAliasing_CheckedChanged(object sender, EventArgs e)
         {
             if (CheckBoxAntiAliasing.Checked)
             {
-                drawingEngine.SetSmoothingMode(SmoothingMode.AntiAlias);
+                settings.SetSmoothingMode(SmoothingMode.AntiAlias);
             }
             else
             {
-                drawingEngine.SetSmoothingMode(SmoothingMode.None);
+                settings.SetSmoothingMode(SmoothingMode.None);
             }
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
         }
@@ -277,16 +281,18 @@ namespace NewPaitnt
 
         private void Color_btn(object sender, EventArgs e)
         {
-            drawingEngine.SetPenColor(((Button)sender).BackColor);
+            settings.SetPenColor(((Button)sender).BackColor);
             PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
+            PictureBoxThickness.Image = drawingEngine.GetPenImage();
         }
 
         private void PictureBoxColors_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
-                drawingEngine.SetPenColor (colorDialog1.Color);
+                settings.SetPenColor(colorDialog1.Color);
                 PictureBoxColorFillFigure.BackColor = colorDialog1.Color;
+                PictureBoxThickness.Image = drawingEngine.GetPenImage();
             }
         }
 
@@ -297,7 +303,7 @@ namespace NewPaitnt
 
         private void BtnMove_Click(object sender, EventArgs e)
         {
-            drawingEngine.SetMode(EFigure.Move);
+            settings.SetMode(EFigure.Move);
         }
 
         private void MainPaint_FormClosed(object sender, FormClosedEventArgs e)

@@ -129,20 +129,18 @@ namespace NewPaitnt
         {
             _isFigureCreated = false;
             drawingEngine.CleanBackground();
-            //currentProcess.Refresh();
-            //memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
-            //mouseHandeler.MouseUp(sender, e);
-            //pictureBoxPaint.Image = drawingEngine.MainImage;
+
+            currentProcess.Refresh();
+            memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
+
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
 
         }
 
-
-        // кнопок и методов нет - оставила для Наташи
-
         private void MenuSave_Click(object sender, EventArgs e)
         {
+            saveFileDialog.FileName = "newUnicorn";
             saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -153,7 +151,8 @@ namespace NewPaitnt
                 }
             }
         }
-        private void MenuOpen_Click(object sender, EventArgs e) // очищвется при рисовании нужно добавлять в лист????
+
+        private void MenuOpen_Click(object sender, EventArgs e)
         {
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
@@ -162,13 +161,13 @@ namespace NewPaitnt
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-               PictureBoxPaint.Image = Image.FromFile(openFileDialog.FileName); 
-                
-
+                drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
+                drawingEngine.DrawAllFigures();
+                PictureBoxPaint.Image = drawingEngine.MainImage;
             }
         }
 
-        private void MenuClear_Click(object sender, EventArgs e) //очищать лист при вызове метода
+        private void MenuClear_Click(object sender, EventArgs e)
         {
             drawingEngine.ClearCanvas();
             PictureBoxPaint.Image = drawingEngine.MainImage;

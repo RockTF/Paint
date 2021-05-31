@@ -20,6 +20,7 @@ namespace NewPaitnt.Implementation
         private Point _move;
         private Point _rightClick;
         // Графика
+        public Bitmap Canvas;
         public Bitmap MainImage;
         private Bitmap Background;
         private Bitmap CurrentFigure;
@@ -45,6 +46,7 @@ namespace NewPaitnt.Implementation
             _move = new Point(0, 0);
             _rightClick = new Point(0, 0);
 
+            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
             MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
             Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
             CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
@@ -69,12 +71,9 @@ namespace NewPaitnt.Implementation
 
         public void ClearCanvas()
         {
-            // Чистим список фигур и графику
             _storage.Clear();
-            MainGraphics.Clear(Color.White);
-            BackgroundGraphics.Clear(BlackTransparrent);
-            FigureGraphics.Clear(BlackTransparrent);
-            ForegroundGraphics.Clear(BlackTransparrent);
+            ClearLayers(Color.White);
+            Canvas = (Bitmap)MainImage.Clone();
         }
 
         public void CreateFigure() //!!! Вынести в шейп фактори 
@@ -117,7 +116,7 @@ namespace NewPaitnt.Implementation
         public void DrawAllFigures()
         {
             // Очищаем основное изображение
-            MainGraphics.Clear(Color.White);
+            MainGraphics.DrawImage(Canvas, 0, 0);
             // Отрисовываем на нем последовательно все что есть в списке фигур
             foreach (var figure in _storage.Figures)
             {
@@ -125,83 +124,43 @@ namespace NewPaitnt.Implementation
             }
         }
 
-        // Расписан ниже самый распространенный случай
         public void SelectFigure()
         {
             if (_selectedFigureIndex == 0)
             {
-                MainGraphics.Clear(Color.White);
-
-                BackgroundGraphics.Clear(BlackTransparrent);
-
-                FigureGraphics.Clear(BlackTransparrent);
-                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
-
-                ForegroundGraphics.Clear(BlackTransparrent);
-                for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count; i++)
-                {
-                    _storage.Figures[i].Draw(ref ForegroundGraphics);
-                }
-
-                MainGraphics.DrawImage(Background, 0, 0);
-                MainGraphics.DrawImage(CurrentFigure, 0, 0);
-                MainGraphics.DrawImage(Foreground, 0, 0);
+                ClearLayers();
+                DrawSelectedFigure();
+                DrawFigureSequence(_selectedFigureIndex + 1, _storage.Figures.Count);
+                DrawLayers();
             }
             else if (_selectedFigureIndex == _storage.Figures.Count - 1)
             {
-                MainGraphics.Clear(Color.White);
-
-                BackgroundGraphics.Clear(BlackTransparrent);
-                for (int i = 0; i < _selectedFigureIndex; i++)
-                {
-                    _storage.Figures[i].Draw(ref BackgroundGraphics);
-                }
-
-                FigureGraphics.Clear(BlackTransparrent);
-                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
-
-                ForegroundGraphics.Clear(BlackTransparrent);
-
-                MainGraphics.DrawImage(Background, 0, 0);
-                MainGraphics.DrawImage(CurrentFigure, 0, 0);
-                MainGraphics.DrawImage(Foreground, 0, 0);
+                ClearLayers();
+                DrawFigureSequence(0, _selectedFigureIndex);
+                DrawSelectedFigure();
+                DrawLayers();
             }
             else
             {
-                // Очищаем основное изображение
-                MainGraphics.Clear(Color.White);
-                // Отрисовиваем все фигуры ниже выделенной на отдельном прозрачном изображении
-                BackgroundGraphics.Clear(BlackTransparrent);
-                for (int i = 0; i < _selectedFigureIndex; i++)
-                {
-                    _storage.Figures[i].Draw(ref BackgroundGraphics); //!!!!!!!!!!!!!!!!!!!! Фикс бага! При очистке и нажатии на пикчер бокс баг!!!
-                }
-                // Отрисовываем текущую фигуру на отдельном прозрачном изображении
-                FigureGraphics.Clear(BlackTransparrent);
-                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
-                // Отрисовываем все фигуры выше выделенной на отдельном прозрачном изображении
-                ForegroundGraphics.Clear(BlackTransparrent);
+                ClearLayers();
+                DrawFigureSequence(0, _selectedFigureIndex);
+                DrawSelectedFigure();
                 for (int i = _selectedFigureIndex + 1; i < _storage.Figures.Count; i++)
-                {
-                    _storage.Figures[i].Draw(ref ForegroundGraphics);
-                }
-                // Совмещаем все три созданных изображения на основном
-                MainGraphics.DrawImage(Background, 0, 0);
-                MainGraphics.DrawImage(CurrentFigure, 0, 0);
-                MainGraphics.DrawImage(Foreground, 0, 0);
+                DrawFigureSequence(_selectedFigureIndex + 1, _storage.Figures.Count);
+                DrawLayers();
             }
         }
 
         public void MoveFigure()
         {
-            MainGraphics.Clear(Color.White);
-            FigureGraphics.Clear(BlackTransparrent);
-            _storage.Figures[_selectedFigureIndex].Move(_previousMove, _move);
-            _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
-
-            MainGraphics.DrawImage(Background, 0, 0);
-            MainGraphics.DrawImage(CurrentFigure, 0, 0);
-            MainGraphics.DrawImage(Foreground, 0, 0);
+            if (_selectedFigureIndex >= 0)
+            {
+                MainGraphics.DrawImage(Canvas, 0, 0);
+                FigureGraphics.Clear(BlackTransparrent);
+                _storage.Figures[_selectedFigureIndex].Move(_previousMove, _move);
+                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
+                DrawLayers();
+            }
         }
 
         public void DrawMainOnBackground()
@@ -295,6 +254,45 @@ namespace NewPaitnt.Implementation
         public void SetSelectedFigure(int figureIndex)
         {
             _selectedFigureIndex = figureIndex;
+        }
+
+        private void ClearLayers()
+        {
+            MainGraphics.DrawImage(Canvas, 0, 0);
+            BackgroundGraphics.Clear(BlackTransparrent);
+            FigureGraphics.Clear(BlackTransparrent);
+            ForegroundGraphics.Clear(BlackTransparrent);
+        }
+
+        private void ClearLayers(Color color)
+        {
+            MainGraphics.Clear(color);
+            BackgroundGraphics.Clear(BlackTransparrent);
+            FigureGraphics.Clear(BlackTransparrent);
+            ForegroundGraphics.Clear(BlackTransparrent);
+        }
+
+        private void DrawLayers()
+        {
+            MainGraphics.DrawImage(Background, 0, 0);
+            MainGraphics.DrawImage(CurrentFigure, 0, 0);
+            MainGraphics.DrawImage(Foreground, 0, 0);
+        }
+
+        private void DrawSelectedFigure()
+        {
+            if (_selectedFigureIndex >= 0)
+            {
+                _storage.Figures[_selectedFigureIndex].Draw(ref FigureGraphics);
+            }
+        }
+
+        private void DrawFigureSequence(int startIndex, int endIndex)
+        {
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                _storage.Figures[i].Draw(ref ForegroundGraphics);
+            }
         }
     }
 }

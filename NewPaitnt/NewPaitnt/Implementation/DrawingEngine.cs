@@ -114,8 +114,6 @@ namespace NewPaitnt.Implementation
                     break;
             }
         }
-
-
         public void DrawAllFigures()
         {
             // Очищаем основное изображение
@@ -239,13 +237,13 @@ namespace NewPaitnt.Implementation
         // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
         public void RedrawFigure()
         {
-            _storage.Figures[_storage.Figures.Count -1].Draw(ref FigureGraphics, _move);
+            _storage.Figures[_storage.Figures.Count -1].Draw(ref FigureGraphics, _move); // Сделать в Storage GetFigureLast()
 
         }
 
         public void DrawFigure()
         {
-            _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics);
+            _storage.Figures[_storage.Figures.Count - 1].Draw(ref FigureGraphics); // Сделать в Storage 
 
         }
 

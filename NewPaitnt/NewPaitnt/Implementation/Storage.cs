@@ -6,8 +6,11 @@ namespace NewPaitnt.Implementation
     public class Storage
     {
         private static Storage _storage;
-        public List<IDrawable> Figures { get; private set; }
-        public List<string> FiguresNames { get; private set; }
+
+        // Создвть интерфейс
+
+        public List<IDrawable> Figures { get; private set; } //private _figures
+        public List<string> FiguresNames { get; private set; } //private _figuresNames
         private Storage()
         {
             Figures = new List<IDrawable>();

@@ -38,22 +38,27 @@ namespace NewPaitnt.Implementation
         {
             _settings.ImageWidth = newWidth;
         }
+
         public void SetImageHeight(int newHeight)
         {
             _settings.ImageHeight = newHeight;
         }
+
         public void SetMode(EFigure newMode)
         {
             _settings.Mode = newMode;
         }
+
         public void SetPenWidth(float newWidth)
         {
             _settings.Pen.Width = newWidth;
         }
+
         public void SetPenColor(Color color)
         {
             _settings.Pen.Color = color;
         }
+
         public void SetPenDashStyle(DashStyle newStyle)
         {
             _settings.Pen.DashStyle = newStyle;
@@ -62,10 +67,12 @@ namespace NewPaitnt.Implementation
         {
             _settings.Brush = new SolidBrush(newColor);
         }
+
         public void SetSmoothingMode(SmoothingMode newMode)
         {
             _settings.SmoothingMode = newMode;
         }
+
         public void Reset()
         {
             ImageWidth = SettingsConstants.DefaultImageWidth;

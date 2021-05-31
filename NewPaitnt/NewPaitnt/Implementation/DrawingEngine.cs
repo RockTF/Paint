@@ -176,7 +176,7 @@ namespace NewPaitnt.Implementation
                 BackgroundGraphics.Clear(BlackTransparrent);
                 for (int i = 0; i < _selectedFigureIndex; i++)
                 {
-                    _storage.Figures[i].Draw(ref BackgroundGraphics);
+                    _storage.Figures[i].Draw(ref BackgroundGraphics); //!!!!!!!!!!!!!!!!!!!! Фикс бага! При очистке и нажатии на пикчер бокс баг!!!
                 }
                 // Отрисовываем текущую фигуру на отдельном прозрачном изображении
                 FigureGraphics.Clear(BlackTransparrent);

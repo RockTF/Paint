@@ -157,9 +157,15 @@ namespace NewPaitnt
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+               
                 drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
+               
+                settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width) ;
+                settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
+                
                 drawingEngine.DrawAllFigures();
                 PictureBoxPaint.Image = drawingEngine.MainImage;
+               
             }
         }
 

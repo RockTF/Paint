@@ -7,15 +7,19 @@ namespace NewPaitnt.Implementation
     public class Storage : IStorage
     {
         private static Storage _storage;
+        
 
         private int _count;
         private List<IDrawable> _figures;
+        private List<IDrawable> _history;
         private List<string> _figuresNames;
+
         private Storage()
         {
             _count = 0;
             _figures = new List<IDrawable>();
             _figuresNames = new List<string>();
+
         }
         public static Storage Initialize()
         {
@@ -71,7 +75,7 @@ namespace NewPaitnt.Implementation
         }
         public void RemoveFigureAt(int position)
         {
-            if (position >= 0 && position < _figures.Count)
+            if (position >= 0 && position <= _figures.Count)
             {
                 _count--;
                 _figures.RemoveAt(position);

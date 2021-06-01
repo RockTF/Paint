@@ -15,28 +15,35 @@ namespace NewPaitnt.VectorModel
         public  Pen  Pen { get; set; }
         public  Brush Brush { get; set; }
 
-       /* public int Xclick { get; set; }
+     /*   public int Xclick { get; set; }
         public int Yclick { get; set; }
         public int Xmove { get; set; }
         public int Ymove { get; set; }
         public int Xstart { get; set; }
         public int Ystart { get; set; }
         public int Xend { get; set; }
-        public int Yend { get; set; }
-*/
+        public int Yend { get; set; }*/
+
         public string FigureName { get; set; }
 
         public SmoothingMode SmoothingMode { get; set; }
 
 
-        /* public void CalculateCoordinates(int Xcurrent, int Ycurrent)
-         {
-             Xstart = (Xclick < Xcurrent) ? Xclick : Xcurrent;
-             Xend = (Xclick < Xcurrent) ? Xcurrent : Xclick;
-             Ystart = (Yclick < Ycurrent) ? Yclick : Ycurrent;
-             Yend = (Yclick < Ycurrent) ? Ycurrent : Yclick;
-         }*/
+   /*     public void CalculateCoordinates(int Xcurrent, int Ycurrent)
+        {
+            Xstart = (Xclick < Xcurrent) ? Xclick : Xcurrent;
+            Xend = (Xclick < Xcurrent) ? Xcurrent : Xclick;
+            Ystart = (Yclick < Ycurrent) ? Yclick : Ycurrent;
+            Yend = (Yclick < Ycurrent) ? Ycurrent : Yclick;
+        }
+        public Rectangle GetRectangel()
+        {
+            int width = Math.Abs(Xend - Xstart);
+            int height = Math.Abs(Yend - Ystart);
+            Rectangle rect = new System.Drawing.Rectangle(Xstart, Ystart, width, height);
 
+            return rect;
+        }*/
         public abstract void Draw(ref Graphics graphics);
         public abstract void Refresh(ref Graphics graphics);
         public void Move(Point from, Point to)
@@ -48,6 +55,7 @@ namespace NewPaitnt.VectorModel
                 Points[i] = new Point(tempX, tempY);
             }
         }
+
        
         public void Selest()
         {

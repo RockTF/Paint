@@ -220,7 +220,7 @@ namespace NewPaitnt
             this.BtnMove.Location = new System.Drawing.Point(696, 16);
             this.BtnMove.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnMove.Name = "BtnMove";
-            this.BtnMove.Size = new System.Drawing.Size(51, 29);
+            this.BtnMove.Size = new System.Drawing.Size(56, 29);
             this.BtnMove.TabIndex = 63;
             this.BtnMove.Text = "Move";
             this.BtnMove.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

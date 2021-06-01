@@ -163,11 +163,8 @@ namespace NewPaitnt.Implementation
             {
                 MainGraphics.DrawImage(Canvas, 0, 0);
                 FigureGraphics.Clear(BlackTransparrent);
-                _storage.GetFigure(_selectedFigureIndex);
-                _storage.RemoveFigureAt(_selectedFigureIndex);
-                //_storage.GetFigure(_selectedFigureIndex).Draw(ref FigureGraphics);
-                DrawLayers();
-
+                _storage.RemoveFigureAt(_selectedFigureIndex);                
+                DrawAllFigures();
             }
         }
 
@@ -305,5 +302,6 @@ namespace NewPaitnt.Implementation
             RedrawFigure();
             DrawFigureOnMain();
         }
+       
     }
 }

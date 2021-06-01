@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewPaitnt.VectorModel;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,8 +8,21 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Vector
 {
-    public class Polygon
+    public class Polygon : Figure
     {
-        
+        public override void Draw(ref Graphics graphics)
+        {
+
+        }
+
+        public override void Draw(ref Graphics graphics, Point end)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Refresh(ref Graphics graphics)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

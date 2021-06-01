@@ -102,7 +102,9 @@ namespace NewPaitnt.Implementation
                     // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new Curve (_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
-
+                case EFigure.SmoothCurve:
+                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _mouseHandler.GetRightClick(), _settings.Pen, _settings.SmoothingMode, _settings.AddNextPoint, _settings.IisLineFinished));
+                        break;
                 default:
                     break;
             }

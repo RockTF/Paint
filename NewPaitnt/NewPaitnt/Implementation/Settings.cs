@@ -8,6 +8,8 @@ namespace NewPaitnt.Implementation
         private static Settings _settings;
         public int ImageWidth { get; private set; }
         public int ImageHeight { get; private set; }
+        public bool AddNextPoint { get; private set; }
+        public bool IisLineFinished { get; private set; }
         public EFigure Mode { get; private set; }
         public Pen Pen { get; private set; }
         public Brush Brush { get; private set; }
@@ -71,6 +73,14 @@ namespace NewPaitnt.Implementation
         public void SetSmoothingMode(SmoothingMode newMode)
         {
             _settings.SmoothingMode = newMode;
+        }
+        public void SetAddNextPoint(bool AddNextPoint)
+        {
+            _settings.IisLineFinished = AddNextPoint;
+        }
+        public void SetIisLineFinished(bool IisLineFinished)
+        {
+            _settings.IisLineFinished = IisLineFinished;
         }
 
         public void Reset()

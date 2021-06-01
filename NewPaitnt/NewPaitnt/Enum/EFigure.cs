@@ -10,7 +10,7 @@ namespace NewPaitnt.Implementation
             Triangle,
             Polygon,
             Rectangle,
-            SmoothCorv,
+            SmoothCurve,
             RoundedRectangle,
             // Добавил для перемещения, надо обсудить
             Move

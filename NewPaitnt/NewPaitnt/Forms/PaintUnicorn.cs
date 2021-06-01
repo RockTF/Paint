@@ -16,6 +16,9 @@ namespace NewPaitnt
         MouseHandler mouseHandler;
         private bool _isBtnFillClicked;
         private bool _isFigureCreated;
+        private bool _addNextPoint;
+        private bool _isLineFinished;
+
 
         public MainPaint()
         {
@@ -69,7 +72,12 @@ namespace NewPaitnt
                 {
                     drawingEngine.SelectFigure();
                 }
-               
+                if (drawingEngine.GetMode() == EFigure.SmoothCurve)
+                {
+                   settings.SetIisLineFinished( _isLineFinished = false);
+                   settings.SetAddNextPoint( _addNextPoint = true);
+                }
+
                 PictureBoxPaint.Image = drawingEngine.MainImage;
             }
         }
@@ -79,7 +87,7 @@ namespace NewPaitnt
             if (e.Button == MouseButtons.Left && drawingEngine.GetMode() != EFigure.Dot && drawingEngine.GetMode() != EFigure.Move)
             {
                 mouseHandler.NewMove(e.Location);
-
+                settings.SetAddNextPoint(_addNextPoint = false);
                 if (!_isFigureCreated)
                 {
                     _isFigureCreated = true;
@@ -106,6 +114,7 @@ namespace NewPaitnt
         private void PictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
             _isFigureCreated = false;
+            settings.SetIisLineFinished(_isLineFinished = true);
             drawingEngine.CleanBackground();
 
             currentProcess.Refresh();
@@ -113,7 +122,7 @@ namespace NewPaitnt
 
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
-
+           
         }
 
         private void MenuCreate_Click(object sender, EventArgs e) //очищать лист при вызове метода
@@ -235,7 +244,7 @@ namespace NewPaitnt
 
         private void SmoothCorve(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.SmoothCorv);
+            settings.SetMode(EFigure.SmoothCurve);
         }
 
         private void BtnSguare_Click(object sender, EventArgs e)

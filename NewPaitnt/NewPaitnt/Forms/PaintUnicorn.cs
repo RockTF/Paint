@@ -53,6 +53,8 @@ namespace NewPaitnt
             // Set the value of the double-buffering style bits to true.
             this.SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.UpdateStyles();
+
+            NumericUpDownPolygon.Value = settings.numberOfPolygonApexes;
         }
 
         private void PictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
@@ -327,6 +329,16 @@ namespace NewPaitnt
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             drawingEngine.DeleteFigure();
+        }
+
+        private void NumericUpDownPolygon_Click(object sender, EventArgs e)
+        {
+            settings.SetNumberOfPolygonApexes((int)(sender as NumericUpDown).Value);
+        }
+
+        private void BtnHexagon_Click(object sender, EventArgs e)
+        {
+            settings.SetMode(EFigure.Polygon);
         }
     }
 }

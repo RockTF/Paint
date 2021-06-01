@@ -8,5 +8,6 @@ namespace NewPaitnt.Implementation
         public const int DefaultImageHeight = 560;
         public const EFigure DefaultMode = EFigure.Curve;
         public const SmoothingMode DefaultSmoothingMode = SmoothingMode.None;
+        public const int DefaultNumberOfPolygonApexes = 6;
     }
 }

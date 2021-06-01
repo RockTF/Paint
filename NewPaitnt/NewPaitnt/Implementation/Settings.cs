@@ -14,18 +14,10 @@ namespace NewPaitnt.Implementation
         public Pen Pen { get; private set; }
         public Brush Brush { get; private set; }
         public SmoothingMode SmoothingMode { get; private set; }
+        public int numberOfPolygonApexes { get; private set; }
         private Settings()
         {
-            ImageWidth = SettingsConstants.DefaultImageWidth;
-            ImageHeight = SettingsConstants.DefaultImageHeight;
-            Mode = SettingsConstants.DefaultMode;
-            Pen = new Pen(Color.Black, 1f);
-            Pen.StartCap = LineCap.Round;
-            Pen.EndCap = LineCap.Round;
-            Pen.LineJoin = LineJoin.Round;
-            Pen.DashCap = DashCap.Round;
-            Brush = new SolidBrush(Color.Transparent);
-            SmoothingMode = SettingsConstants.DefaultSmoothingMode;
+            Reset();
         }
         public static Settings Initialize()
         {
@@ -83,6 +75,11 @@ namespace NewPaitnt.Implementation
             _settings.IisLineFinished = IisLineFinished;
         }
 
+        public void SetNumberOfPolygonApexes(int number)
+        {
+            numberOfPolygonApexes = number;
+        }
+
         public void Reset()
         {
             ImageWidth = SettingsConstants.DefaultImageWidth;
@@ -95,6 +92,7 @@ namespace NewPaitnt.Implementation
             Pen.DashCap = DashCap.Round;
             Brush = new SolidBrush(Color.Transparent);
             SmoothingMode = SettingsConstants.DefaultSmoothingMode;
+            numberOfPolygonApexes = SettingsConstants.DefaultNumberOfPolygonApexes;
         }
     }
 }

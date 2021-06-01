@@ -105,6 +105,9 @@ namespace NewPaitnt.Implementation
                 case EFigure.SmoothCurve:
                     _storage.AddFigure(new SmoothCurve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _mouseHandler.GetRightClick(), _settings.Pen, _settings.SmoothingMode, _settings.AddNextPoint, _settings.IisLineFinished));
                         break;
+                case EFigure.Polygon:
+                    _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.SmoothingMode));
+                    break;
                 default:
                     break;
             }

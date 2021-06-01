@@ -163,6 +163,9 @@ namespace NewPaitnt.Implementation
         {
             if (_selectedFigureIndex >= 0)
             {
+                //_storage.GetFigure(_selectedFigureIndex); // Получение фигуры из листа по индексу
+                _storage.RemoveFigureAt(_selectedFigureIndex); // очистка в личте
+
                 MainGraphics.DrawImage(Canvas, 0, 0);
                 FigureGraphics.Clear(BlackTransparrent);
                 _storage.RemoveFigureAt(_selectedFigureIndex);                

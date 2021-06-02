@@ -79,6 +79,10 @@ namespace NewPaitnt.VectorModel
         }
 
         public abstract void Draw(ref Graphics graphics, Point end);
-        
+
+        public void AddNextPoint(Point click)
+        {
+            Points.Add(click);
+        }
     }
 }

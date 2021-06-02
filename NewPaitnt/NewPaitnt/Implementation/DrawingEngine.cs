@@ -39,16 +39,7 @@ namespace NewPaitnt.Implementation
             _storage = storage;
             _service = service;
 
-            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-
-            MainGraphics = Graphics.FromImage(MainImage);
-            BackgroundGraphics = Graphics.FromImage(Background);
-            FigureGraphics = Graphics.FromImage(CurrentFigure);
-            ForegroundGraphics = Graphics.FromImage(Foreground);
+            NewBitmaps();
             MainGraphics.Clear(Color.White);
             Canvas = (Bitmap)MainImage.Clone();
 
@@ -104,7 +95,7 @@ namespace NewPaitnt.Implementation
                     _storage.AddFigure(new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.SmoothCurve:
-                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _mouseHandler.GetRightClick(), _settings.Pen, _settings.SmoothingMode, _settings.AddNextPoint, _settings.IisLineFinished));
+                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Polygon:
                     _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.SmoothingMode));
@@ -167,8 +158,7 @@ namespace NewPaitnt.Implementation
         {
             if (_selectedFigureIndex >= 0)
             {
-                //_storage.GetFigure(_selectedFigureIndex); // Получение фигуры из листа по индексу
-                _storage.RemoveFigureAt(_selectedFigureIndex); // очистка в личте
+                _storage.RemoveFigureAt(_selectedFigureIndex);
 
                 MainGraphics.DrawImage(Canvas, 0, 0);
                 FigureGraphics.Clear(BlackTransparrent);
@@ -176,7 +166,6 @@ namespace NewPaitnt.Implementation
                 DrawAllFigures();
             }
         }
-
 
         public void DrawMainOnBackground()
         {
@@ -281,19 +270,9 @@ namespace NewPaitnt.Implementation
         }
         public void NewImageSize()
         {
-            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-
-            MainGraphics = Graphics.FromImage(MainImage);
-            BackgroundGraphics = Graphics.FromImage(Background);
-            FigureGraphics = Graphics.FromImage(CurrentFigure);
-            ForegroundGraphics = Graphics.FromImage(Foreground);
+            NewBitmaps();
             MainGraphics.Clear(Color.White);
             Canvas = (Bitmap)MainImage.Clone();
-
             ClearCanvas();
         }
         public void DrawNewFigure()
@@ -311,6 +290,25 @@ namespace NewPaitnt.Implementation
             RedrawFigure();
             DrawFigureOnMain();
         }
-       
+
+        public void AddPointToCurve(Point click)
+        {
+            _storage.GetLastFigure().AddNextPoint(click);
+        }
+
+        public void NewBitmaps()
+        {
+            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+
+            MainGraphics = Graphics.FromImage(MainImage);
+            BackgroundGraphics = Graphics.FromImage(Background);
+            FigureGraphics = Graphics.FromImage(CurrentFigure);
+            ForegroundGraphics = Graphics.FromImage(Foreground);
+        }
+
     }
 }

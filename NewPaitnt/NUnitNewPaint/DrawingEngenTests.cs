@@ -1,19 +1,21 @@
-using Moq;
+﻿using Moq;
 using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
 using NewPaitnt.Vector;
-using NewPaitnt.VectorModel;
 using NUnit.Framework;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NUnitNewPaint
 {
-    public class Tests
+    class DrawingEngenTests
     {
         private DrawingEngine _drawingEngine;
         private MouseHandler _mouseHandler;
         private Settings _settings;
-
         private IDrawable _drawable;
         private Mock<IStorage> _storage;
 
@@ -21,25 +23,16 @@ namespace NUnitNewPaint
         [SetUp]
         public void Setup()
         {
-           
+            _drawingEngine = DrawingEngine.Initialize(31,31, Storage.Initialize());
             _mouseHandler = MouseHandler.Initialize();
             _settings = Settings.Initialize();
-
             _drawable = new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode);
             _storage = new Mock<IStorage>(MockBehavior.Strict);
-
-           _drawingEngine = DrawingEngine.Initialize(31, 31, _storage.Object);
         }
 
         [Test]
-        public void CreateFigureTest1() 
+        public void Test1()
         {
-            //var figure = new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode);
-            var figure = new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode);
-        //    _settings.Mode = EFigure.
-            _storage.Setup(a => a.AddFigure(It.IsAny<Curve>()));
-           // _drawingEngine.CreateFigure();
-            _storage.Verify(a => a.AddFigure(It.IsAny<Curve>()), Times.Once);
 
         }
     }

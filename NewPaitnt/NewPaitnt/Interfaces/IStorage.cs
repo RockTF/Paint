@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Interfaces
 {
-    interface IStorage
+    public interface IStorage
     {
-        public void AddFigure(IDrawable figure);
-        public IDrawable GetFigure(int position);
-        public IDrawable GetLastFigure();
-        public List<IDrawable> GetAllFigures();
-        public string GetFigureName(int position);
-        public List<string> GetFiguresNames();
-        public void RemoveFigureAt(int position);
-        public void Clear();
+         void AddFigure(IDrawable figure);
+         IDrawable GetFigure(int position);
+         IDrawable GetLastFigure();
+         List<IDrawable> GetAllFigures();
+         string GetFigureName(int position);
+         List<string> GetFiguresNames();
+         void RemoveFigureAt(int position);
+        int GetCount();
+         void Clear();
     }
 }

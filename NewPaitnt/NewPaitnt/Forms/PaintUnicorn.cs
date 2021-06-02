@@ -33,7 +33,7 @@ namespace NewPaitnt
         {
             mouseHandler = MouseHandler.Initialize();
             settings = Settings.Initialize();
-            drawingEngine = DrawingEngine.Initialize(PictureBoxThickness.Width, PictureBoxThickness.Height);
+            drawingEngine = DrawingEngine.Initialize(PictureBoxThickness.Width, PictureBoxThickness.Height, Storage.Initialize());
 
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
             PictureBoxPaint.Image = drawingEngine.MainImage;

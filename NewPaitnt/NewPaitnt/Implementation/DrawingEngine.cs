@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using NewPaitnt.Interfaces;
 using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
 
@@ -10,7 +11,7 @@ namespace NewPaitnt.Implementation
         private static DrawingEngine _drawingEngine;
         // Остальные компоненты СинглТоны
         private Settings _settings;
-        private Storage _storage;
+        private IStorage _storage;
         private PenPreview _penPreview;
         private Service _service;
         private MouseHandler _mouseHandler;
@@ -29,10 +30,11 @@ namespace NewPaitnt.Implementation
         // Внутренние приватные переменные
         private int _selectedFigureIndex;
 
-        private DrawingEngine(int penBoxWidth, int penBoxHeight)
+        private DrawingEngine(int penBoxWidth, int penBoxHeight, IStorage storage)
         {
             _settings = Settings.Initialize();
             _storage = Storage.Initialize();
+            _storage = storage;
             _penPreview = PenPreview.Initialize(_settings.Pen, penBoxWidth, penBoxHeight);
             _service = Service.Initialize();
             _mouseHandler = MouseHandler.Initialize();
@@ -54,11 +56,11 @@ namespace NewPaitnt.Implementation
             _selectedFigureIndex = -1;
         }
 
-        public static DrawingEngine Initialize(int penBoxWidth, int penBoxHeight)
+        public static DrawingEngine Initialize(int penBoxWidth, int penBoxHeight, IStorage storage)
         {
             if (_drawingEngine == null)
             {
-                _drawingEngine = new DrawingEngine(penBoxWidth, penBoxHeight);
+                _drawingEngine = new DrawingEngine(penBoxWidth, penBoxHeight, storage);
             }
             return _drawingEngine;
         }
@@ -70,48 +72,48 @@ namespace NewPaitnt.Implementation
             Canvas = (Bitmap)MainImage.Clone();
         }
 
-        public void CreateFigure() //!!! Вынести в шейп фактори 
-        {
-            switch (_settings.Mode)
-            {
-                case EFigure.Dot:
-                    // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new Dot(_mouseHandler.GetClick(), _settings.Pen, _settings.SmoothingMode));
-                    break;
-                case EFigure.Line:
-                    // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
-                    break;
-                          case EFigure.Rectangle:
-                    // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
-                    break;
-                case EFigure.Triangle:
-                    // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
-                    break;
-                case EFigure.Ellipse:
-                    // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
-                    break;
-                case EFigure.RoundedRectangle:
-                    // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
-                    break;
-                case EFigure.Curve:
-                    // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new Curve (_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
-                    break;
-                case EFigure.SmoothCurve:
-                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _mouseHandler.GetRightClick(), _settings.Pen, _settings.SmoothingMode, _settings.AddNextPoint, _settings.IisLineFinished));
-                        break;
-                case EFigure.Polygon:
-                    _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.SmoothingMode));
-                    break;
-                default:
-                    break;
-            }
-        }
+        //public void CreateFigure(Enum type) //!!! Вынести в шейп фактори 
+        //{
+        //    switch (_settings.Mode)
+        //    {
+        //        case EFigure.Dot:
+        //            // Добавляем новую соответствующую фигуру в список
+        //            _storage.AddFigure(new Dot(_mouseHandler.GetClick(), _settings.Pen, _settings.SmoothingMode));
+        //            break;
+        //        case EFigure.Line:
+        //            // Добавляем новую соответствующую фигуру в список
+        //            _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+        //            break;
+        //                  case EFigure.Rectangle:
+        //            // Добавляем новую соответствующую фигуру в список
+        //            _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+        //            break;
+        //        case EFigure.Triangle:
+        //            // Добавляем новую соответствующую фигуру в список
+        //            _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+        //            break;
+        //        case EFigure.Ellipse:
+        //            // Добавляем новую соответствующую фигуру в список
+        //            _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+        //            break;
+        //        case EFigure.RoundedRectangle:
+        //            // Добавляем новую соответствующую фигуру в список
+        //            _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+        //            break;
+        //        case EFigure.Curve:
+        //            // Добавляем новую соответствующую фигуру в список
+        //            _storage.AddFigure(new Curve (_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+        //            break;
+        //        case EFigure.SmoothCurve:
+        //            _storage.AddFigure(new SmoothCurve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _mouseHandler.GetRightClick(), _settings.Pen, _settings.SmoothingMode, _settings.AddNextPoint, _settings.IisLineFinished));
+        //                break;
+        //        case EFigure.Polygon:
+        //            _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.SmoothingMode));
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
         public void DrawAllFigures()
         {
@@ -297,7 +299,7 @@ namespace NewPaitnt.Implementation
         }
         public void DrawNewFigure()
         {
-            CreateFigure();
+            //CreateFigure(_settings.Mode);
             DrawBackgroundOnMain();
             CleanFigure();
             DrawFigure();

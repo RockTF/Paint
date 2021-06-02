@@ -13,7 +13,7 @@ namespace NewPaitnt
         public CreateNewCanvas()
         {
             InitializeComponent();
-            drawingEngine = DrawingEngine.Initialize(31, 31); // баг исправить
+            drawingEngine = DrawingEngine.Initialize(31, 31, Storage.Initialize()); // баг исправить
             settings = Settings.Initialize();
         }
        

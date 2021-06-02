@@ -78,7 +78,7 @@ namespace NewPaitnt.Implementation
             if (position >= 0 && position <= _figures.Count)
             {
                 _count--;
-                _figures.RemoveAt(position);
+                _figures.RemoveAt(position); // bag
                 _figuresNames.RemoveAt(position);
             }
             else

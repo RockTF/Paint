@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewPaitnt.Implementation
 {
-    class MouseHandler
+    public class MouseHandler
     {
         private static MouseHandler _mouseHandler;
 

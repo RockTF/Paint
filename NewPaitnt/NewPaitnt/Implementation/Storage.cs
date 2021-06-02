@@ -7,7 +7,6 @@ namespace NewPaitnt.Implementation
     public class Storage : IStorage
     {
         private static Storage _storage;
-        
 
         private int _count;
         private List<IDrawable> _figures;

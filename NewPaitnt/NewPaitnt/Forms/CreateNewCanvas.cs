@@ -13,8 +13,8 @@ namespace NewPaitnt
         public CreateNewCanvas()
         {
             InitializeComponent();
-            drawingEngine = DrawingEngine.Initialize(31, 31, Storage.Initialize()); // баг исправить
             settings = Settings.Initialize();
+            drawingEngine = DrawingEngine.Initialize(settings, MouseHandler.Initialize(), PenPreview.Initialize(settings.Pen, 31, 31), Storage.Initialize(), Service.Initialize());
         }
        
 

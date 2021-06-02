@@ -15,7 +15,7 @@ namespace NewPaitnt.Interfaces
          string GetFigureName(int position);
          List<string> GetFiguresNames();
          void RemoveFigureAt(int position);
-        int GetCount();
+         int GetCount();
          void Clear();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NewPaitnt.Implementation;
+using NewPaitnt.Interfaces;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,9 +12,15 @@ namespace NewPaitnt
     public partial class MainPaint : Form
     {
         Process currentProcess;
+
         Settings settings;
-        DrawingEngine drawingEngine;
         MouseHandler mouseHandler;
+        PenPreview penPreview;
+        IStorage storage;
+        Service service;
+
+        DrawingEngine drawingEngine;
+        
         private bool _isBtnFillClicked;
         private bool _isFigureCreated;
         private bool _addNextPoint;
@@ -31,9 +38,13 @@ namespace NewPaitnt
 
         private void MainPaint_Load(object sender, EventArgs e)
         {
-            mouseHandler = MouseHandler.Initialize();
             settings = Settings.Initialize();
-            drawingEngine = DrawingEngine.Initialize(PictureBoxThickness.Width, PictureBoxThickness.Height, Storage.Initialize());
+            mouseHandler = MouseHandler.Initialize();
+            penPreview = PenPreview.Initialize(settings.Pen, PictureBoxThickness.Width, PictureBoxThickness.Height);
+            storage = Storage.Initialize();
+            service = Service.Initialize();
+
+            drawingEngine = DrawingEngine.Initialize(settings, mouseHandler, penPreview, storage, service);
 
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
             PictureBoxPaint.Image = drawingEngine.MainImage;

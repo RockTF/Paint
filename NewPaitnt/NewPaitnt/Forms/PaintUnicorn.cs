@@ -73,7 +73,9 @@ namespace NewPaitnt
         {
             if (e.Button == MouseButtons.Left)
             {
+                
                 drawingEngine.DrawMainOnBackground();
+
                 mouseHandler.NewClick(e.Location);
 
                 if (settings.Mode == EFigure.SmoothCurve)
@@ -84,7 +86,6 @@ namespace NewPaitnt
                 if (!_isLineFinished && _isFirstPointAdd)
                 {
                     drawingEngine.AddPointToCurve(mouseHandler.GetClick());
-
                 }
                 else if (!_isLineFinished && !_isFirstPointAdd)
                 {
@@ -104,6 +105,12 @@ namespace NewPaitnt
 
                 PictureBoxPaint.Image = drawingEngine.MainImage;
             }
+            if (e.Button == MouseButtons.Right)
+            {
+                _isLineFinished = true;
+                _isFigureCreated = false;
+                _isFirstPointAdd = false;
+            }
         }
 
         private void PictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
@@ -115,15 +122,17 @@ namespace NewPaitnt
                     mouseHandler.NewMove(e.Location);
                 }
 
-                if (!_isFigureCreated)
+                if (settings.Mode != EFigure.Move)
                 {
-                    _isFigureCreated = true;
-
-                    drawingEngine.DrawNewFigure();
-                }
-                else
-                {
-                    drawingEngine.RedrawNewFigure();
+                    if (!_isFigureCreated)
+                    {
+                        _isFigureCreated = true;
+                        drawingEngine.DrawNewFigure();
+                    }
+                    else
+                    {
+                        drawingEngine.RedrawNewFigure();
+                    }
                 }
 
                 PictureBoxPaint.Image = drawingEngine.MainImage;
@@ -143,12 +152,13 @@ namespace NewPaitnt
                 if (!_isFigureCreated)
                 {
                     _isFigureCreated = true;
-
                     drawingEngine.DrawNewFigure();
                 }
                 else
                 {
+                    drawingEngine.ClearAllExceptMainImage();
                     drawingEngine.RedrawNewFigure();
+                    
                 }
 
                 PictureBoxPaint.Image = drawingEngine.MainImage;
@@ -157,9 +167,11 @@ namespace NewPaitnt
 
         private void PictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
-            _isFigureCreated = false;
-
-            drawingEngine.CleanBackground();
+            if (settings.Mode != EFigure.SmoothCurve)
+            {
+                _isFigureCreated = false;
+                drawingEngine.CleanBackground();
+            }
 
             currentProcess.Refresh();
             memoryLabel.Text = "Memory usage: " + ((float)currentProcess.PrivateMemorySize64 / 1024f / 1024f).ToString("F1") + " MB";
@@ -371,6 +383,9 @@ namespace NewPaitnt
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             drawingEngine.DeleteFigure();
+            FiguresListBox.Items.Clear();
+            FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
+            PictureBoxPaint.Image = drawingEngine.MainImage;
         }
 
         private void NumericUpDownPolygon_Click(object sender, EventArgs e)

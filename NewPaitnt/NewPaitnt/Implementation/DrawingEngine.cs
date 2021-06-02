@@ -158,8 +158,6 @@ namespace NewPaitnt.Implementation
         {
             if (_selectedFigureIndex >= 0)
             {
-                _storage.RemoveFigureAt(_selectedFigureIndex);
-
                 MainGraphics.DrawImage(Canvas, 0, 0);
                 FigureGraphics.Clear(BlackTransparrent);
                 _storage.RemoveFigureAt(_selectedFigureIndex);                
@@ -231,6 +229,15 @@ namespace NewPaitnt.Implementation
             BackgroundGraphics.Clear(BlackTransparrent);
             FigureGraphics.Clear(BlackTransparrent);
             ForegroundGraphics.Clear(BlackTransparrent);
+        }
+
+        public void ClearAllExceptMainImage()
+        {
+            MainGraphics.DrawImage(Canvas, 0, 0);
+            BackgroundGraphics.Clear(BlackTransparrent);
+            FigureGraphics.Clear(BlackTransparrent);
+            ForegroundGraphics.Clear(BlackTransparrent);
+            DrawAllFigures();
         }
 
         private void ClearLayers(Color color)

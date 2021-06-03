@@ -82,7 +82,6 @@ namespace NewPaitnt.Implementation
         {
             if (position >= 0 && position <= _figures.Count)
             {
-                _count--;
                 _figures.RemoveAt(position); 
                 _figuresNames.RemoveAt(position);
             }
@@ -94,7 +93,7 @@ namespace NewPaitnt.Implementation
 
         public void TransferToBuffer() 
         {
-            if (_figures.Count != 0)
+            if (_figures.Count > 0)
             {
                 if (_buffer == null)
                 {
@@ -102,16 +101,17 @@ namespace NewPaitnt.Implementation
                 }
                 _buffer.Add(_figures[^1]);
                 _figures.RemoveAt(_figures.Count - 1);
-                _figuresNames.RemoveAt(_figures.Count - 1);
+                _figuresNames.RemoveAt(_figuresNames.Count - 1);
             }
         }
 
-        public void TransferToFigure() 
+        public void TransferToFigure()
         {
-            if (_figures.Count != 0)
+            if (_buffer.Count > 0) 
             {
                 _figures.Add(_buffer[^1]);
                 _buffer.RemoveAt(_buffer.Count - 1);
+                _figuresNames.Add(_figures[^1].FigureName);
             }
         }
 

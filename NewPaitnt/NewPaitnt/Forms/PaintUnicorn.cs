@@ -260,11 +260,17 @@ namespace NewPaitnt
         private void BtnUndo_Click(object sender, EventArgs e)
         {
             drawingEngine.Undo();
+            PictureBoxPaint.Image = drawingEngine.MainImage;
+            FiguresListBox.Items.Clear();
+            FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
         }
 
         private void BtnRedo_Click(object sender, EventArgs e)
         {
             drawingEngine.Redo();
+            PictureBoxPaint.Image = drawingEngine.MainImage;
+            FiguresListBox.Items.Clear();
+            FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
         }
 
         private void BtnPoint_Click(object sender, EventArgs e)

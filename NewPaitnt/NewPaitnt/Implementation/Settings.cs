@@ -54,6 +54,11 @@ namespace NewPaitnt.Implementation
             _settings.Pen.Color = color;
         }
 
+        public void SetBrushColor(Color newColor)
+        {
+            _settings.Brush = new SolidBrush(newColor);
+        }
+
         public void SetSmoothingMode(SmoothingMode newMode)
         {
             _settings.SmoothingMode = newMode;

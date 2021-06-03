@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 
 namespace NewPaitnt.VectorModel
 {
-    public class Triangle:Figure
+    public class Triangle : Figure
     {
         private static int _count = 0;
         public Triangle(Point start, Point end, Pen pen, Brush brush, SmoothingMode smoothingMode)
@@ -27,7 +24,6 @@ namespace NewPaitnt.VectorModel
 
         public override void Draw(ref Graphics graphics)
         {
-
             List<Point> TrianglePoint = new List<Point>(3);
             TrianglePoint.Add(new Point(Points[1].X, Points[1].Y));
             TrianglePoint.Add(new Point(Points[0].X, Points[1].Y));
@@ -37,6 +33,7 @@ namespace NewPaitnt.VectorModel
             graphics.FillPolygon(Brush, TrianglePoint.ToArray());
             graphics.DrawPolygon(Pen, TrianglePoint.ToArray());
         }
+
         public override void Draw(ref Graphics graphics, Point end)
         {
             Points[1] = end;

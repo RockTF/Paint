@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Drawing.Drawing2D;
 using NewPaitnt.Interfaces;
 using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
@@ -8,15 +7,11 @@ namespace NewPaitnt.Implementation
 {
     public class DrawingEngine
     {
-        private static DrawingEngine _drawingEngine;
-        // Компоненты СинглТоны
         private Settings _settings;
         private MouseHandler _mouseHandler;
         private PenPreview _penPreview;
-        private IStorage _storage;
-        private Service _service;
-              
-        // Графика
+        private IStorage _storage;              
+        
         public Bitmap Canvas;
         public Bitmap MainImage;
         private Bitmap Background;
@@ -27,32 +22,21 @@ namespace NewPaitnt.Implementation
         private Graphics BackgroundGraphics;
         private Graphics FigureGraphics;
         private Graphics ForegroundGraphics;
-        
-        // Внутренние приватные переменные
+  
         private int _selectedFigureIndex;
 
-        private DrawingEngine(Settings settings, MouseHandler mouseHandler, PenPreview penPreview, IStorage storage, Service service)
+        public DrawingEngine(Settings settings, MouseHandler mouseHandler, PenPreview penPreview, IStorage storage)
         {
             _settings = settings;
             _mouseHandler = mouseHandler;
             _penPreview = penPreview;
             _storage = storage;
-            _service = service;
 
             NewBitmaps();
             MainGraphics.Clear(Color.White);
             Canvas = (Bitmap)MainImage.Clone();
 
             _selectedFigureIndex = -1;
-        }
-
-        public static DrawingEngine Initialize(Settings settings, MouseHandler mouseHandler, PenPreview penPreview, IStorage storage, Service service)
-        {
-            if (_drawingEngine == null)
-            {
-                _drawingEngine = new DrawingEngine(settings, mouseHandler, penPreview, storage, service);
-            }
-            return _drawingEngine;
         }
 
         public void ClearCanvas()
@@ -67,11 +51,9 @@ namespace NewPaitnt.Implementation
             switch (_settings.Mode)
             {
                 case EFigure.Dot:
-                    // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new Dot(_mouseHandler.GetClick(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Line:
-                    // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Rectangle:
@@ -91,7 +73,6 @@ namespace NewPaitnt.Implementation
                     _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Curve:
-                    // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.SmoothCurve:
@@ -107,9 +88,7 @@ namespace NewPaitnt.Implementation
 
         public void DrawAllFigures()
         {
-            // Очищаем основное изображение
             MainGraphics.DrawImage(Canvas, 0, 0);
-            // Отрисовываем на нем последовательно все что есть в списке фигур
             foreach (var figure in _storage.GetAllFigures())
             {
                 figure.Draw(ref MainGraphics);
@@ -118,14 +97,15 @@ namespace NewPaitnt.Implementation
 
         public void SelectFigure()
         {
+            var count = -_storage.GetCount();
             if (_selectedFigureIndex == 0)
             {
                 ClearLayers();
                 DrawSelectedFigure();
-                DrawFigureSequence(_selectedFigureIndex + 1, _storage.GetCount());
+                DrawFigureSequence(_selectedFigureIndex + 1, count);
                 DrawLayers();
             }
-            else if (_selectedFigureIndex == _storage.GetCount() - 1)
+            else if (_selectedFigureIndex == count - 1)
             {
                 ClearLayers();
                 DrawFigureSequence(0, _selectedFigureIndex);
@@ -137,8 +117,10 @@ namespace NewPaitnt.Implementation
                 ClearLayers();
                 DrawFigureSequence(0, _selectedFigureIndex);
                 DrawSelectedFigure();
-                for (int i = _selectedFigureIndex + 1; i < _storage.GetCount(); i++)
-                DrawFigureSequence(_selectedFigureIndex + 1, _storage.GetCount());
+                for (int i = _selectedFigureIndex + 1; i < count; i++)
+                {
+                    DrawFigureSequence(_selectedFigureIndex + 1, count);
+                }
                 DrawLayers();
             }
         }
@@ -154,6 +136,7 @@ namespace NewPaitnt.Implementation
                 DrawLayers();
             }
         }
+
         public void DeleteFigure()
         {
             if (_selectedFigureIndex >= 0)
@@ -195,7 +178,6 @@ namespace NewPaitnt.Implementation
             return _storage.GetFiguresNames().ToArray();
         }
 
-        // Метод для перерисовки выделенной фигуры при каком либо изменении ее свойств
         public void RedrawFigure()
         {
             _storage.GetLastFigure().Draw(ref FigureGraphics, _mouseHandler.GetMove());
@@ -206,16 +188,10 @@ namespace NewPaitnt.Implementation
             _storage.GetLastFigure().Draw(ref FigureGraphics);
         }
 
-
         public Bitmap GetPenImage()
         {
             _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
             return _penPreview.PenBitmap;
-        }
-
-        public EFigure GetMode()
-        {
-            return _settings.Mode;
         }
 
         public void SetSelectedFigure(int figureIndex)
@@ -223,7 +199,7 @@ namespace NewPaitnt.Implementation
             _selectedFigureIndex = figureIndex;
         }
 
-        private void ClearLayers()
+        public void ClearLayers()
         {
             MainGraphics.DrawImage(Canvas, 0, 0);
             BackgroundGraphics.Clear(BlackTransparrent);
@@ -240,7 +216,7 @@ namespace NewPaitnt.Implementation
             DrawAllFigures();
         }
 
-        private void ClearLayers(Color color)
+        public void ClearLayers(Color color)
         {
             MainGraphics.Clear(color);
             BackgroundGraphics.Clear(BlackTransparrent);
@@ -248,14 +224,14 @@ namespace NewPaitnt.Implementation
             ForegroundGraphics.Clear(BlackTransparrent);
         }
 
-        private void DrawLayers()
+        public void DrawLayers()
         {
             MainGraphics.DrawImage(Background, 0, 0);
             MainGraphics.DrawImage(CurrentFigure, 0, 0);
             MainGraphics.DrawImage(Foreground, 0, 0);
         }
 
-        private void DrawSelectedFigure()
+        public void DrawSelectedFigure()
         {
             if (_selectedFigureIndex >= 0)
             {
@@ -263,11 +239,11 @@ namespace NewPaitnt.Implementation
             }
         }
 
-        private void DrawFigureSequence(int startIndex, int endIndex)
+        public void DrawFigureSequence(int startIndex, int endIndex)
         {
             for (int i = startIndex; i < endIndex; i++)
             {
-                _storage.GetFigure(i).Draw(ref ForegroundGraphics);
+                _storage.GetFigure(i)?.Draw(ref ForegroundGraphics);
             }
         }
 
@@ -275,6 +251,7 @@ namespace NewPaitnt.Implementation
         {
             _storage.Clear();
         }
+
         public void NewImageSize()
         {
             NewBitmaps();
@@ -282,6 +259,7 @@ namespace NewPaitnt.Implementation
             Canvas = (Bitmap)MainImage.Clone();
             ClearCanvas();
         }
+
         public void DrawNewFigure()
         {
             CreateFigure();
@@ -290,12 +268,25 @@ namespace NewPaitnt.Implementation
             DrawFigure();
             DrawFigureOnMain();
         }
+
         public void RedrawNewFigure()
         {
             DrawBackgroundOnMain();
             CleanFigure();
             RedrawFigure();
             DrawFigureOnMain();
+        }
+
+        public void Undo()
+        {
+            _storage.TransferToBuffer();
+            DrawAllFigures();
+        }
+
+        public void Redo()
+        {
+            _storage.TransferToFigure();
+            DrawAllFigures();
         }
 
         public void AddPointToCurve(Point click)

@@ -1,15 +1,17 @@
-﻿using System.Drawing;
+﻿using NewPaitnt.Interfaces;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace NewPaitnt.Implementation
 {
-    public class PenPreview
+    public class PenPreview : IPenPreview
     {
         private static PenPreview _penPreview;
         private int _xCenter;
         private int _yCenter;
         public Bitmap PenBitmap { get; private set; }
         private Graphics _penGraphics;
+
         private PenPreview(Pen pen, int Width, int Height)
         {
             PenBitmap = new Bitmap(Width, Height);
@@ -19,6 +21,7 @@ namespace NewPaitnt.Implementation
             _penGraphics.SmoothingMode = SettingsConstants.DefaultSmoothingMode;
             Refresh(pen, SettingsConstants.DefaultSmoothingMode);
         }
+
         public static PenPreview Initialize(Pen pen, int Width, int Height)
         {
             if (_penPreview == null)
@@ -27,6 +30,7 @@ namespace NewPaitnt.Implementation
             }
             return _penPreview;
         }
+
         public void Refresh(Pen pen, SmoothingMode smoothingMode)
         {
             _penGraphics.Clear(Color.White);

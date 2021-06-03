@@ -19,7 +19,6 @@ namespace NewPaitnt
         MouseHandler mouseHandler;
         PenPreview penPreview;
         IStorage storage;
-        Service service;
 
         DrawingEngine drawingEngine;
 
@@ -44,9 +43,8 @@ namespace NewPaitnt
             mouseHandler = MouseHandler.Initialize();
             penPreview = PenPreview.Initialize(settings.Pen, PictureBoxThickness.Width, PictureBoxThickness.Height);
             storage = Storage.Initialize();
-            service = Service.Initialize();
 
-            drawingEngine = DrawingEngine.Initialize(settings, mouseHandler, penPreview, storage, service);
+            drawingEngine = new DrawingEngine(settings, mouseHandler, penPreview, storage);
 
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
             PictureBoxPaint.Image = drawingEngine.MainImage;
@@ -59,12 +57,7 @@ namespace NewPaitnt
             _isBtnFillClicked = false;
             _isFigureCreated = false;
             _isFirstPointAdd = false;
-            // Антон ещё меняет
-            //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            //DoubleBuffered = true;
-
-            // Set the value of the double-buffering style bits to true.
+         
             this.SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.UpdateStyles();
 
@@ -75,16 +68,12 @@ namespace NewPaitnt
         {
             if (e.Button == MouseButtons.Left)
             {
-                
                 drawingEngine.DrawMainOnBackground();
-
                 mouseHandler.NewClick(e.Location);
-
                 if (settings.Mode == EFigure.SmoothCurve)
                 {
                     _isLineFinished = false;
                 }
-
                 if (!_isLineFinished && _isFirstPointAdd)
                 {
                     drawingEngine.AddPointToCurve(mouseHandler.GetClick());
@@ -93,18 +82,15 @@ namespace NewPaitnt
                 {
                     _isFirstPointAdd = true;
                 }
-
                 if (settings.Mode == EFigure.Dot)
                 {
                     _isFigureCreated = true;
-
                     drawingEngine.DrawNewFigure();
                 }
                 else if (settings.Mode == EFigure.Move)
                 {
                     drawingEngine.SelectFigure();
                 }
-
                 PictureBoxPaint.Image = drawingEngine.MainImage;
             }
             if (e.Button == MouseButtons.Right)
@@ -123,7 +109,6 @@ namespace NewPaitnt
                 {
                     mouseHandler.NewMove(e.Location);
                 }
-
                 if (settings.Mode != EFigure.Move)
                 {
                     if (!_isFigureCreated)
@@ -136,15 +121,11 @@ namespace NewPaitnt
                         drawingEngine.RedrawNewFigure();
                     }
                 }
-
                 PictureBoxPaint.Image = drawingEngine.MainImage;
-
                 if (settings.Mode == EFigure.Move)
                 {
                     mouseHandler.NewMove(e.Location);
-
                     drawingEngine.MoveFigure();
-
                     PictureBoxPaint.Image = drawingEngine.MainImage;
                 }
             }
@@ -160,9 +141,7 @@ namespace NewPaitnt
                 {
                     drawingEngine.ClearAllExceptMainImage();
                     drawingEngine.RedrawNewFigure();
-                    
                 }
-
                 PictureBoxPaint.Image = drawingEngine.MainImage;
             }
         }
@@ -180,18 +159,19 @@ namespace NewPaitnt
 
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
-
         }
 
-        private void MenuCreate_Click(object sender, EventArgs e) //очищать лист при вызове метода
+        private void MenuCreate_Click(object sender, EventArgs e) 
         {
             CreateNewCanvas createNewCanvas = (CreateNewCanvas)Application.OpenForms["CreateNewCanvas"];
+
             if (createNewCanvas == null)
             {
                 if (BtnMove.Enabled)
                 {
                     settings.SetMode(EFigure.Curve);
                 }
+
                 createNewCanvas = new CreateNewCanvas();
                 createNewCanvas.Show();
             }
@@ -279,15 +259,12 @@ namespace NewPaitnt
 
         private void BtnUndo_Click(object sender, EventArgs e)
         {
-            
-            //DrawingEngine.Undo();
-            //PictureBoxPaint.Image = DrawingEngine.MainImage;
+            drawingEngine.Undo();
         }
 
         private void BtnRedo_Click(object sender, EventArgs e)
         {
-            //DrawingEngine.Redo();
-            //PictureBoxPaint.Image = DrawingEngine.MainImage;
+            drawingEngine.Redo();
         }
 
         private void BtnPoint_Click(object sender, EventArgs e)

@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NewPaitnt.Vector
 {
@@ -37,6 +35,7 @@ namespace NewPaitnt.Vector
 
             FigureName = "Polygon" + _count++.ToString();
         }
+
         public override void Draw(ref Graphics graphics)
         {
             graphics.SmoothingMode = SmoothingMode;

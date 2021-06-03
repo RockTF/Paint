@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 
 
 namespace NewPaitnt.VectorModel
 {
-    public class Rectangle:Figure
+    public class Rectangle : Figure
     {
         private static int _count = 0;
         public Rectangle(Point start, Point end, Pen pen, Brush brush, SmoothingMode smoothingMode)
@@ -39,6 +36,7 @@ namespace NewPaitnt.VectorModel
             graphics.DrawRectangle(Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
            
         }
+
         public override void Draw(ref Graphics graphics, Point end)
         {
             Points[1] = end;

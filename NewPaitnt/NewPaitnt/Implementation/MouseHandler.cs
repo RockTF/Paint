@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NewPaitnt.Interfaces;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NewPaitnt.Implementation
 {
-    public class MouseHandler
+    public class MouseHandler : IMouseHandler
     {
         private static MouseHandler _mouseHandler;
 
@@ -32,38 +29,44 @@ namespace NewPaitnt.Implementation
             }
             return _mouseHandler;
         }
+
         public void NewRightClick(Point rightClick)
         {
             _rightClick = rightClick;
         }
+
         public void NewMove(Point move)
         {
             _previousMove = _move;
             _move = move;
         }
+
         public void NewClick(Point click)
         {
             _click = click;
             _previousMove = click;
             _move = click;
         }
+
         public Point GetClick()
         {
             return _click;
 
         }
+
         public Point GetMove()
         {
             return _move;
         }
+
         public Point GetPreviousMove()
         {
             return _previousMove;
         }
+
         public Point GetRightClick()
         {
             return _rightClick;
         }
-
     }
 }

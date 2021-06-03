@@ -1,6 +1,7 @@
 ﻿using System;
 using NewPaitnt.Interfaces;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace NewPaitnt.Implementation
 {
@@ -12,6 +13,8 @@ namespace NewPaitnt.Implementation
         private List<IDrawable> _history;
         private List<IDrawable> _buffer;
         private List<string> _figuresNames;
+
+        private string _jsonText;
 
         private Storage()
         {
@@ -121,6 +124,33 @@ namespace NewPaitnt.Implementation
             _figures.Clear();
             _buffer.Clear();
             _figuresNames.Clear();
+        }
+
+        private void JsonSerialize()
+        {
+            _jsonText = JsonConvert.SerializeObject(_figures);
+        }
+
+        private void JsonDeserialize()
+        {
+            _figures = (List<IDrawable>)JsonConvert.DeserializeObject<IDrawable>(_jsonText);
+        }
+
+        public string GetJson()
+        {
+            JsonSerialize();
+            return _jsonText;
+        }
+
+        public void SetJson(string jsonText)
+        {
+            Clear();
+            _jsonText = jsonText;
+            JsonDeserialize();
+            foreach (var figure in _figures)
+            {
+                _figuresNames.Add(figure.FigureName);
+            }
         }
     }
 }

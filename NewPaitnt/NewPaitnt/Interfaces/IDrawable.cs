@@ -8,9 +8,9 @@ namespace NewPaitnt.Interfaces
    {
         string FigureName { get; }
         List<Point> Points { get; }
-        Pen Pen { get; }
-        Brush Brush { get; }
-        SmoothingMode SmoothingMode { get; }
+        Pen Pen { get; set; }
+        Brush Brush { get; set; }
+        SmoothingMode SmoothingMode { get; set; }
 
         abstract void Draw(ref Graphics graphics);
         abstract void Draw(ref Graphics graphics,Point end);

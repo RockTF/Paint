@@ -17,5 +17,5 @@ namespace NewPaitnt.Interfaces
         public void AddNextPoint(Point click);
         void Move(Point from, Point to);
         void ChangePen(Pen pen);
-    }
+   }
 }

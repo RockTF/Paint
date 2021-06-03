@@ -15,6 +15,7 @@ namespace NewPaitnt.Implementation
         public Brush Brush { get; private set; }
         public SmoothingMode SmoothingMode { get; private set; }
         public int numberOfPolygonApexes { get; private set; }
+
         private Settings()
         {
             Reset();
@@ -27,7 +28,7 @@ namespace NewPaitnt.Implementation
             }
             return _settings;
         }
-        // Все свойства сетим через методы чтобы не поменять случайно
+       
         public void SetImageWidth(int newWidth)
         {
             _settings.ImageWidth = newWidth;
@@ -53,28 +54,11 @@ namespace NewPaitnt.Implementation
             _settings.Pen.Color = color;
         }
 
-        public void SetPenDashStyle(DashStyle newStyle)
-        {
-            _settings.Pen.DashStyle = newStyle;
-        }
-        public void SetBrushColor(Color newColor)
-        {
-            _settings.Brush = new SolidBrush(newColor);
-        }
-
         public void SetSmoothingMode(SmoothingMode newMode)
         {
             _settings.SmoothingMode = newMode;
         }
-        public void SetAddNextPoint(bool AddNextPoint)
-        {
-            _settings.IisLineFinished = AddNextPoint;
-        }
-        public void SetIisLineFinished(bool IisLineFinished)
-        {
-            _settings.IisLineFinished = IisLineFinished;
-        }
-
+      
         public void SetNumberOfPolygonApexes(int number)
         {
             numberOfPolygonApexes = number;

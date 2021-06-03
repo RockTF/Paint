@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 
 namespace NewPaitnt.VectorModel
 {
-    public class RoundedRectangle:Figure
+    public class RoundedRectangle : Figure
     {
         private static int _count = 0;
         public RoundedRectangle(Point start, Point end, Pen pen, SmoothingMode smoothingMode)

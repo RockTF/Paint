@@ -1,11 +1,8 @@
-﻿using NewPaitnt.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NewPaitnt.VectorModel
 {
@@ -16,10 +13,10 @@ namespace NewPaitnt.VectorModel
         public Curve(Point start, Point move, Pen pen, SmoothingMode smoothingMode)
         {
            Points = new List<Point>();
-           if(Points.Count ==0)
-            {
+           if (Points.Count ==0)
+           {
                 Points.Add(new Point(start.X, start.Y));
-            }
+           }
                        
             Points.Add(new Point(move.X, move.Y));
           

@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NewPaitnt.Vector
 {
@@ -21,6 +19,7 @@ namespace NewPaitnt.Vector
             _numberOfApex = numberOfApex;
             Points = new List<Point>(_numberOfApex);
             _aroundCenterPoints = new List<Point>(_numberOfApex);
+
             for (int i = 0; i < _numberOfApex; i++)
             {
                 Points.Add(new Point(0, 0));

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 
 namespace NewPaitnt.VectorModel
 {
-    public class Triangle:Figure
+    public class Triangle : Figure
     {
         private static int _count = 0;
         public Triangle(Point start, Point end, Pen pen, SmoothingMode smoothingMode)

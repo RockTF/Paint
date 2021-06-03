@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Drawing.Drawing2D;
 using NewPaitnt.Interfaces;
 using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;

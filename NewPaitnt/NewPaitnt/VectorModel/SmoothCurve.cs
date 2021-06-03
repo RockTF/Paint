@@ -3,13 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NewPaitnt.Vector
 {
-    class SmoothCurve : Figure
+    public class SmoothCurve : Figure
     {
         private static int _count = 0;
         public SmoothCurve(Point click, Point move, Point end, Pen pen, SmoothingMode smoothingMode, bool AddNextPoint, bool IsLineFinished)

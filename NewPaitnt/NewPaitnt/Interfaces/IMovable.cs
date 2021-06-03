@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+
 
 namespace NewPaitnt.Interfaces
 {
-    interface IMovable
+    public interface IMovable
     {
         abstract void Draw(ref Graphics graphics);
         abstract void Draw(ref Graphics graphics, Point end);

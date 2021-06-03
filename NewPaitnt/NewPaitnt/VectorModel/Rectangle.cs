@@ -49,6 +49,8 @@ namespace NewPaitnt.VectorModel
             int Yend = (Points[0].Y < Points[1].Y) ? Points[1].Y : Points[0].Y;
 
             graphics.SmoothingMode = SmoothingMode;
+
+            graphics.FillRectangle(Brush, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             graphics.DrawRectangle(Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             
         }

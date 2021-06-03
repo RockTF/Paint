@@ -80,15 +80,15 @@ namespace NewPaitnt.Implementation
                     break;
                 case EFigure.Triangle:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Ellipse:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.RoundedRectangle:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Curve:
                     // Добавляем новую соответствующую фигуру в список
@@ -98,7 +98,7 @@ namespace NewPaitnt.Implementation
                     _storage.AddFigure(new SmoothCurve(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Polygon:
-                    _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 default:
                     break;

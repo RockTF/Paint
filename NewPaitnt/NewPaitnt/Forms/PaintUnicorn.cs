@@ -366,7 +366,7 @@ namespace NewPaitnt
             if (_isBtnFillClicked)
             {
                 settings.SetBrushColor(((Button)sender).BackColor);
-                
+                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
                 _isBtnFillClicked = false;
             }
             else
@@ -433,8 +433,21 @@ namespace NewPaitnt
 
         private void BtnTransparent_Click(object sender, EventArgs e)
         {
-            PictureBoxColorFillFigure.BackColor = Color.Transparent;
-            PictureBoxThickness.Image = drawingEngine.GetPenImage();
+            if (_isBtnFillClicked)
+            {
+                settings.SetBrushColor(Color.Transparent);
+                PictureBoxColorFillFigure.BackColor = Color.Transparent;
+                _isBtnFillClicked = false;
+            }
+            else
+            {
+
+                settings.SetPenColor(Color.Transparent);
+                PictureBoxColorFillFigure.BackColor = Color.Transparent;
+                PictureBoxThickness.Image = drawingEngine.GetPenImage();
+            }
+            
+            
         }
     }
 }

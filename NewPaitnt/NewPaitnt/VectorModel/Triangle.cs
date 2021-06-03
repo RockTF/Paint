@@ -11,7 +11,7 @@ namespace NewPaitnt.VectorModel
     public class Triangle:Figure
     {
         private static int _count = 0;
-        public Triangle(Point start, Point end, Pen pen, SmoothingMode smoothingMode)
+        public Triangle(Point start, Point end, Pen pen, Brush brush, SmoothingMode smoothingMode)
         {
             Points = new List<Point>(2);
 
@@ -19,6 +19,7 @@ namespace NewPaitnt.VectorModel
             Points.Add(end);
 
             Pen = (Pen)pen.Clone();
+            Brush = (Brush)brush.Clone();
             SmoothingMode = smoothingMode;
 
             FigureName = "Triangle" + _count++.ToString();
@@ -33,6 +34,7 @@ namespace NewPaitnt.VectorModel
             TrianglePoint.Add(new Point((Points[0].X + Points[1].X) / 2, Points[0].Y));
 
             graphics.SmoothingMode = SmoothingMode;
+            graphics.FillPolygon(Brush, TrianglePoint.ToArray());
             graphics.DrawPolygon(Pen, TrianglePoint.ToArray());
         }
         public override void Draw(ref Graphics graphics, Point end)
@@ -45,6 +47,7 @@ namespace NewPaitnt.VectorModel
             TrianglePoint.Add(new Point((Points[0].X + Points[1].X) / 2, Points[0].Y));
 
             graphics.SmoothingMode = SmoothingMode;
+            graphics.FillPolygon(Brush, TrianglePoint.ToArray());
             graphics.DrawPolygon(Pen, TrianglePoint.ToArray());
         }
 

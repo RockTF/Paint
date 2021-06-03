@@ -4,6 +4,8 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Text.Json;
 using System.Windows.Forms;
 using Button = System.Windows.Forms.Button;
 
@@ -202,36 +204,56 @@ namespace NewPaitnt
         private void MenuSave_Click(object sender, EventArgs e)
         {
             saveFileDialog.FileName = "newUnicorn";
-            saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
-
+            saveFileDialog.Filter = "storege.json|*.json";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (PictureBoxPaint != null)
+                using (FileStream fs = new FileStream("storege.json", FileMode.OpenOrCreate))
                 {
-                    PictureBoxPaint.Image.Save(saveFileDialog.FileName);
+                    string json = JsonSerializer.Serialize<IStorage>(storage);
+                    JsonSerializer.SerializeAsync<IStorage>(fs, storage);
+                    
                 }
             }
+            //saveFileDialog.FileName = "newUnicorn";
+            //saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege";
+
+            //if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    if (PictureBoxPaint != null)
+            //    {
+            //        PictureBoxPaint.Image.Save(saveFileDialog.FileName);
+
+                    
+            //    }
+            //}
         }
 
         private void MenuOpen_Click(object sender, EventArgs e)
         {
             openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
-
-            openFileDialog.RestoreDirectory = true;
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            openFileDialog.Filter = "storege.json";
+            using (FileStream fs = new FileStream("storege.json", FileMode.OpenOrCreate))
             {
-               
-                drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
-               
-                settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width) ;
-                settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
-                
-                drawingEngine.DrawAllFigures();
-                PictureBoxPaint.Image = drawingEngine.MainImage;
-               
+                JsonSerializer.DeserializeAsync<IStorage>(fs);
+
             }
+
+            //openFileDialog.InitialDirectory = "c:\\";
+            //openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege Json|*.json|All|*.*";
+
+            //openFileDialog.RestoreDirectory = true;
+
+            //if (openFileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
+
+            //    settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width);
+            //    settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
+
+            //    drawingEngine.DrawAllFigures();
+            //    PictureBoxPaint.Image = drawingEngine.MainImage;
+
+           // }
         }
 
         private void MenuClear_Click(object sender, EventArgs e)

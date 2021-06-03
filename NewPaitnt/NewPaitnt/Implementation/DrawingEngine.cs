@@ -316,6 +316,10 @@ namespace NewPaitnt.Implementation
             FigureGraphics = Graphics.FromImage(CurrentFigure);
             ForegroundGraphics = Graphics.FromImage(Foreground);
         }
+        public void Deserialize(IStorage storage)
+        {
+
+        }
 
     }
 }

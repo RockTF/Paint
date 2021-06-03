@@ -99,6 +99,10 @@ namespace NewPaitnt.Implementation
         public void SelectFigure()
         {
             var count = _storage.GetCount();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             if (_selectedFigureIndex == 0)
             {
                 ClearLayers();

@@ -8,15 +8,6 @@ using System.Collections.Generic;
 
 namespace NUnitNewPaint
 {
-    //[TestFixture(typeof(Curve))]
-    //[TestFixture(typeof(Line))]
-    //[TestFixture(typeof(Ellipse))]
-    //[TestFixture(typeof(Polygon))]
-    //[TestFixture(typeof(RoundedRectangle))]
-    //[TestFixture(typeof(Triangle))]
-    //[TestFixture(typeof(Dot))]
-    //[TestFixture(typeof(Rectangle))]
-
     public class DrawingEngineTests
     {
         private Settings _settings;
@@ -45,8 +36,6 @@ namespace NUnitNewPaint
 
             _drawable = new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode);
         }
-
-        //[TestCase(EFigure.Curve, typeof(Curve))]
 
         [Test]
         public void CreateFigureTestStorage()
@@ -193,12 +182,12 @@ namespace NUnitNewPaint
         [Test]
         public void GetLastFigureTestStorage()
         {
-            var t = new List<IDrawable>()
+            var listFigure = new List<IDrawable>()
             {
                 new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode)
             };
 
-            _storage.Setup(a => a.GetAllFigures()).Returns(t);
+            _storage.Setup(a => a.GetAllFigures()).Returns(listFigure);
             _drawingEngine.DrawAllFigures();
             _storage.Verify(a => a.GetAllFigures(), Times.Once);
         }
@@ -214,12 +203,12 @@ namespace NUnitNewPaint
         [Test]
         public void GetFigureListTestStorage()
         {
-            var t = new List<string>()
+            var listName = new List<string>()
             {
                "Line"
             };
 
-            _storage.Setup(a => a.GetFiguresNames()).Returns(t);
+            _storage.Setup(a => a.GetFiguresNames()).Returns(listName);
             _drawingEngine.GetFigureList();
             _storage.Verify(a => a.GetFiguresNames(), Times.Once);
         }

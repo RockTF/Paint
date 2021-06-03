@@ -102,6 +102,7 @@ namespace NewPaitnt.Implementation
                 {
                     _buffer = new List<IDrawable>();
                 }
+
                 _buffer.Add(_figures[^1]);
                 _figures.RemoveAt(_figures.Count - 1);
                 _figuresNames.RemoveAt(_figuresNames.Count - 1);
@@ -110,7 +111,7 @@ namespace NewPaitnt.Implementation
 
         public void TransferToFigure()
         {
-            if (_buffer.Count > 0) 
+            if (_buffer != null && _buffer.Count != null && _figures != null && _buffer.Count > 0) 
             {
                 _figures.Add(_buffer[^1]);
                 _buffer.RemoveAt(_buffer.Count - 1);

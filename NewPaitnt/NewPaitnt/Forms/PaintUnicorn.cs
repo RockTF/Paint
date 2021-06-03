@@ -457,6 +457,7 @@ namespace NewPaitnt
             drawingEngine.DeleteFigure();
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
+           
             PictureBoxPaint.Image = drawingEngine.MainImage;
             drawingEngine.SetSelectedFigure(-1);
             _isFigureSelected = false;

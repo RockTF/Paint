@@ -9,7 +9,7 @@ namespace NewPaitnt.Implementation
     public class DrawingEngine
     {
         private Settings _settings;
-        private MouseHandler _mouseHandler;
+        private IMouseHandler _mouseHandler;
         private PenPreview _penPreview;
         private IStorage _storage;              
         
@@ -26,7 +26,7 @@ namespace NewPaitnt.Implementation
   
         private int _selectedFigureIndex;
 
-        public DrawingEngine(Settings settings, MouseHandler mouseHandler, PenPreview penPreview, IStorage storage)
+        public DrawingEngine(Settings settings, IMouseHandler mouseHandler, PenPreview penPreview, IStorage storage)
         {
             _settings = settings;
             _mouseHandler = mouseHandler;
@@ -99,6 +99,10 @@ namespace NewPaitnt.Implementation
         public void SelectFigure()
         {
             var count = _storage.GetCount();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             if (_selectedFigureIndex == 0)
             {
                 ClearLayers();
@@ -192,7 +196,7 @@ namespace NewPaitnt.Implementation
             return _penPreview.PenBitmap;
         }
 
-        public void SetSelectedFigure(int figureIndex)
+        public void SetSelectedFigure(int figureIndex) //////////////////////////////////////////////
         {
             _selectedFigureIndex = figureIndex;
         }
@@ -245,7 +249,7 @@ namespace NewPaitnt.Implementation
             }
         }
 
-        public void ClearStorage()
+        public void ClearStorage() //////////////////////////////////////////////////
         {
             _storage.Clear();
         }

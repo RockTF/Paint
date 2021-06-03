@@ -186,27 +186,29 @@ namespace NewPaitnt
 
         private void MenuSave_Click(object sender, EventArgs e)
         {
-            saveFileDialog.FileName = "newUnicorn";
-            saveFileDialog.Filter = "storege.json|*.json";
+            saveFileDialog.FileName = "Figuras.json";
+            saveFileDialog.Filter = "TXT Text|*.txt";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                using (FileStream fs = new FileStream("storege.json", FileMode.OpenOrCreate))
-                {
-                    string json = JsonSerializer.Serialize<IStorage>(storage);
-                    JsonSerializer.SerializeAsync<IStorage>(fs, storage);
-
-                }
+                
+                FileStream fParameter = new FileStream("Figuras.json", FileMode.OpenOrCreate);
+                StreamWriter m_WriterParameter = new StreamWriter(fParameter);
+                m_WriterParameter.BaseStream.Seek(0, SeekOrigin.End);
+                m_WriterParameter.Write(storage.GetJson()); 
+                m_WriterParameter.Flush();
+                m_WriterParameter.Close();
             }
+            
+
             //saveFileDialog.FileName = "newUnicorn";
             //saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege";
-
+            //saveFileDialog.Filter = "TXT Text|*.txt";
             //if (saveFileDialog.ShowDialog() == DialogResult.OK)
             //{
+            //   // 
             //    if (PictureBoxPaint != null)
             //    {
             //        PictureBoxPaint.Image.Save(saveFileDialog.FileName);
-
-
             //    }
             //}
         }

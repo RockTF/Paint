@@ -76,7 +76,7 @@ namespace NewPaitnt.Implementation
                     break;
                 case EFigure.Rectangle:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Triangle:
                     // Добавляем новую соответствующую фигуру в список

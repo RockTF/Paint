@@ -12,8 +12,6 @@ namespace NewPaitnt.Implementation
             Rectangle,
             SmoothCurve,
             RoundedRectangle,
-            // Добавил для перемещения, надо обсудить
             Move
     }
-    
 }

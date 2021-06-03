@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using NewPaitnt.Implementation;
 
@@ -14,7 +13,7 @@ namespace NewPaitnt
         {
             InitializeComponent();
             settings = Settings.Initialize();
-            drawingEngine = new DrawingEngine(settings, MouseHandler.Initialize(), PenPreview.Initialize(settings.Pen, 31, 31), Storage.Initialize(), Service.Initialize());
+            drawingEngine = new DrawingEngine(settings, MouseHandler.Initialize(), PenPreview.Initialize(settings.Pen, 31, 31), Storage.Initialize());
         }
        
 

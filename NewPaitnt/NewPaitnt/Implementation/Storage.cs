@@ -8,7 +8,6 @@ namespace NewPaitnt.Implementation
     {
         private static Storage _storage;
 
-        private int _count;
         private List<IDrawable> _figures;
         private List<IDrawable> _history;
         private List<IDrawable> _buffer;
@@ -16,11 +15,10 @@ namespace NewPaitnt.Implementation
 
         private Storage()
         {
-            _count = 0;
             _figures = new List<IDrawable>();
             _figuresNames = new List<string>();
-
         }
+
         public static Storage Initialize()
         {
             if (_storage == null)
@@ -29,12 +27,13 @@ namespace NewPaitnt.Implementation
             }
             return _storage;
         }
+
         public void AddFigure(IDrawable figure)
         {
-            _count++;
             _figures.Add(figure);
             _figuresNames.Add(figure.FigureName);
         }
+
         public IDrawable GetFigure(int position)
         {
             if (position >= 0 && position < _figures.Count)
@@ -46,14 +45,17 @@ namespace NewPaitnt.Implementation
                throw new IndexOutOfRangeException(); 
             }
         }
+
         public IDrawable GetLastFigure()
         {
-            return _figures[_count - 1];
+            return _figures[_figures.Count - 1];
         }
+
         public List<IDrawable> GetAllFigures()
         {
             return _figures;
         }
+
         public string GetFigureName(int position)
         {
             if (position >= 0 && position < _figures.Count)
@@ -65,19 +67,21 @@ namespace NewPaitnt.Implementation
                 throw new IndexOutOfRangeException();
             }
         }
+
         public List<string> GetFiguresNames()
         {
             return _figuresNames;
         }
+
         public int GetCount()
         {
-            return _count;
+            return _figures.Count;
         }
+
         public void RemoveFigureAt(int position)
         {
             if (position >= 0 && position <= _figures.Count)
             {
-                //_count--;
                 _figures.RemoveAt(position); // bag
                 _figuresNames.RemoveAt(position);
             }
@@ -87,33 +91,31 @@ namespace NewPaitnt.Implementation
             }
         }
 
-        //public void TransferToBuffer() //UNDO
-        //{
-        //    if (_figures.Count != 0)
-        //    {
-        //        if (_buffer == null)
-        //        {
-        //            _buffer = new List<IDrawable>();
-        //        }
-        //        _buffer.Add(_figures[^1]);
-        //        _figures.RemoveAt(_count - 1);
-        //        _figuresNames.RemoveAt(_count - 1);
-        //    }
-        //}
+        public void TransferToBuffer() 
+        {
+            if (_figures.Count != 0)
+            {
+                if (_buffer == null)
+                {
+                    _buffer = new List<IDrawable>();
+                }
+                _buffer.Add(_figures[^1]);
+                _figures.RemoveAt(_figures.Count - 1);
+                _figuresNames.RemoveAt(_figures.Count - 1);
+            }
+        }
 
-        //public void TransferToFigure() //REDO
-        //{
-        //    if (_figures.Count != 0)
-        //    {
-        //        _figures.Add(_buffer[^1]);
-        //        _count++;
-        //        _buffer.RemoveAt(_buffer.Count - 1);
-        //    }
-        //}
+        public void TransferToFigure() 
+        {
+            if (_figures.Count != 0)
+            {
+                _figures.Add(_buffer[^1]);
+                _buffer.RemoveAt(_buffer.Count - 1);
+            }
+        }
 
         public void Clear()
         {
-            _count = 0;
             _figures.Clear();
             _buffer.Clear();
             _figuresNames.Clear();

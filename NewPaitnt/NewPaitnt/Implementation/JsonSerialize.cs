@@ -6,11 +6,11 @@ using System.Runtime.Serialization.Json;
 
 namespace NewPaitnt.Implementation
 {
-    class JsonSerialize
+    public class JsonSerialize
     {
-        //Добавить  [DataContract] и  [DataMember]
         private Storage _storege;
         Stream file;
+
         public JsonSerialize(Storage storege)
         {
             _storege = storege;
@@ -27,7 +27,7 @@ namespace NewPaitnt.Implementation
 
             using (file = new FileStream("Figuras.json", FileMode.OpenOrCreate)) 
             {
-                var _storege = jsonFormatter.ReadObject(file) as List<IDrawable>; //Это передать в нью сторедж 
+                var _storege = jsonFormatter.ReadObject(file) as List<IDrawable>; 
             }
 
         }

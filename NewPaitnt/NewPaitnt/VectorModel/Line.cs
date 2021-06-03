@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NewPaitnt.Vector
 {
@@ -30,6 +28,7 @@ namespace NewPaitnt.Vector
             graphics.SmoothingMode = SmoothingMode;
             graphics.DrawLine(Pen, Points[0], Points[1]);
         }
+
         public override void Draw(ref Graphics graphics, Point end)
         {
             Points[1] = end;

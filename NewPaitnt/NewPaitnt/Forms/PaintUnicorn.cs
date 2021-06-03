@@ -44,7 +44,7 @@ namespace NewPaitnt
             storage = Storage.Initialize();
             service = Service.Initialize();
 
-            drawingEngine = DrawingEngine.Initialize(settings, mouseHandler, penPreview, storage, service);
+            drawingEngine = new DrawingEngine(settings, mouseHandler, penPreview, storage, service);
 
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
             PictureBoxPaint.Image = drawingEngine.MainImage;
@@ -141,12 +141,14 @@ namespace NewPaitnt
         private void MenuCreate_Click(object sender, EventArgs e) //очищать лист при вызове метода
         {
             CreateNewCanvas createNewCanvas = (CreateNewCanvas)Application.OpenForms["CreateNewCanvas"];
+
             if (createNewCanvas == null)
             {
                 if (BtnMove.Enabled)
                 {
                     settings.SetMode(EFigure.Curve);
                 }
+
                 createNewCanvas = new CreateNewCanvas();
                 createNewCanvas.Show();
             }
@@ -214,15 +216,12 @@ namespace NewPaitnt
 
         private void BtnUndo_Click(object sender, EventArgs e)
         {
-            
-            //DrawingEngine.Undo();
-            //PictureBoxPaint.Image = DrawingEngine.MainImage;
+            drawingEngine.Undo();
         }
 
         private void BtnRedo_Click(object sender, EventArgs e)
         {
-            //DrawingEngine.Redo();
-            //PictureBoxPaint.Image = DrawingEngine.MainImage;
+            drawingEngine.Redo();
         }
 
         private void BtnPoint_Click(object sender, EventArgs e)

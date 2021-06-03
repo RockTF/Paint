@@ -11,6 +11,7 @@ namespace NewPaitnt.Implementation
         private int _count;
         private List<IDrawable> _figures;
         private List<IDrawable> _history;
+        private List<IDrawable> _buffer;
         private List<string> _figuresNames;
 
         private Storage()
@@ -76,7 +77,7 @@ namespace NewPaitnt.Implementation
         {
             if (position >= 0 && position <= _figures.Count)
             {
-                _count--;
+                //_count--;
                 _figures.RemoveAt(position); // bag
                 _figuresNames.RemoveAt(position);
             }
@@ -85,6 +86,27 @@ namespace NewPaitnt.Implementation
                 throw new IndexOutOfRangeException();
             }
         }
+
+        public void TransferToBuffer() //UNDO
+        {
+            if (_figures.Count != 0)
+            {
+                _buffer.Add(_figures[^1]);
+                _figures.RemoveAt(_count - 1);
+                _figuresNames.RemoveAt(_count - 1);
+            }
+        }
+
+        public void TransferToFigure() //REDO
+        {
+            if (_figures.Count != 0)
+            {
+               // _figures.Add(_buffer[^1]);
+                _count++;
+                _buffer.RemoveAt(_buffer.Count - 1);
+            }
+        }
+
         public void Clear()
         {
             _count = 0;

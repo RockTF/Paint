@@ -16,6 +16,7 @@ namespace NewPaitnt.VectorModel
         public Curve(Point start, Point move, Pen pen, SmoothingMode smoothingMode)
         {
            Points = new List<Point>();
+
            if(Points.Count ==0)
             {
                 Points.Add(new Point(start.X, start.Y));

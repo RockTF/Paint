@@ -8,7 +8,7 @@ namespace NewPaitnt.Implementation
 {
     public class DrawingEngine
     {
-        private static DrawingEngine _drawingEngine;
+        //private static DrawingEngine _drawingEngine;
         // Компоненты СинглТоны
         private Settings _settings;
         private MouseHandler _mouseHandler;
@@ -31,7 +31,7 @@ namespace NewPaitnt.Implementation
         // Внутренние приватные переменные
         private int _selectedFigureIndex;
 
-        private DrawingEngine(Settings settings, MouseHandler mouseHandler, PenPreview penPreview, IStorage storage, Service service)
+        public DrawingEngine(Settings settings, MouseHandler mouseHandler, PenPreview penPreview, IStorage storage, Service service)
         {
             _settings = settings;
             _mouseHandler = mouseHandler;
@@ -53,15 +53,6 @@ namespace NewPaitnt.Implementation
             Canvas = (Bitmap)MainImage.Clone();
 
             _selectedFigureIndex = -1;
-        }
-
-        public static DrawingEngine Initialize(Settings settings, MouseHandler mouseHandler, PenPreview penPreview, IStorage storage, Service service)
-        {
-            if (_drawingEngine == null)
-            {
-                _drawingEngine = new DrawingEngine(settings, mouseHandler, penPreview, storage, service);
-            }
-            return _drawingEngine;
         }
 
         public void ClearCanvas()
@@ -93,7 +84,7 @@ namespace NewPaitnt.Implementation
                     break;
                 case EFigure.Ellipse:
                     // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.RoundedRectangle:
                     // Добавляем новую соответствующую фигуру в список
@@ -311,6 +302,19 @@ namespace NewPaitnt.Implementation
             RedrawFigure();
             DrawFigureOnMain();
         }
-       
+
+        public void Undo() 
+        {
+            _storage.TransferToBuffer();
+            
+            DrawAllFigures();
+        }
+
+        public void Redo()
+        {
+            _storage.TransferToFigure();
+            DrawAllFigures();
+        }
+
     }
 }

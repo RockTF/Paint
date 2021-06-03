@@ -150,21 +150,21 @@ namespace NUnitNewPaint
             _storage.Verify(a => a.GetCount(), Times.Once);
         }
         [Test]
-        public void DrawNewFigureTestStorage() // падает 
+        public void DrawNewFigureTestStorage()
         {
             _storage.Setup(a => a.AddFigure(It.IsAny<IDrawable>()));
             _drawingEngine.DrawNewFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<IDrawable>()), Times.Once);
         }
         [Test]
-        public void DrawNewFigureTest2Storage() // падает
+        public void DrawNewFigureTest2Storage()
         {
             _storage.Setup(a => a.GetLastFigure());
             _drawingEngine.DrawNewFigure();
             _storage.Verify(a => a.GetLastFigure(), Times.Once);
         }
         [Test]
-        public void RedrawNewFigureTest1Storage() // падает 
+        public void RedrawNewFigureTest1Storage()
         {
             _storage.Setup(a => a.GetLastFigure());
             _drawingEngine.RedrawNewFigure();

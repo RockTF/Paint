@@ -98,30 +98,27 @@ namespace NewPaitnt.Implementation
 
         public void SelectFigure()
         {
-            var count = -_storage.GetCount();
+            var count = _storage.GetCount();
             if (_selectedFigureIndex == 0)
             {
                 ClearLayers();
                 DrawSelectedFigure();
-                DrawFigureSequence(_selectedFigureIndex + 1, count);
+                DrawFigureSequence(ref ForegroundGraphics, _selectedFigureIndex + 1, count);
                 DrawLayers();
             }
             else if (_selectedFigureIndex == count - 1)
             {
                 ClearLayers();
-                DrawFigureSequence(0, _selectedFigureIndex);
+                DrawFigureSequence(ref BackgroundGraphics, 0, _selectedFigureIndex);
                 DrawSelectedFigure();
                 DrawLayers();
             }
             else
             {
                 ClearLayers();
-                DrawFigureSequence(0, _selectedFigureIndex);
+                DrawFigureSequence(ref BackgroundGraphics, 0, _selectedFigureIndex);
                 DrawSelectedFigure();
-                for (int i = _selectedFigureIndex + 1; i < count; i++)
-                {
-                    DrawFigureSequence(_selectedFigureIndex + 1, count);
-                }
+                DrawFigureSequence(ref ForegroundGraphics, _selectedFigureIndex + 1, count);
                 DrawLayers();
             }
         }
@@ -240,11 +237,11 @@ namespace NewPaitnt.Implementation
             }
         }
 
-        public void DrawFigureSequence(int startIndex, int endIndex)
+        public void DrawFigureSequence(ref Graphics graphics, int startIndex, int endIndex)
         {
             for (int i = startIndex; i < endIndex; i++)
             {
-                _storage.GetFigure(i)?.Draw(ref ForegroundGraphics);
+                _storage.GetFigure(i)?.Draw(ref graphics);
             }
         }
 

@@ -480,16 +480,25 @@ namespace NewPaitnt
                 settings.SetBrushColor(Color.Transparent);
                 PictureBoxColorFillFigure.BackColor = Color.Transparent;
                 _isBtnFillClicked = false;
+                if (_isFigureSelected)
+                {
+                    drawingEngine.ChangeBrush(Color.Transparent);
+                    drawingEngine.SelectFigure();
+                }
             }
             else
             {
-
                 settings.SetPenColor(Color.Transparent);
                 PictureBoxColorFillFigure.BackColor = Color.Transparent;
                 PictureBoxThickness.Image = drawingEngine.GetPenImage();
+                if (_isFigureSelected)
+                {
+                    drawingEngine.ChangePenColor(Color.Transparent);
+                    drawingEngine.SelectFigure();
+
+                }
             }
-
-
+            PictureBoxPaint.Image = drawingEngine.MainImage;
         }
     }
 }

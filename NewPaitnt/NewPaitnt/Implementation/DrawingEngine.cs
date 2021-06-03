@@ -39,16 +39,7 @@ namespace NewPaitnt.Implementation
             _storage = storage;
             _service = service;
 
-            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-
-            MainGraphics = Graphics.FromImage(MainImage);
-            BackgroundGraphics = Graphics.FromImage(Background);
-            FigureGraphics = Graphics.FromImage(CurrentFigure);
-            ForegroundGraphics = Graphics.FromImage(Foreground);
+            NewBitmaps();
             MainGraphics.Clear(Color.White);
             Canvas = (Bitmap)MainImage.Clone();
 
@@ -95,7 +86,7 @@ namespace NewPaitnt.Implementation
                     _storage.AddFigure(new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.SmoothCurve:
-                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _mouseHandler.GetRightClick(), _settings.Pen, _settings.SmoothingMode, _settings.AddNextPoint, _settings.IisLineFinished));
+                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Polygon:
                     _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.SmoothingMode));
@@ -158,16 +149,12 @@ namespace NewPaitnt.Implementation
         {
             if (_selectedFigureIndex >= 0)
             {
-                //_storage.GetFigure(_selectedFigureIndex); // Получение фигуры из листа по индексу
-                _storage.RemoveFigureAt(_selectedFigureIndex); // очистка в личте
-
                 MainGraphics.DrawImage(Canvas, 0, 0);
                 FigureGraphics.Clear(BlackTransparrent);
                 _storage.RemoveFigureAt(_selectedFigureIndex);                
                 DrawAllFigures();
             }
         }
-
 
         public void DrawMainOnBackground()
         {
@@ -235,6 +222,15 @@ namespace NewPaitnt.Implementation
             ForegroundGraphics.Clear(BlackTransparrent);
         }
 
+        public void ClearAllExceptMainImage()
+        {
+            MainGraphics.DrawImage(Canvas, 0, 0);
+            BackgroundGraphics.Clear(BlackTransparrent);
+            FigureGraphics.Clear(BlackTransparrent);
+            ForegroundGraphics.Clear(BlackTransparrent);
+            DrawAllFigures();
+        }
+
         private void ClearLayers(Color color)
         {
             MainGraphics.Clear(color);
@@ -272,19 +268,9 @@ namespace NewPaitnt.Implementation
         }
         public void NewImageSize()
         {
-            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-
-            MainGraphics = Graphics.FromImage(MainImage);
-            BackgroundGraphics = Graphics.FromImage(Background);
-            FigureGraphics = Graphics.FromImage(CurrentFigure);
-            ForegroundGraphics = Graphics.FromImage(Foreground);
+            NewBitmaps();
             MainGraphics.Clear(Color.White);
             Canvas = (Bitmap)MainImage.Clone();
-
             ClearCanvas();
         }
         public void DrawNewFigure()
@@ -303,17 +289,23 @@ namespace NewPaitnt.Implementation
             DrawFigureOnMain();
         }
 
-        public void Undo() 
+        public void AddPointToCurve(Point click)
         {
-            _storage.TransferToBuffer();
-            
-            DrawAllFigures();
+            _storage.GetLastFigure().AddNextPoint(click);
         }
 
-        public void Redo()
+        public void NewBitmaps()
         {
-            _storage.TransferToFigure();
-            DrawAllFigures();
+            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
+
+            MainGraphics = Graphics.FromImage(MainImage);
+            BackgroundGraphics = Graphics.FromImage(Background);
+            FigureGraphics = Graphics.FromImage(CurrentFigure);
+            ForegroundGraphics = Graphics.FromImage(Foreground);
         }
 
     }

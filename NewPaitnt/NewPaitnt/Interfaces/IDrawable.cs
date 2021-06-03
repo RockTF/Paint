@@ -14,7 +14,7 @@ namespace NewPaitnt.Interfaces
 
         abstract void Draw(ref Graphics graphics);
         abstract void Draw(ref Graphics graphics,Point end);
-
+        public void AddNextPoint(Point click);
         void Move(Point from, Point to);
         void ChangePen(Pen pen);
     }

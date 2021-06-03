@@ -61,5 +61,10 @@ namespace NewPaitnt.VectorModel
         {
            
         }
+
+        public void AddNextPoint(Point click)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

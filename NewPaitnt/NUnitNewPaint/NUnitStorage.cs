@@ -3,6 +3,8 @@ using NewPaitnt.Interfaces;
 using NewPaitnt.Vector;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Reflection;
 namespace NUnitNewPaint
 {
@@ -19,7 +21,7 @@ namespace NUnitNewPaint
             _settings = Settings.Initialize();
         }
         [Test]
-        public void TransferToBuffer()
+        public void TransferToBufferTest()
         {
             var listFigure = new List<IDrawable>()
             {
@@ -29,18 +31,52 @@ namespace NUnitNewPaint
             {
                "Line"
             };
+
             var fieldInfo = typeof(Storage).GetField("_figures", BindingFlags.NonPublic | BindingFlags.Instance);
             fieldInfo.SetValue(_storage, listFigure);
             var fieldInfo1 = typeof(Storage).GetField("_figuresNames", BindingFlags.NonPublic | BindingFlags.Instance);
             fieldInfo1.SetValue(_storage, listNames);
             var fielbuffer = typeof(Storage).GetField("_buffer", BindingFlags.NonPublic | BindingFlags.Instance);
+
             _storage.TransferToBuffer();
+
             List<IDrawable> actualData = (List<IDrawable>)fielbuffer.GetValue(_storage);
             List<IDrawable> fieldInfoFigure = (List<IDrawable>)fieldInfo.GetValue(_storage);
             List<string> fildInfoFigureName = (List<string>)fieldInfo1.GetValue(_storage);
+
             Assert.AreEqual(actualData.Count, 1);
             Assert.AreEqual(fieldInfoFigure.Count, 0);
             Assert.AreEqual(fildInfoFigureName.Count, 0);
+        }
+        [Test]
+        public void TransferToFigurTest()
+        {
+            var listBuffer = new List<IDrawable>()
+            {
+                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode)
+            };
+            var listNames = new List<string>()
+            {
+               "Line"
+            };
+
+            var fieldInfo = typeof(Storage).GetField("_buffer", BindingFlags.NonPublic | BindingFlags.Instance);
+            fieldInfo.SetValue(_storage, listBuffer);
+
+            var fieldInfoName = typeof(Storage).GetField("_figuresNames", BindingFlags.NonPublic | BindingFlags.Instance);
+            fieldInfoName.SetValue(_storage, listNames);
+
+            var fielbuffer = typeof(Storage).GetField("_figures", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            _storage.TransferToFigure();
+
+            List<IDrawable> actualData = (List<IDrawable>)fielbuffer.GetValue(_storage);
+            List<IDrawable> fieldInfoFigure = (List<IDrawable>)fieldInfo.GetValue(_storage);
+            List<string> fildInfoFigureName = (List<string>)fieldInfoName.GetValue(_storage);
+
+            Assert.AreEqual(actualData.Count, 1);
+            Assert.AreEqual(fieldInfoFigure.Count, 0);
+            Assert.AreEqual(fildInfoFigureName.Count, 2);
         }
         [Test]
         public void Clear()
@@ -65,6 +101,31 @@ namespace NUnitNewPaint
             Assert.AreEqual(actualData.Count, 0);
             Assert.AreEqual(fieldInfoFigure.Count, 0);
             Assert.AreEqual(fildInfoFigureName.Count, 0);
+        }
+        [Test]
+        public void RemoveFigureTest()
+        {
+            Line line = new Line(new Point(0, 0), new Point(0, 0), new Pen(Color.Black), SmoothingMode.None);
+            int initialCount = 5;
+            _storage.Clear();
+            for (int i = 0; i < initialCount; i++)
+            {
+                _storage.AddFigure(line);
+            }
+            _storage.RemoveFigureAt(3);
+            Assert.AreEqual(initialCount - 1, _storage.GetCount());
+        }
+        [Test]
+        public void GetCount()
+        {
+            var listFigure = new List<IDrawable>()
+            {
+                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode)
+            };
+            var fieldInfo = typeof(Storage).GetField("_figures", BindingFlags.NonPublic | BindingFlags.Instance);
+            fieldInfo.SetValue(_storage, listFigure);
+            List<IDrawable> fieldInfoFigure = (List<IDrawable>)fieldInfo.GetValue(_storage);
+            Assert.AreEqual(fieldInfoFigure.Count, 1);
         }
     }
 }

@@ -109,14 +109,16 @@ namespace NewPaitnt.Implementation
 
         public void SelectFigure()
         {
+            var count = -_storage.GetCount();
+
             if (_selectedFigureIndex == 0)
             {
                 ClearLayers();
                 DrawSelectedFigure();
-                DrawFigureSequence(_selectedFigureIndex + 1, _storage.GetCount());
+                DrawFigureSequence(_selectedFigureIndex + 1, count);
                 DrawLayers();
             }
-            else if (_selectedFigureIndex == _storage.GetCount() - 1)
+            else if (_selectedFigureIndex == count - 1)
             {
                 ClearLayers();
                 DrawFigureSequence(0, _selectedFigureIndex);
@@ -128,8 +130,12 @@ namespace NewPaitnt.Implementation
                 ClearLayers();
                 DrawFigureSequence(0, _selectedFigureIndex);
                 DrawSelectedFigure();
-                for (int i = _selectedFigureIndex + 1; i < _storage.GetCount(); i++)
-                DrawFigureSequence(_selectedFigureIndex + 1, _storage.GetCount());
+
+                for (int i = _selectedFigureIndex + 1; i < count; i++)
+                {
+                    DrawFigureSequence(_selectedFigureIndex + 1, count);
+                }
+
                 DrawLayers();
             }
         }
@@ -258,7 +264,7 @@ namespace NewPaitnt.Implementation
         {
             for (int i = startIndex; i < endIndex; i++)
             {
-                _storage.GetFigure(i).Draw(ref ForegroundGraphics);
+                _storage.GetFigure(i)?.Draw(ref ForegroundGraphics);
             }
         }
 
@@ -288,6 +294,18 @@ namespace NewPaitnt.Implementation
             RedrawFigure();
             DrawFigureOnMain();
         }
+
+        //public void Undo()
+        //{
+        //    _storage.TransferToBuffer();
+        //    DrawAllFigures();
+        //}
+
+        //public void Redo()
+        //{
+        //    _storage.TransferToFigure();
+        //    DrawAllFigures();
+        //}
 
         public void AddPointToCurve(Point click)
         {

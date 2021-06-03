@@ -7,18 +7,27 @@ using NUnit.Framework;
 
 namespace NUnitNewPaint
 {
+    //[TestFixture(typeof(Curve))]
+    //[TestFixture(typeof(Line))]
+    //[TestFixture(typeof(Ellipse))]
+    //[TestFixture(typeof(Polygon))]
+    //[TestFixture(typeof(RoundedRectangle))]
+    //[TestFixture(typeof(Triangle))]
+    //[TestFixture(typeof(Dot))]
+    //[TestFixture(typeof(Rectangle))]
+
     public class DrawingEngineTests
     {
         private Settings _settings;
         private MouseHandler _mouseHandler;
         private PenPreview _penPreview;
-        private Mock<IStorage> _storage;
         private Service _service;
-
         private DrawingEngine _drawingEngine;
 
         private IDrawable _drawable;
-        
+
+        private Mock<IStorage> _storage;
+        private Mock<IPenPreview> _ipenPreview;
 
         [SetUp]
         public void Setup()
@@ -34,11 +43,11 @@ namespace NUnitNewPaint
             _drawable = new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode);
         }
 
+        //[TestCase(EFigure.Curve, typeof(Curve))]
         [Test]
-        public void CreateCurveTest1()
+        public void CreateCurveTest1(EFigure type)
         {
-            //var figure = new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode);
-            _settings.SetMode(EFigure.Curve);
+            _settings.SetMode(type);
             _storage.Setup(a => a.AddFigure(It.IsAny<Curve>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<Curve>()), Times.Once);
@@ -88,7 +97,7 @@ namespace NUnitNewPaint
         [Test]
         public void CreateRoundedRectangleTest()
         {
-            _settings.SetMode(EFigure.Ellipse);
+            _settings.SetMode(EFigure.RoundedRectangle);
             _storage.Setup(a => a.AddFigure(It.IsAny<RoundedRectangle>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<RoundedRectangle>()), Times.Once);
@@ -135,7 +144,8 @@ namespace NUnitNewPaint
         [Test]
         public void SelectFigureTest1()
         {
-            _storage.Setup(a => a.GetCount());
+            _storage.Setup(a => a.GetCount()).Returns(1);
+            _storage.Setup(a => a.GetFigure(0)).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
             _drawingEngine.SelectFigure();
             _storage.Verify(a => a.GetCount(), Times.Once);
         }

@@ -87,30 +87,35 @@ namespace NewPaitnt.Implementation
             }
         }
 
-        public void TransferToBuffer() //UNDO
-        {
-            if (_figures.Count != 0)
-            {
-                _buffer.Add(_figures[^1]);
-                _figures.RemoveAt(_count - 1);
-                _figuresNames.RemoveAt(_count - 1);
-            }
-        }
+        //public void TransferToBuffer() //UNDO
+        //{
+        //    if (_figures.Count != 0)
+        //    {
+        //        if (_buffer == null)
+        //        {
+        //            _buffer = new List<IDrawable>();
+        //        }
+        //        _buffer.Add(_figures[^1]);
+        //        _figures.RemoveAt(_count - 1);
+        //        _figuresNames.RemoveAt(_count - 1);
+        //    }
+        //}
 
-        public void TransferToFigure() //REDO
-        {
-            if (_figures.Count != 0)
-            {
-               // _figures.Add(_buffer[^1]);
-                _count++;
-                _buffer.RemoveAt(_buffer.Count - 1);
-            }
-        }
+        //public void TransferToFigure() //REDO
+        //{
+        //    if (_figures.Count != 0)
+        //    {
+        //        _figures.Add(_buffer[^1]);
+        //        _count++;
+        //        _buffer.RemoveAt(_buffer.Count - 1);
+        //    }
+        //}
 
         public void Clear()
         {
             _count = 0;
             _figures.Clear();
+            _buffer.Clear();
             _figuresNames.Clear();
         }
     }

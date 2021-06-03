@@ -259,12 +259,12 @@ namespace NewPaitnt
 
         private void BtnUndo_Click(object sender, EventArgs e)
         {
-            drawingEngine.Undo();
+            //drawingEngine.Undo();
         }
 
         private void BtnRedo_Click(object sender, EventArgs e)
         {
-            drawingEngine.Redo();
+            //drawingEngine.Redo();
         }
 
         private void BtnPoint_Click(object sender, EventArgs e)

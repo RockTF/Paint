@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 using NewPaitnt.Interfaces;
 using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
@@ -57,16 +58,20 @@ namespace NewPaitnt.Implementation
                     _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Rectangle:
-                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Triangle:
-                    _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Ellipse:
-                    _storage.AddFigure(new Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.RoundedRectangle:
-                    _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                    // Добавляем новую соответствующую фигуру в список
+                    _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Curve:
                     _storage.AddFigure(new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
@@ -75,7 +80,7 @@ namespace NewPaitnt.Implementation
                     _storage.AddFigure(new SmoothCurve(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Polygon:
-                    _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.SmoothingMode));
+                    _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 default:
                     break;
@@ -93,30 +98,27 @@ namespace NewPaitnt.Implementation
 
         public void SelectFigure()
         {
-            var count = -_storage.GetCount();
+            var count = _storage.GetCount();
             if (_selectedFigureIndex == 0)
             {
                 ClearLayers();
                 DrawSelectedFigure();
-                DrawFigureSequence(_selectedFigureIndex + 1, count);
+                DrawFigureSequence(ref ForegroundGraphics, _selectedFigureIndex + 1, count);
                 DrawLayers();
             }
             else if (_selectedFigureIndex == count - 1)
             {
                 ClearLayers();
-                DrawFigureSequence(0, _selectedFigureIndex);
+                DrawFigureSequence(ref BackgroundGraphics, 0, _selectedFigureIndex);
                 DrawSelectedFigure();
                 DrawLayers();
             }
             else
             {
                 ClearLayers();
-                DrawFigureSequence(0, _selectedFigureIndex);
+                DrawFigureSequence(ref BackgroundGraphics, 0, _selectedFigureIndex);
                 DrawSelectedFigure();
-                for (int i = _selectedFigureIndex + 1; i < count; i++)
-                {
-                    DrawFigureSequence(_selectedFigureIndex + 1, count);
-                }
+                DrawFigureSequence(ref ForegroundGraphics, _selectedFigureIndex + 1, count);
                 DrawLayers();
             }
         }
@@ -235,11 +237,11 @@ namespace NewPaitnt.Implementation
             }
         }
 
-        public void DrawFigureSequence(int startIndex, int endIndex)
+        public void DrawFigureSequence(ref Graphics graphics, int startIndex, int endIndex)
         {
             for (int i = startIndex; i < endIndex; i++)
             {
-                _storage.GetFigure(i)?.Draw(ref ForegroundGraphics);
+                _storage.GetFigure(i)?.Draw(ref graphics);
             }
         }
 
@@ -303,6 +305,29 @@ namespace NewPaitnt.Implementation
             FigureGraphics = Graphics.FromImage(CurrentFigure);
             ForegroundGraphics = Graphics.FromImage(Foreground);
         }
+        public void Deserialize(IStorage storage)
+        {
 
+        }
+        public void ChangePenColor(Color color)
+        {
+            _storage.GetFigure(_selectedFigureIndex).Pen.Color = color;
+        }
+        public void ChangeDashStyle(DashStyle dashStyle)
+        {
+            _storage.GetFigure(_selectedFigureIndex).Pen.DashStyle = dashStyle;
+        }
+        public void ChangePenWidth(float width)
+        {
+            _storage.GetFigure(_selectedFigureIndex).Pen.Width = width;
+        }
+        public void ChangeAntiAliasing(SmoothingMode smoothingMode)
+        {
+            _storage.GetFigure(_selectedFigureIndex).SmoothingMode = smoothingMode;
+        }
+        public void ChangeBrush(Color color)
+        {
+            _storage.GetFigure(_selectedFigureIndex).Brush = new SolidBrush(color);
+        }
     }
 }

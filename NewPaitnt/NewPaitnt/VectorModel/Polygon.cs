@@ -14,8 +14,7 @@ namespace NewPaitnt.Vector
         private double _angularStep;
         private Point _center;
         private List<Point> _aroundCenterPoints;
-
-        public Polygon(Point click, Point move, int numberOfApex, Pen pen, SmoothingMode smoothingMode)
+        public Polygon(Point click, Point move, int numberOfApex, Pen pen, Brush brush, SmoothingMode smoothingMode)
         {
             _numberOfApex = numberOfApex;
             Points = new List<Point>(_numberOfApex);
@@ -28,6 +27,7 @@ namespace NewPaitnt.Vector
             _angularStep = 2.0 * Math.PI / _numberOfApex;
 
             Pen = (Pen)pen.Clone();
+            Brush = (Brush)brush.Clone();
             SmoothingMode = smoothingMode;
 
             _center = click;
@@ -39,6 +39,7 @@ namespace NewPaitnt.Vector
         public override void Draw(ref Graphics graphics)
         {
             graphics.SmoothingMode = SmoothingMode;
+            graphics.FillPolygon(Brush, Points.ToArray());
             graphics.DrawPolygon(Pen, Points.ToArray());
         }
 
@@ -46,6 +47,7 @@ namespace NewPaitnt.Vector
         {
             RecalculateCoordinates(move);
             graphics.SmoothingMode = SmoothingMode;
+            graphics.FillPolygon(Brush, Points.ToArray());
             graphics.DrawPolygon(Pen, Points.ToArray());
         }
 

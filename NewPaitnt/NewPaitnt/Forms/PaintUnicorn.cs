@@ -4,6 +4,8 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Text.Json;
 using System.Windows.Forms;
 using Button = System.Windows.Forms.Button;
 
@@ -24,16 +26,17 @@ namespace NewPaitnt
         private bool _isFigureCreated;
         private bool _isLineFinished;
         private bool _isFirstPointAdd;
+        private bool _isFigureSelected;
 
 
         public MainPaint()
         {
             InitializeComponent();
-           
+
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         }
-    
+
 
         private void MainPaint_Load(object sender, EventArgs e)
         {
@@ -55,7 +58,9 @@ namespace NewPaitnt
             _isBtnFillClicked = false;
             _isFigureCreated = false;
             _isFirstPointAdd = false;
-         
+            _isFigureSelected = false;
+
+
             this.SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.UpdateStyles();
 
@@ -159,7 +164,7 @@ namespace NewPaitnt
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
         }
 
-        private void MenuCreate_Click(object sender, EventArgs e) 
+        private void MenuCreate_Click(object sender, EventArgs e)
         {
             CreateNewCanvas createNewCanvas = (CreateNewCanvas)Application.OpenForms["CreateNewCanvas"];
 
@@ -181,35 +186,59 @@ namespace NewPaitnt
 
         private void MenuSave_Click(object sender, EventArgs e)
         {
-            saveFileDialog.FileName = "newUnicorn";
-            saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
-
+            saveFileDialog.FileName = "Figuras.json";
+            saveFileDialog.Filter = "TXT Text|*.txt";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (PictureBoxPaint != null)
-                {
-                    PictureBoxPaint.Image.Save(saveFileDialog.FileName);
-                }
+                
+                FileStream fParameter = new FileStream("Figuras.json", FileMode.OpenOrCreate);
+                StreamWriter m_WriterParameter = new StreamWriter(fParameter);
+                m_WriterParameter.BaseStream.Seek(0, SeekOrigin.End);
+                m_WriterParameter.Write(storage.GetJson()); 
+                m_WriterParameter.Flush();
+                m_WriterParameter.Close();
             }
+            
+
+            //saveFileDialog.FileName = "newUnicorn";
+            //saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege";
+            //saveFileDialog.Filter = "TXT Text|*.txt";
+            //if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //   // 
+            //    if (PictureBoxPaint != null)
+            //    {
+            //        PictureBoxPaint.Image.Save(saveFileDialog.FileName);
+            //    }
+            //}
         }
 
         private void MenuOpen_Click(object sender, EventArgs e)
         {
             openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
-
-            openFileDialog.RestoreDirectory = true;
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            openFileDialog.Filter = "storege.json";
+            using (FileStream fs = new FileStream("storege.json", FileMode.OpenOrCreate))
             {
-                drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
-               
-                settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width) ;
-                settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
-                
-                drawingEngine.DrawAllFigures();
-                PictureBoxPaint.Image = drawingEngine.MainImage;
+                JsonSerializer.DeserializeAsync<IStorage>(fs);
+
             }
+
+            //openFileDialog.InitialDirectory = "c:\\";
+            //openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege Json|*.json|All|*.*";
+
+            //openFileDialog.RestoreDirectory = true;
+
+            //if (openFileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
+
+            //    settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width);
+            //    settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
+
+            //    drawingEngine.DrawAllFigures();
+            //    PictureBoxPaint.Image = drawingEngine.MainImage;
+
+            // }
         }
 
         private void MenuClear_Click(object sender, EventArgs e)
@@ -226,6 +255,12 @@ namespace NewPaitnt
         {
             settings.SetPenWidth(TrackBarThickness.Value);
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
+            if (_isFigureSelected)
+            {
+                drawingEngine.ChangePenWidth(TrackBarThickness.Value);
+                drawingEngine.SelectFigure();
+                PictureBoxPaint.Image = drawingEngine.MainImage;
+            }
         }
 
         private void BtnFill_Click(object sender, EventArgs e)
@@ -236,51 +271,65 @@ namespace NewPaitnt
         private void BtnUndo_Click(object sender, EventArgs e)
         {
             drawingEngine.Undo();
+            PictureBoxPaint.Image = drawingEngine.MainImage;
+            FiguresListBox.Items.Clear();
+            FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
         }
 
         private void BtnRedo_Click(object sender, EventArgs e)
         {
             drawingEngine.Redo();
+            PictureBoxPaint.Image = drawingEngine.MainImage;
+            FiguresListBox.Items.Clear();
+            FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
         }
 
         private void BtnPoint_Click(object sender, EventArgs e)
         {
             settings.SetMode(EFigure.Dot);
+            _isFigureSelected = false;
         }
 
         private void BtnRectangle_Click(object sender, EventArgs e)
         {
             settings.SetMode(EFigure.Rectangle);
+            _isFigureSelected = false;
         }
 
         private void BtnEllipse_Click(object sender, EventArgs e)
         {
             settings.SetMode(EFigure.Ellipse);
+            _isFigureSelected = false;
         }
 
         private void BtnCurve_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Curve); 
+            settings.SetMode(EFigure.Curve);
+            _isFigureSelected = false;
         }
 
         private void BtnTriangle_Click(object sender, EventArgs e)
         {
             settings.SetMode(EFigure.Triangle);
+            _isFigureSelected = false;
         }
 
         private void BtnLine_Click(object sender, EventArgs e)
         {
             settings.SetMode(EFigure.Line);
+            _isFigureSelected = false;
         }
 
         private void SmoothCorve(object sender, EventArgs e)
         {
             settings.SetMode(EFigure.SmoothCurve);
+            _isFigureSelected = false;
         }
 
         private void BtnSguare_Click(object sender, EventArgs e)
         {
             settings.SetMode(EFigure.RoundedRectangle);
+            _isFigureSelected = false;
         }
 
         private void CheckBoxAntiAliasing_CheckedChanged(object sender, EventArgs e)
@@ -288,12 +337,25 @@ namespace NewPaitnt
             if (CheckBoxAntiAliasing.Checked)
             {
                 settings.SetSmoothingMode(SmoothingMode.AntiAlias);
+                ChangeAntiAliasing(SmoothingMode.AntiAlias);
             }
             else
             {
                 settings.SetSmoothingMode(SmoothingMode.None);
+                ChangeAntiAliasing(SmoothingMode.AntiAlias);
             }
             PictureBoxThickness.Image = drawingEngine.GetPenImage();
+
+            
+        }
+        private void ChangeAntiAliasing(SmoothingMode smoothingMode)
+        {
+            if (_isFigureSelected)
+            {
+                drawingEngine.ChangeAntiAliasing(smoothingMode);
+                drawingEngine.SelectFigure();
+                PictureBoxPaint.Image = drawingEngine.MainImage;
+            }
         }
 
         private void ComboBoxContour_SelectedIndexChanged(object sender, EventArgs e)
@@ -302,29 +364,63 @@ namespace NewPaitnt
             {
                 case 0:
                     settings.Pen.DashStyle = DashStyle.Solid;
+                    ChangeDashStyle(DashStyle.Solid);
                     break;
                 case 1:
                     settings.Pen.DashStyle = DashStyle.Dash;
+                    ChangeDashStyle(DashStyle.Dash);
                     break;
                 case 2:
                     settings.Pen.DashStyle = DashStyle.DashDot;
+                    ChangeDashStyle(DashStyle.DashDot);
                     break;
                 default:
                     break;
             }
         }
+        private void ChangeDashStyle(DashStyle dashStyle)
+        {
+            if (_isFigureSelected)
+            {
+                drawingEngine.ChangeDashStyle(dashStyle);
+                drawingEngine.SelectFigure();
+                PictureBoxPaint.Image = drawingEngine.MainImage;
+            }
+        }
 
         private void Color_btn(object sender, EventArgs e)
         {
-            settings.SetPenColor(((Button)sender).BackColor);
-            PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
-            PictureBoxThickness.Image = drawingEngine.GetPenImage();
+            if (_isBtnFillClicked)
+            {
+                settings.SetBrushColor(((Button)sender).BackColor);
+                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
+                _isBtnFillClicked = false;
+                if (_isFigureSelected)
+                {
+                    drawingEngine.ChangeBrush(((Button)sender).BackColor);
+                    drawingEngine.SelectFigure();
+                }
+            }
+            else
+            {
+                settings.SetPenColor(((Button)sender).BackColor);
+                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
+                PictureBoxThickness.Image = drawingEngine.GetPenImage();
+                if (_isFigureSelected)
+                {
+                    drawingEngine.ChangePenColor(((Button)sender).BackColor);
+                    drawingEngine.SelectFigure();
+
+                }
+            }
+            PictureBoxPaint.Image = drawingEngine.MainImage;
         }
 
         private void PictureBoxColors_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
+                settings.SetBrushColor(colorDialog1.Color);
                 settings.SetPenColor(colorDialog1.Color);
                 PictureBoxColorFillFigure.BackColor = colorDialog1.Color;
                 PictureBoxThickness.Image = drawingEngine.GetPenImage();
@@ -334,6 +430,7 @@ namespace NewPaitnt
         private void FiguresListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             drawingEngine.SetSelectedFigure((sender as ListBox).SelectedIndex);
+            _isFigureSelected = true;
         }
 
         private void BtnMove_Click(object sender, EventArgs e)
@@ -361,6 +458,8 @@ namespace NewPaitnt
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
             PictureBoxPaint.Image = drawingEngine.MainImage;
+            drawingEngine.SetSelectedFigure(-1);
+            _isFigureSelected = false;
         }
 
         private void NumericUpDownPolygon_Click(object sender, EventArgs e)
@@ -371,6 +470,35 @@ namespace NewPaitnt
         private void BtnHexagon_Click(object sender, EventArgs e)
         {
             settings.SetMode(EFigure.Polygon);
+            _isFigureSelected = false;
+        }
+
+        private void BtnTransparent_Click(object sender, EventArgs e)
+        {
+            if (_isBtnFillClicked)
+            {
+                settings.SetBrushColor(Color.Transparent);
+                PictureBoxColorFillFigure.BackColor = Color.Transparent;
+                _isBtnFillClicked = false;
+                if (_isFigureSelected)
+                {
+                    drawingEngine.ChangeBrush(Color.Transparent);
+                    drawingEngine.SelectFigure();
+                }
+            }
+            else
+            {
+                settings.SetPenColor(Color.Transparent);
+                PictureBoxColorFillFigure.BackColor = Color.Transparent;
+                PictureBoxThickness.Image = drawingEngine.GetPenImage();
+                if (_isFigureSelected)
+                {
+                    drawingEngine.ChangePenColor(Color.Transparent);
+                    drawingEngine.SelectFigure();
+
+                }
+            }
+            PictureBoxPaint.Image = drawingEngine.MainImage;
         }
     }
 }

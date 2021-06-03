@@ -8,7 +8,7 @@ namespace NewPaitnt.VectorModel
     public class RoundedRectangle : Figure
     {
         private static int _count = 0;
-        public RoundedRectangle(Point start, Point end, Pen pen, SmoothingMode smoothingMode)
+        public RoundedRectangle(Point start, Point end, Pen pen, Brush brush, SmoothingMode smoothingMode)
         {
             Points = new List<Point>(2);
 
@@ -16,6 +16,7 @@ namespace NewPaitnt.VectorModel
             Points.Add(end);
 
             Pen = (Pen)pen.Clone();
+            Brush = (Brush)brush.Clone();
             SmoothingMode = smoothingMode;
 
             FigureName = "RoundedRectangle" + _count++.ToString();
@@ -28,10 +29,12 @@ namespace NewPaitnt.VectorModel
             int Ystart = (Points[0].Y < Points[1].Y) ? Points[0].Y : Points[1].Y;
             int Yend = (Points[0].Y < Points[1].Y) ? Points[1].Y : Points[0].Y;
 
+           
             RectangleF rectangle = new RectangleF(Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             GraphicsPath path = this.GetRoundedRect(rectangle, radius: 14);
 
             graphics.SmoothingMode = SmoothingMode;
+            graphics.FillPath(Brush, path);
             graphics.DrawPath(Pen, path);
             
         }
@@ -124,6 +127,7 @@ namespace NewPaitnt.VectorModel
             GraphicsPath path = this.GetRoundedRect(rectangle, radius: 14);
 
             graphics.SmoothingMode = SmoothingMode;
+            graphics.FillPath(Brush, path);
             graphics.DrawPath(Pen, path);
         }
 

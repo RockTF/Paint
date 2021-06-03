@@ -11,7 +11,7 @@ namespace NewPaitnt.VectorModel
         public List<Point> Points { get; set; }
         public Pen Pen { get; set; }
         public Brush Brush { get; set; }
-        public SmoothingMode SmoothingMode { get; private set; }
+        public SmoothingMode SmoothingMode { get; set; }
 
         private static int _count = 0;
 

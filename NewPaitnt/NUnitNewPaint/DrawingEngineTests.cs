@@ -162,12 +162,28 @@ namespace NUnitNewPaint
         }
 
         [Test]
+        public void ClearStorageTestStorage()
+        {
+            _storage.Setup(a => a.Clear());
+            _drawingEngine.ClearStorage();
+            _storage.Verify(a => a.Clear(), Times.Once);
+        }
+
+        [Test]
+        public void GetLastFigureTestStorage()
+        {
+            _storage.Setup(a => a.GetAllFigures());
+            //_storage.Setup(a => a.GetFigure(0)).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+            _drawingEngine.DrawAllFigures();
+            _storage.Verify(a => a.GetAllFigures(), Times.Once);
+        }
+
+        [Test]
         public void DeleteFigureTestStorage()
         {
-            _storage.Setup(a => a.RemoveFigureAt(-1));
-            //_storage.Setup(a => a.GetLastFigure()).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+            _storage.Setup(a => a.RemoveFigureAt(1));
             _drawingEngine.DeleteFigure();
-            _storage.Verify(a => a.RemoveFigureAt(-1), Times.Once);
+            _storage.Verify(a => a.RemoveFigureAt(1), Times.Once);
         }
 
         [Test]
@@ -178,45 +194,29 @@ namespace NUnitNewPaint
             _storage.Verify(a => a.GetFiguresNames(), Times.Once);
         }
 
-        [Test]
-        public void ClearStorageTestStorage()
-        {
-            _storage.Setup(a => a.Clear());
-            _drawingEngine.ClearStorage();
-            _storage.Verify(a => a.Clear(), Times.Once);
-        }
-       
-        [Test]
-        public void RedrawFigureTestMouseHandler()
-        {
-            _mousehandler.Setup(a => a.GetMove());
-            _drawingEngine.RedrawFigure();
-            _mousehandler.Verify(a => a.GetMove(), Times.Once);
-        }
+        //[Test]
+        //public void RedrawFigureTestMouseHandler()
+        //{
+        //    _mousehandler.Setup(a => a.GetMove());
+        //    _drawingEngine.RedrawFigure();
+        //    _mousehandler.Verify(a => a.GetMove(), Times.Once);
+        //}
 
-        [Test]
-        public void MoveFigureTest1MouseHandler()
-        {
-            _mousehandler.Setup(a => a.GetPreviousMove());
-            _drawingEngine.MoveFigure();
-            _mousehandler.Verify(a => a.GetPreviousMove(), Times.Once);
-        }
+        //[Test]
+        //public void MoveFigureTest1MouseHandler()
+        //{
+        //    _mousehandler.Setup(a => a.GetPreviousMove());
+        //    _drawingEngine.MoveFigure();
+        //    _mousehandler.Verify(a => a.GetPreviousMove(), Times.Once);
+        //}
 
-        [Test]
-        public void MoveFigureTest2MouseHandler()
-        {
-            _mousehandler.Setup(a => a.GetMove());
-            _drawingEngine.CreateFigure();
-            _mousehandler.Verify(a => a.GetMove(), Times.Once);
-        }
-
-        [Test]
-        public void CreateFigureTest1MouseHandler()
-        {
-            _mousehandler.Setup(a => a.GetMove());
-            _drawingEngine.CreateFigure();
-            _mousehandler.Verify(a => a.GetMove(), Times.Once);
-        }
+        //[Test]
+        //public void MoveFigureTest2MouseHandler()
+        //{
+        //    _mousehandler.Setup(a => a.GetMove());
+        //    _drawingEngine.CreateFigure();
+        //    _mousehandler.Verify(a => a.GetMove(), Times.Once);
+        //}
 
     }
 }

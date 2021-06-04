@@ -16,7 +16,5 @@ namespace NewPaitnt.Interfaces
          void TransferToBuffer();
          void TransferToFigure();
          void Clear();
-        string GetJson();
-        void SetJson(string jsonText);
     }
 }

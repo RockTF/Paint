@@ -4,8 +4,6 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
-using System.Text.Json;
 using System.Windows.Forms;
 using Button = System.Windows.Forms.Button;
 
@@ -73,6 +71,7 @@ namespace NewPaitnt
             {
                 drawingEngine.DrawMainOnBackground();
                 mouseHandler.NewClick(e.Location);
+
                 if (settings.Mode == EFigure.SmoothCurve)
                 {
                     _isLineFinished = false;
@@ -124,7 +123,9 @@ namespace NewPaitnt
                         drawingEngine.RedrawNewFigure();
                     }
                 }
+
                 PictureBoxPaint.Image = drawingEngine.MainImage;
+
                 if (settings.Mode == EFigure.Move)
                 {
                     mouseHandler.NewMove(e.Location);
@@ -186,59 +187,36 @@ namespace NewPaitnt
 
         private void MenuSave_Click(object sender, EventArgs e)
         {
-            saveFileDialog.FileName = "Figuras.json";
-            saveFileDialog.Filter = "TXT Text|*.txt";
+            saveFileDialog.FileName = "newUnicorn";
+            saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
+
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                
-                FileStream fParameter = new FileStream("Figuras.json", FileMode.OpenOrCreate);
-                StreamWriter m_WriterParameter = new StreamWriter(fParameter);
-                m_WriterParameter.BaseStream.Seek(0, SeekOrigin.End);
-                m_WriterParameter.Write(storage.GetJson()); 
-                m_WriterParameter.Flush();
-                m_WriterParameter.Close();
+                if (PictureBoxPaint != null)
+                {
+                    PictureBoxPaint.Image.Save(saveFileDialog.FileName);
+                }
             }
-            
-
-            //saveFileDialog.FileName = "newUnicorn";
-            //saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege";
-            //saveFileDialog.Filter = "TXT Text|*.txt";
-            //if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //   // 
-            //    if (PictureBoxPaint != null)
-            //    {
-            //        PictureBoxPaint.Image.Save(saveFileDialog.FileName);
-            //    }
-            //}
         }
 
         private void MenuOpen_Click(object sender, EventArgs e)
         {
             openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "storege.json";
-            using (FileStream fs = new FileStream("storege.json", FileMode.OpenOrCreate))
+            openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege Json|*.json|All|*.*";
+
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                JsonSerializer.DeserializeAsync<IStorage>(fs);
+               
+                drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
 
+                settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width);
+                settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
+
+                drawingEngine.DrawAllFigures();
+                PictureBoxPaint.Image = drawingEngine.MainImage;
             }
-
-            //openFileDialog.InitialDirectory = "c:\\";
-            //openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege Json|*.json|All|*.*";
-
-            //openFileDialog.RestoreDirectory = true;
-
-            //if (openFileDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
-
-            //    settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width);
-            //    settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
-
-            //    drawingEngine.DrawAllFigures();
-            //    PictureBoxPaint.Image = drawingEngine.MainImage;
-
-            // }
         }
 
         private void MenuClear_Click(object sender, EventArgs e)

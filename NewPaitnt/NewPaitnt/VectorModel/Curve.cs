@@ -40,10 +40,5 @@ namespace NewPaitnt.VectorModel
             graphics.SmoothingMode = SmoothingMode;
             graphics.DrawCurve(Pen, Points.ToArray());
         }
-
-        public override void Refresh(ref Graphics graphics)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

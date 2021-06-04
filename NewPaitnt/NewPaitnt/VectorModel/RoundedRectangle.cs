@@ -130,10 +130,5 @@ namespace NewPaitnt.VectorModel
             graphics.FillPath(Brush, path);
             graphics.DrawPath(Pen, path);
         }
-
-        public override void Refresh(ref Graphics graphics)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -125,32 +125,5 @@ namespace NewPaitnt.Implementation
             _buffer.Clear();
             _figuresNames.Clear();
         }
-
-        private void JsonSerialize()
-        {
-            _jsonText = JsonConvert.SerializeObject(_figures);
-        }
-
-        private void JsonDeserialize()
-        {
-            _figures = (List<IDrawable>)JsonConvert.DeserializeObject<IDrawable>(_jsonText);
-        }
-
-        public string GetJson()
-        {
-            JsonSerialize();
-            return _jsonText;
-        }
-
-        public void SetJson(string jsonText)
-        {
-            Clear();
-            _jsonText = jsonText;
-            JsonDeserialize();
-            foreach (var figure in _figures)
-            {
-                _figuresNames.Add(figure.FigureName);
-            }
-        }
     }
 }

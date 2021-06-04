@@ -52,10 +52,5 @@ namespace NewPaitnt.VectorModel
             graphics.DrawRectangle(Pen, Xstart, Ystart, Xend - Xstart, Yend - Ystart);
             
         }
-
-        public override void Refresh(ref Graphics graphics)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -47,7 +47,7 @@ namespace NewPaitnt.Implementation
             Canvas = (Bitmap)MainImage.Clone();
         }
 
-        public void CreateFigure() //!!! Вынести в шейп фактори Совет от Кати - сделать енам
+        public void CreateFigure()
         {
             switch (_settings.Mode)
             {
@@ -58,19 +58,15 @@ namespace NewPaitnt.Implementation
                     _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
                     break;
                 case EFigure.Rectangle:
-                    // Добавляем новую соответствующую фигуру в список
-                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
+                       _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Triangle:
-                    // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Ellipse:
-                    // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.RoundedRectangle:
-                    // Добавляем новую соответствующую фигуру в список
                     _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
                     break;
                 case EFigure.Curve:
@@ -90,6 +86,7 @@ namespace NewPaitnt.Implementation
         public void DrawAllFigures()
         {
             MainGraphics.DrawImage(Canvas, 0, 0);
+
             foreach (var figure in _storage.GetAllFigures())
             {
                 figure.Draw(ref MainGraphics);
@@ -99,6 +96,7 @@ namespace NewPaitnt.Implementation
         public void SelectFigure()
         {
             var count = _storage.GetCount();
+
             if (_selectedFigureIndex == 0)
             {
                 ClearLayers();
@@ -151,7 +149,7 @@ namespace NewPaitnt.Implementation
             BackgroundGraphics.DrawImage(MainImage, 0, 0);
         }
 
-        public void DrawBackgroundOnMain()
+        private void DrawBackgroundOnMain()
         {
             MainGraphics.DrawImage(Background, 0, 0);
         }
@@ -161,12 +159,12 @@ namespace NewPaitnt.Implementation
             BackgroundGraphics.Clear(BlackTransparrent);
         }
 
-        public void CleanFigure()
+        private void CleanFigure()
         {
             FigureGraphics.Clear(BlackTransparrent);
         }
 
-        public void DrawFigureOnMain()
+        private void DrawFigureOnMain()
         {
             MainGraphics.DrawImage(CurrentFigure, 0, 0);
         }
@@ -181,7 +179,7 @@ namespace NewPaitnt.Implementation
             _storage.GetLastFigure().Draw(ref FigureGraphics, _mouseHandler.GetMove());
         }
 
-        public void DrawFigure()
+        private void DrawFigure()
         {
             _storage.GetLastFigure().Draw(ref FigureGraphics);
         }
@@ -197,7 +195,7 @@ namespace NewPaitnt.Implementation
             _selectedFigureIndex = figureIndex;
         }
 
-        public void ClearLayers()
+        private void ClearLayers()
         {
             MainGraphics.DrawImage(Canvas, 0, 0);
             BackgroundGraphics.Clear(BlackTransparrent);
@@ -214,7 +212,7 @@ namespace NewPaitnt.Implementation
             DrawAllFigures();
         }
 
-        public void ClearLayers(Color color)
+        private void ClearLayers(Color color)
         {
             MainGraphics.Clear(color);
             BackgroundGraphics.Clear(BlackTransparrent);
@@ -222,14 +220,14 @@ namespace NewPaitnt.Implementation
             ForegroundGraphics.Clear(BlackTransparrent);
         }
 
-        public void DrawLayers()
+        private void DrawLayers()
         {
             MainGraphics.DrawImage(Background, 0, 0);
             MainGraphics.DrawImage(CurrentFigure, 0, 0);
             MainGraphics.DrawImage(Foreground, 0, 0);
         }
 
-        public void DrawSelectedFigure()
+        private void DrawSelectedFigure()
         {
             if (_selectedFigureIndex >= 0)
             {
@@ -237,7 +235,7 @@ namespace NewPaitnt.Implementation
             }
         }
 
-        public void DrawFigureSequence(ref Graphics graphics, int startIndex, int endIndex)
+        private void DrawFigureSequence(ref Graphics graphics, int startIndex, int endIndex)
         {
             for (int i = startIndex; i < endIndex; i++)
             {
@@ -292,7 +290,7 @@ namespace NewPaitnt.Implementation
             _storage.GetLastFigure().AddNextPoint(click);
         }
 
-        public void NewBitmaps()
+        private void NewBitmaps()
         {
             Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
             MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
@@ -305,10 +303,7 @@ namespace NewPaitnt.Implementation
             FigureGraphics = Graphics.FromImage(CurrentFigure);
             ForegroundGraphics = Graphics.FromImage(Foreground);
         }
-        public void Deserialize(IStorage storage)
-        {
 
-        }
         public void ChangePenColor(Color color)
         {
             _storage.GetFigure(_selectedFigureIndex).Pen.Color = color;

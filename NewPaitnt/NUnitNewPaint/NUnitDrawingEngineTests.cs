@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 namespace NUnitNewPaint
 {
-    public class DrawingEngineTests
+    public class NUnitDrawingEngineTests
     {
         private Settings _settings;
         private MouseHandler _mouseHandler;
@@ -15,7 +15,6 @@ namespace NUnitNewPaint
         private DrawingEngine _drawingEngine;
         private IDrawable _drawable;
         private Mock<IStorage> _storage;
-        private Mock<IPenPreview> _ipenPreview;
         private Mock<IMouseHandler> _mousehandler;
         [SetUp]
         public void Setup()

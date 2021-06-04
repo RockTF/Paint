@@ -47,10 +47,5 @@ namespace NewPaitnt.VectorModel
             graphics.FillPolygon(Brush, TrianglePoint.ToArray());
             graphics.DrawPolygon(Pen, TrianglePoint.ToArray());
         }
-
-        public override void Refresh(ref Graphics graphics)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

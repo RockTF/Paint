@@ -17,7 +17,7 @@ namespace NewPaitnt.VectorModel
         public string FigureName { get; set; }
         public SmoothingMode SmoothingMode { get; set; }
         public abstract void Draw(ref Graphics graphics);
-        public abstract void Refresh(ref Graphics graphics);
+
 
         public void Move(Point from, Point to)
         {

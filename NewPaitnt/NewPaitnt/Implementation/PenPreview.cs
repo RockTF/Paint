@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 
 namespace NewPaitnt.Implementation
 {
-    public class PenPreview : IPenPreview
+    public class PenPreview
     {
         private static PenPreview _penPreview;
         private int _xCenter;

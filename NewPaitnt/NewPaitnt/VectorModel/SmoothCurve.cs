@@ -34,11 +34,6 @@ namespace NewPaitnt.Vector
             Points[Points.Count - 1] = end;
             graphics.DrawCurve(Pen, Points.ToArray());
         }
-
-        public override void Refresh(ref Graphics graphics)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 

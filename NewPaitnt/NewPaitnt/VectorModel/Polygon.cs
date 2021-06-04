@@ -51,11 +51,6 @@ namespace NewPaitnt.Vector
             graphics.DrawPolygon(Pen, Points.ToArray());
         }
 
-        public override void Refresh(ref Graphics graphics)
-        {
-            throw new NotImplementedException();
-        }
-
         private void RecalculateCoordinates(Point move)
         {
             Points[0] = move;

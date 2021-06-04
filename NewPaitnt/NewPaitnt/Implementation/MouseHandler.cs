@@ -30,11 +30,6 @@ namespace NewPaitnt.Implementation
             return _mouseHandler;
         }
 
-        public void NewRightClick(Point rightClick)
-        {
-            _rightClick = rightClick;
-        }
-
         public void NewMove(Point move)
         {
             _previousMove = _move;

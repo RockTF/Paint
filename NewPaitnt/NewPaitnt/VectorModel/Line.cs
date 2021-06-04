@@ -35,10 +35,5 @@ namespace NewPaitnt.Vector
             graphics.SmoothingMode = SmoothingMode;
             graphics.DrawLine(Pen, Points[0], Points[1]);
         }
-
-        public override void Refresh(ref Graphics graphics)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

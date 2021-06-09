@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace NewPaitnt
 {
-    class Validator
+    public class Valid
     {
-        bool isValidNane(char[] input)
+        public bool IsValidName(char[] input)
         {
             if (input == null)
             {
@@ -54,7 +53,7 @@ namespace NewPaitnt
             return false;
 
         }
-        bool isValidPassword(char[] input)
+        public bool IsValidPassword(char[] input)
         {
             if (input == null)
             {
@@ -103,7 +102,7 @@ namespace NewPaitnt
 
 
         }
-        bool isValidEmail(char[] input)
+        public bool IsValidEmail(char[] input)
         {
             if (input == null)
             {

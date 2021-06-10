@@ -154,6 +154,7 @@ namespace NewPaitnt.Forms
             this.Controls.Add(this.LabelFirstName);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Signup";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SIGN UP";
             this.ResumeLayout(false);
             this.PerformLayout();

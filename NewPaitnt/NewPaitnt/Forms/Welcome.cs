@@ -12,18 +12,16 @@ namespace NewPaitnt.Forms
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
+            this.Hide();
             Login login = new Login();
             login.Show();
-
-            this.Close();
         }
 
         private void BtnSignUp_Click(object sender, EventArgs e)
         {
+            this.Hide();
             Signup signup = new Signup();
             signup.Show();
-
-            this.Close();
         }
     }
 }

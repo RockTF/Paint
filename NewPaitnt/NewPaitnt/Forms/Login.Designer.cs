@@ -126,6 +126,7 @@ namespace NewPaitnt.Forms
             this.Controls.Add(this.BtnForgot);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LOG IN";
             this.ResumeLayout(false);
             this.PerformLayout();

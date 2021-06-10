@@ -1,4 +1,5 @@
-﻿using NewPaitnt.Implementation;
+﻿using NewPaitnt.Forms;
+using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
 using System;
 using System.Diagnostics;
@@ -477,6 +478,20 @@ namespace NewPaitnt
                 }
             }
             PictureBoxPaint.Image = drawingEngine.MainImage;
+        }
+
+        private void BtnMyStatistics_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Statistics statistics = new Statistics();
+            statistics.ShowDialog();
+        }
+
+        private void BtnLoginOut_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Welcome welcome = new Welcome();
+            welcome.ShowDialog();
         }
     }
 }

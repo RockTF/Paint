@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-
+﻿using NewPaitnt.VectorModel;
+using System.Drawing;
 
 namespace NewPaitnt.Interfaces
 {
@@ -7,9 +7,9 @@ namespace NewPaitnt.Interfaces
     {
         void NewMove(Point move);
         void NewClick(Point click);
-        Point GetClick();
-        Point GetMove();
-        Point GetPreviousMove();
-        Point GetRightClick();
+        Point2D GetClick();
+        Point2D GetMove();
+        Point2D GetPreviousMove();
+        Point2D GetRightClick();
     }
 }

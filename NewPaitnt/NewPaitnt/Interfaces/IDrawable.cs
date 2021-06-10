@@ -1,21 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+﻿using NewPaitnt.Enum;
+using NewPaitnt.VectorModel;
+using System.Collections.Generic;
 
 namespace NewPaitnt.Interfaces
 {
    public interface IDrawable
    {
+        EFigure FigureType { get; }
         string FigureName { get; }
-        List<Point> Points { get; }
-        Pen Pen { get; set; }
-        Brush Brush { get; set; }
-        SmoothingMode SmoothingMode { get; set; }
+        List<Point2D> Points { get; }
+        string PenColor { get; }
+        float PenWidth { get; }
+        EDashStyle PenDashStyle { get; }
+        string BrushColor { get; }
+        bool IsSmoothed { get; }
 
-        abstract void Draw(ref Graphics graphics);
-        abstract void Draw(ref Graphics graphics,Point end);
-        public void AddNextPoint(Point click);
-        void Move(Point from, Point to);
-        void ChangePen(Pen pen);
+        public void UpdatePoint(Point2D point);
+        void Move(Point2D from, Point2D to);
+        void Update(string penColor, float penWidth, EDashStyle penDashStyle, string brushColor, bool isSmoothed);
    }
 }

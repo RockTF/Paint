@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Drawing.Drawing2D;
+﻿using NewPaitnt.Enum;
 
 namespace NewPaitnt.Implementation
 {
@@ -8,12 +7,14 @@ namespace NewPaitnt.Implementation
         private static Settings _settings;
         public int ImageWidth { get; private set; }
         public int ImageHeight { get; private set; }
-        public bool AddNextPoint { get; private set; }
-        public bool IisLineFinished { get; private set; }
-        public EFigure Mode { get; private set; }
-        public Pen Pen { get; private set; }
-        public Brush Brush { get; private set; }
-        public SmoothingMode SmoothingMode { get; private set; }
+        public bool AddNextPoint { get; private set; } // оправдано ли здесь
+        public bool IisLineFinished { get; private set; } // оправдано ли здесь
+        public EMode Mode { get; private set; }
+        public string PenColor { get; private set; }
+        public float PenWidth { get; private set; }
+        public EDashStyle PenDashStyle { get; private set; }
+        public string BrushColor { get; private set; }
+        public bool IsSmoothed { get; private set; }
         public int numberOfPolygonApexes { get; private set; }
 
         private Settings()
@@ -39,31 +40,41 @@ namespace NewPaitnt.Implementation
             _settings.ImageHeight = newHeight;
         }
 
-        public void SetMode(EFigure newMode)
+        public void SetMode(EMode newMode)
         {
             _settings.Mode = newMode;
         }
 
         public void SetPenWidth(float newWidth)
         {
-            _settings.Pen.Width = newWidth;
+            _settings.PenWidth = newWidth;
         }
 
-        public void SetPenColor(Color color)
+        public void SetPenColor(string hexColor)
         {
-            _settings.Pen.Color = color;
+            _settings.PenColor = hexColor;
         }
 
-        public void SetBrushColor(Color newColor)
+        public void SetPenDashStyle(EDashStyle dashStyle)
         {
-            _settings.Brush = new SolidBrush(newColor);
+            _settings.PenDashStyle = dashStyle;
         }
 
-        public void SetSmoothingMode(SmoothingMode newMode)
+        public void SetBrushColor(string hexColor)
         {
-            _settings.SmoothingMode = newMode;
+            _settings.BrushColor = hexColor;
         }
-      
+
+        public void SetSmooth()
+        {
+            _settings.IsSmoothed = true;
+        }
+
+        public void SetUnsmooth()
+        {
+            _settings.IsSmoothed = false;
+        }
+
         public void SetNumberOfPolygonApexes(int number)
         {
             numberOfPolygonApexes = number;
@@ -74,13 +85,11 @@ namespace NewPaitnt.Implementation
             ImageWidth = SettingsConstants.DefaultImageWidth;
             ImageHeight = SettingsConstants.DefaultImageHeight;
             Mode = SettingsConstants.DefaultMode;
-            Pen = new Pen(Color.Black, 1f);
-            Pen.StartCap = LineCap.Round;
-            Pen.EndCap = LineCap.Round;
-            Pen.LineJoin = LineJoin.Round;
-            Pen.DashCap = DashCap.Round;
-            Brush = new SolidBrush(Color.Transparent);
-            SmoothingMode = SettingsConstants.DefaultSmoothingMode;
+            PenColor = SettingsConstants.DefaultPenColor;
+            PenWidth = SettingsConstants.DefaultPenWidth;
+            PenDashStyle = SettingsConstants.DefaultPenDashStyle;
+            BrushColor = SettingsConstants.DefaultBrushColor;
+            IsSmoothed = SettingsConstants.DefaultSmooth;
             numberOfPolygonApexes = SettingsConstants.DefaultNumberOfPolygonApexes;
         }
     }

@@ -1,39 +1,20 @@
-﻿using NewPaitnt.VectorModel;
-using System;
+﻿using NewPaitnt.Enum;
+using NewPaitnt.VectorModel;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
-
-namespace NewPaitnt.Vector
+namespace NewPaitnt.VectorModel
 {
     public class Line : Figure
     {
         private static int _count = 0;
-        public Line(Point start, Point end, Pen pen, SmoothingMode smoothingMode)
+        public Line(Point2D click, Point2D move, string penColor, float penWidth, EDashStyle penDashStyle, string brushColor, bool isSmoothed)
         {
-            Points = new List<Point>(2);
-
-            Points.Add(start);
-            Points.Add(end);
-
-            Pen = (Pen)pen.Clone();
-            SmoothingMode = smoothingMode;
-
-            FigureName = "Line" + _count++.ToString();
-        }
-
-        public override void Draw(ref Graphics graphics)
-        { 
-            graphics.SmoothingMode = SmoothingMode;
-            graphics.DrawLine(Pen, Points[0], Points[1]);
-        }
-
-        public override void Draw(ref Graphics graphics, Point end)
-        {
-            Points[1] = end;
-            graphics.SmoothingMode = SmoothingMode;
-            graphics.DrawLine(Pen, Points[0], Points[1]);
+            FigureType = EFigure.Line;
+            Points = new List<Point2D>(2);
+            Points.Add(click);
+            Points.Add(move);
+            Update(penColor, penWidth, penDashStyle, brushColor, isSmoothed);
+            FigureName = FigureType.ToString() + _count++.ToString();
         }
     }
 }

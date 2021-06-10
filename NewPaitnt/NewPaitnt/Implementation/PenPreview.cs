@@ -1,5 +1,4 @@
-﻿using NewPaitnt.Interfaces;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace NewPaitnt.Implementation
@@ -12,32 +11,37 @@ namespace NewPaitnt.Implementation
         public Bitmap PenBitmap { get; private set; }
         private Graphics _penGraphics;
 
-        private PenPreview(Pen pen, int Width, int Height)
+        private PenPreview(string penColor, float penWidth, bool isSmoothed, int Width, int Height)
         {
             PenBitmap = new Bitmap(Width, Height);
             _xCenter = Width / 2 - 1;
             _yCenter = Height / 2 - 1;
             _penGraphics = Graphics.FromImage(PenBitmap);
-            _penGraphics.SmoothingMode = SettingsConstants.DefaultSmoothingMode;
-            Refresh(pen, SettingsConstants.DefaultSmoothingMode);
+            _penGraphics.SmoothingMode = isSmoothed ? SmoothingMode.AntiAlias : SmoothingMode.None;
+
+            DrawPen(penColor, penWidth, isSmoothed);
         }
 
-        public static PenPreview Initialize(Pen pen, int Width, int Height)
+        public static PenPreview Initialize(string penColor, float penWidth, bool isSmoothed, int Width, int Height)
         {
             if (_penPreview == null)
             {
-                _penPreview = new PenPreview(pen, Width, Height);
+                _penPreview = new PenPreview(penColor, penWidth, isSmoothed, Width, Height);
             }
             return _penPreview;
         }
 
-        public void Refresh(Pen pen, SmoothingMode smoothingMode)
+        public void DrawPen(string penColor, float penWidth, bool isSmoothed)
         {
             _penGraphics.Clear(Color.White);
-            Pen pointPen = (Pen)pen.Clone();
-            pointPen.DashPattern = new float[] { 1f, 1f };
-            _penGraphics.SmoothingMode = smoothingMode;
-            _penGraphics.DrawLine(pointPen, _xCenter, _yCenter, _xCenter + 1, _yCenter + 1);
+            Pen pen = new Pen(HexColorConverter.HexToColor(penColor), penWidth);
+            pen.StartCap = LineCap.Round;
+            pen.EndCap = LineCap.Round;
+            pen.LineJoin = LineJoin.Round;
+            pen.DashCap = DashCap.Round;
+            pen.DashPattern = new float[] { 1f, 1f };
+            _penGraphics.SmoothingMode = isSmoothed ? SmoothingMode.AntiAlias : SmoothingMode.None;
+            _penGraphics.DrawLine(pen, _xCenter, _yCenter, _xCenter + 1, _yCenter + 1);
         }
     }
 }

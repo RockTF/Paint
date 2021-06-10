@@ -1,44 +1,42 @@
-﻿using NewPaitnt.Interfaces;
-using System;
+﻿using NewPaitnt.Enum;
+using NewPaitnt.Interfaces;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NewPaitnt.VectorModel
 {
-    public abstract class Figure: IDrawable 
+    public abstract class Figure : IDrawable 
     {
-        public List<Point> Points { get; set; }
-        public  Pen  Pen { get; set; }
-        public  Brush Brush { get; set; }
-        public string FigureName { get; set; }
-        public SmoothingMode SmoothingMode { get; set; }
-        public abstract void Draw(ref Graphics graphics);
+        public EFigure FigureType { get; protected set; }
+        public string FigureName { get; protected set; }
+        public List<Point2D> Points { get; protected set; }
+        public string PenColor { get; protected set; }
+        public float PenWidth { get; protected set; }
+        public EDashStyle PenDashStyle { get; protected set; }
+        public string BrushColor { get; protected set; }
+        public bool IsSmoothed { get; protected set; }
 
-
-        public void Move(Point from, Point to)
+        public void Move(Point2D from, Point2D to)
         {
             for (int i = 0; i < Points.Count; i++)
             {
                 int tempX = Points[i].X + (to.X - from.X);
                 int tempY = Points[i].Y + (to.Y - from.Y);
-                Points[i] = new Point(tempX, tempY);
+                Points[i].Cnahge(tempX, tempY);
             }
         }
 
-        public void ChangePen(Pen pen)
+        public void UpdatePoint(Point2D point)
         {
-            Pen = (Pen)pen.Clone();
+            Points[^1].Cnahge(point.X, point.Y);
         }
 
-        public abstract void Draw(ref Graphics graphics, Point end);
-
-        public void AddNextPoint(Point click)
+        public void Update(string penColor, float penWidth, EDashStyle penDashStyle, string brushColor, bool isSmoothed)
         {
-            Points.Add(click);
+            PenColor = penColor;
+            PenWidth = penWidth;
+            PenDashStyle = penDashStyle;
+            BrushColor = brushColor;
+            IsSmoothed = isSmoothed;
         }
     }
 }

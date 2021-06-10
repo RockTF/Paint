@@ -1,6 +1,6 @@
 ﻿namespace NewPaitnt.Enum
 {
-    public enum EFigure
+    public enum EMode
     {
         Curve,
         Dot,
@@ -10,6 +10,7 @@
         Polygon,
         Rectangle,
         SmoothCurve,
-        RoundedRectangle
+        RoundedRectangle,
+        Move
     }
 }

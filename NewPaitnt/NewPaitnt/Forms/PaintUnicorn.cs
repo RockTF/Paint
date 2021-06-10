@@ -1,4 +1,5 @@
-﻿using NewPaitnt.Implementation;
+﻿using NewPaitnt.Enum;
+using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
 using System;
 using System.Diagnostics;
@@ -40,12 +41,13 @@ namespace NewPaitnt
         {
             settings = Settings.Initialize();
             mouseHandler = MouseHandler.Initialize();
-            penPreview = PenPreview.Initialize(settings.Pen, PictureBoxThickness.Width, PictureBoxThickness.Height);
             storage = Storage.Initialize();
+            penPreview = PenPreview.Initialize(settings.PenColor, settings.PenWidth, settings.IsSmoothed, PictureBoxThickness.Width, PictureBoxThickness.Height);
 
-            drawingEngine = new DrawingEngine(settings, mouseHandler, penPreview, storage);
+            drawingEngine = new DrawingEngine(settings, mouseHandler, storage);
 
-            PictureBoxThickness.Image = drawingEngine.GetPenImage();
+            PictureBoxThickness.Image = penPreview.PenBitmap;
+
             PictureBoxPaint.Image = drawingEngine.MainImage;
 
             currentProcess = Process.GetCurrentProcess();
@@ -72,7 +74,7 @@ namespace NewPaitnt
                 drawingEngine.DrawMainOnBackground();
                 mouseHandler.NewClick(e.Location);
 
-                if (settings.Mode == EFigure.SmoothCurve)
+                if (settings.Mode == EMode.SmoothCurve)
                 {
                     _isLineFinished = false;
                 }
@@ -84,12 +86,12 @@ namespace NewPaitnt
                 {
                     _isFirstPointAdd = true;
                 }
-                if (settings.Mode == EFigure.Dot)
+                if (settings.Mode == EMode.Dot)
                 {
                     _isFigureCreated = true;
                     drawingEngine.DrawNewFigure();
                 }
-                else if (settings.Mode == EFigure.Move)
+                else if (settings.Mode == EMode.Move)
                 {
                     drawingEngine.SelectFigure();
                 }
@@ -107,11 +109,11 @@ namespace NewPaitnt
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (settings.Mode != EFigure.Dot && settings.Mode != EFigure.Move)
+                if (settings.Mode != EMode.Dot && settings.Mode != EMode.Move)
                 {
                     mouseHandler.NewMove(e.Location);
                 }
-                if (settings.Mode != EFigure.Move)
+                if (settings.Mode != EMode.Move)
                 {
                     if (!_isFigureCreated)
                     {
@@ -126,14 +128,14 @@ namespace NewPaitnt
 
                 PictureBoxPaint.Image = drawingEngine.MainImage;
 
-                if (settings.Mode == EFigure.Move)
+                if (settings.Mode == EMode.Move)
                 {
                     mouseHandler.NewMove(e.Location);
                     drawingEngine.MoveFigure();
                     PictureBoxPaint.Image = drawingEngine.MainImage;
                 }
             }
-            else if (settings.Mode == EFigure.SmoothCurve && !_isLineFinished)
+            else if (settings.Mode == EMode.SmoothCurve && !_isLineFinished)
             {
                 mouseHandler.NewMove(e.Location);
                 if (!_isFigureCreated)
@@ -152,7 +154,7 @@ namespace NewPaitnt
 
         private void PictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
-            if (settings.Mode != EFigure.SmoothCurve)
+            if (settings.Mode != EMode.SmoothCurve)
             {
                 _isFigureCreated = false;
                 drawingEngine.CleanBackground();
@@ -173,7 +175,7 @@ namespace NewPaitnt
             {
                 if (BtnMove.Enabled)
                 {
-                    settings.SetMode(EFigure.Curve);
+                    settings.SetMode(EMode.Curve);
                 }
 
                 createNewCanvas = new CreateNewCanvas();
@@ -232,7 +234,9 @@ namespace NewPaitnt
         private void TrackBarThickness_Scroll(object sender, EventArgs e)
         {
             settings.SetPenWidth(TrackBarThickness.Value);
-            PictureBoxThickness.Image = drawingEngine.GetPenImage();
+
+            RefreshPenPreview();
+
             if (_isFigureSelected)
             {
                 drawingEngine.ChangePenWidth(TrackBarThickness.Value);
@@ -264,49 +268,49 @@ namespace NewPaitnt
 
         private void BtnPoint_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Dot);
+            settings.SetMode(EMode.Dot);
             _isFigureSelected = false;
         }
 
         private void BtnRectangle_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Rectangle);
+            settings.SetMode(EMode.Rectangle);
             _isFigureSelected = false;
         }
 
         private void BtnEllipse_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Ellipse);
+            settings.SetMode(EMode.Ellipse);
             _isFigureSelected = false;
         }
 
         private void BtnCurve_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Curve);
+            settings.SetMode(EMode.Curve);
             _isFigureSelected = false;
         }
 
         private void BtnTriangle_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Triangle);
+            settings.SetMode(EMode.Triangle);
             _isFigureSelected = false;
         }
 
         private void BtnLine_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Line);
+            settings.SetMode(EMode.Line);
             _isFigureSelected = false;
         }
 
         private void SmoothCorve(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.SmoothCurve);
+            settings.SetMode(EMode.SmoothCurve);
             _isFigureSelected = false;
         }
 
         private void BtnSguare_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.RoundedRectangle);
+            settings.SetMode(EMode.RoundedRectangle);
             _isFigureSelected = false;
         }
 
@@ -314,17 +318,16 @@ namespace NewPaitnt
         {
             if (CheckBoxAntiAliasing.Checked)
             {
-                settings.SetSmoothingMode(SmoothingMode.AntiAlias);
+                settings.SetSmooth();
                 ChangeAntiAliasing(SmoothingMode.AntiAlias);
             }
             else
             {
-                settings.SetSmoothingMode(SmoothingMode.None);
+                settings.SetUnsmooth();
                 ChangeAntiAliasing(SmoothingMode.AntiAlias);
             }
-            PictureBoxThickness.Image = drawingEngine.GetPenImage();
-
             
+            RefreshPenPreview(); 
         }
         private void ChangeAntiAliasing(SmoothingMode smoothingMode)
         {
@@ -341,15 +344,15 @@ namespace NewPaitnt
             switch (ComboBoxContour.SelectedIndex)
             {
                 case 0:
-                    settings.Pen.DashStyle = DashStyle.Solid;
+                    settings.SetPenDashStyle(EDashStyle.Solid);
                     ChangeDashStyle(DashStyle.Solid);
                     break;
                 case 1:
-                    settings.Pen.DashStyle = DashStyle.Dash;
+                    settings.SetPenDashStyle(EDashStyle.Dash);
                     ChangeDashStyle(DashStyle.Dash);
                     break;
                 case 2:
-                    settings.Pen.DashStyle = DashStyle.DashDot;
+                    settings.SetPenDashStyle(EDashStyle.DashDot);
                     ChangeDashStyle(DashStyle.DashDot);
                     break;
                 default:
@@ -370,8 +373,8 @@ namespace NewPaitnt
         {
             if (_isBtnFillClicked)
             {
-                settings.SetBrushColor(((Button)sender).BackColor);
-                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
+                settings.SetBrushColor(HexColorConverter.ColorToHex((sender as Button).BackColor));
+                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor; // check actuality
                 _isBtnFillClicked = false;
                 if (_isFigureSelected)
                 {
@@ -381,14 +384,15 @@ namespace NewPaitnt
             }
             else
             {
-                settings.SetPenColor(((Button)sender).BackColor);
-                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor;
-                PictureBoxThickness.Image = drawingEngine.GetPenImage();
+                settings.SetPenColor(HexColorConverter.ColorToHex((sender as Button).BackColor));
+                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor; // check actuality
+
+                RefreshPenPreview();
+
                 if (_isFigureSelected)
                 {
                     drawingEngine.ChangePenColor(((Button)sender).BackColor);
                     drawingEngine.SelectFigure();
-
                 }
             }
             PictureBoxPaint.Image = drawingEngine.MainImage;
@@ -398,10 +402,11 @@ namespace NewPaitnt
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
-                settings.SetBrushColor(colorDialog1.Color);
-                settings.SetPenColor(colorDialog1.Color);
-                PictureBoxColorFillFigure.BackColor = colorDialog1.Color;
-                PictureBoxThickness.Image = drawingEngine.GetPenImage();
+                settings.SetBrushColor(HexColorConverter.ColorToHex(colorDialog1.Color));
+                settings.SetPenColor(HexColorConverter.ColorToHex(colorDialog1.Color));
+                PictureBoxColorFillFigure.BackColor = colorDialog1.Color; // check actuality
+
+                RefreshPenPreview();
             }
         }
 
@@ -413,7 +418,7 @@ namespace NewPaitnt
 
         private void BtnMove_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Move);
+            settings.SetMode(EMode.Move);
         }
 
         private void MainPaint_FormClosed(object sender, FormClosedEventArgs e)
@@ -447,7 +452,7 @@ namespace NewPaitnt
 
         private void BtnHexagon_Click(object sender, EventArgs e)
         {
-            settings.SetMode(EFigure.Polygon);
+            settings.SetMode(EMode.Polygon);
             _isFigureSelected = false;
         }
 
@@ -455,8 +460,8 @@ namespace NewPaitnt
         {
             if (_isBtnFillClicked)
             {
-                settings.SetBrushColor(Color.Transparent);
-                PictureBoxColorFillFigure.BackColor = Color.Transparent;
+                settings.SetBrushColor(HexColorConverter.ColorToHex(Color.Transparent));
+                PictureBoxColorFillFigure.BackColor = Color.Transparent; // check actuality
                 _isBtnFillClicked = false;
                 if (_isFigureSelected)
                 {
@@ -466,17 +471,24 @@ namespace NewPaitnt
             }
             else
             {
-                settings.SetPenColor(Color.Transparent);
-                PictureBoxColorFillFigure.BackColor = Color.Transparent;
-                PictureBoxThickness.Image = drawingEngine.GetPenImage();
+                settings.SetPenColor(HexColorConverter.ColorToHex(Color.Transparent));
+                PictureBoxColorFillFigure.BackColor = Color.Transparent; // chek actuality
+
+                RefreshPenPreview();
+
                 if (_isFigureSelected)
                 {
                     drawingEngine.ChangePenColor(Color.Transparent);
                     drawingEngine.SelectFigure();
-
                 }
             }
             PictureBoxPaint.Image = drawingEngine.MainImage;
+        }
+
+        public void RefreshPenPreview()
+        {
+            penPreview.DrawPen(settings.PenColor, settings.PenWidth, settings.IsSmoothed);
+            PictureBoxThickness.Image = penPreview.PenBitmap;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 
 
-namespace NewPaitnt.Vector
+namespace NewPaitnt.VectorModel
 {
     public class SmoothCurve : Figure
     {

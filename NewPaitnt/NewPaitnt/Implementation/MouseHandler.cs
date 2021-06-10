@@ -1,4 +1,5 @@
 ﻿using NewPaitnt.Interfaces;
+using NewPaitnt.VectorModel;
 using System.Drawing;
 
 
@@ -8,17 +9,17 @@ namespace NewPaitnt.Implementation
     {
         private static MouseHandler _mouseHandler;
 
-        private Point _click;
-        private Point _previousMove;
-        private Point _move;
-        private Point _rightClick;
+        private Point2D _click;
+        private Point2D _previousMove;
+        private Point2D _move;
+        private Point2D _rightClick;
 
         private MouseHandler()
         {
-            _click = new Point(0, 0);
-            _previousMove = new Point(0, 0);
-            _move = new Point(0, 0);
-            _rightClick = new Point(0, 0);
+            _click = new Point2D(0, 0);
+            _previousMove = new Point2D(0, 0);
+            _move = new Point2D(0, 0);
+            _rightClick = new Point2D(0, 0);
         }
 
         public static MouseHandler Initialize()
@@ -33,33 +34,33 @@ namespace NewPaitnt.Implementation
         public void NewMove(Point move)
         {
             _previousMove = _move;
-            _move = move;
+            _move = PointConverter.SystemToCustom(move);
         }
 
         public void NewClick(Point click)
         {
-            _click = click;
-            _previousMove = click;
-            _move = click;
+            _click = PointConverter.SystemToCustom(click);
+            _previousMove = PointConverter.SystemToCustom(click);
+            _move = PointConverter.SystemToCustom(click);
         }
 
-        public Point GetClick()
+        public Point2D GetClick()
         {
             return _click;
 
         }
 
-        public Point GetMove()
+        public Point2D GetMove()
         {
             return _move;
         }
 
-        public Point GetPreviousMove()
+        public Point2D GetPreviousMove()
         {
             return _previousMove;
         }
 
-        public Point GetRightClick()
+        public Point2D GetRightClick()
         {
             return _rightClick;
         }

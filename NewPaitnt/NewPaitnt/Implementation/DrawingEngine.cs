@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using NewPaitnt.Interfaces;
-using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
 
 namespace NewPaitnt.Implementation
@@ -10,7 +9,6 @@ namespace NewPaitnt.Implementation
     {
         private Settings _settings;
         private IMouseHandler _mouseHandler;
-        private PenPreview _penPreview;
         private IStorage _storage;              
         
         public Bitmap Canvas;
@@ -26,11 +24,10 @@ namespace NewPaitnt.Implementation
   
         private int _selectedFigureIndex;
 
-        public DrawingEngine(Settings settings, IMouseHandler mouseHandler, PenPreview penPreview, IStorage storage)
+        public DrawingEngine(Settings settings, IMouseHandler mouseHandler, IStorage storage)
         {
             _settings = settings;
             _mouseHandler = mouseHandler;
-            _penPreview = penPreview;
             _storage = storage;
 
             NewBitmaps();
@@ -182,12 +179,6 @@ namespace NewPaitnt.Implementation
         private void DrawFigure()
         {
             _storage.GetLastFigure().Draw(ref FigureGraphics);
-        }
-
-        public Bitmap GetPenImage()
-        {
-            _penPreview.Refresh(_settings.Pen, _settings.SmoothingMode);
-            return _penPreview.PenBitmap;
         }
 
         public void SetSelectedFigure(int figureIndex)

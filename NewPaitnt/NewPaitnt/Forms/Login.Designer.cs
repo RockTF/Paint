@@ -50,6 +50,7 @@ namespace NewPaitnt.Forms
             this.BtnForgot.TabIndex = 4;
             this.BtnForgot.Text = "Forgot your password?";
             this.BtnForgot.UseVisualStyleBackColor = true;
+            this.BtnForgot.Click += new System.EventHandler(this.BtnForgot_Click);
             // 
             // BtnLogin
             // 

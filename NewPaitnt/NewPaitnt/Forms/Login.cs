@@ -23,5 +23,12 @@ namespace NewPaitnt.Forms
             MainPaint mainPaint = new MainPaint();
             mainPaint.Show();
         }
+
+        private void BtnForgot_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            ChangePassword changePassword = new ChangePassword();
+            changePassword.Show();
+        }
     }
 }

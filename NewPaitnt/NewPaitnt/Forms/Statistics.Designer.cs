@@ -32,7 +32,9 @@ namespace NewPaitnt.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Statistics));
             this.BtnBack = new System.Windows.Forms.Button();
             this.PictureBoxArrow = new System.Windows.Forms.PictureBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxArrow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnBack
@@ -59,12 +61,22 @@ namespace NewPaitnt.Forms
             this.PictureBoxArrow.TabIndex = 1;
             this.PictureBoxArrow.TabStop = false;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(38, 66);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(723, 351);
+            this.dataGridView1.TabIndex = 2;
+            // 
             // Statistics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.PictureBoxArrow);
             this.Controls.Add(this.BtnBack);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -72,6 +84,7 @@ namespace NewPaitnt.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Statistics";
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxArrow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -80,5 +93,6 @@ namespace NewPaitnt.Forms
 
         private System.Windows.Forms.Button BtnBack;
         private System.Windows.Forms.PictureBox PictureBoxArrow;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

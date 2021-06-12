@@ -13,7 +13,7 @@ namespace NewPaitnt
         {
             InitializeComponent();
             settings = Settings.Initialize();
-            drawingEngine = new DrawingEngine(settings, MouseHandler.Initialize(), PenPreview.Initialize(settings.Pen, 31, 31), Storage.Initialize());
+            drawingEngine = new DrawingEngine(settings, MouseHandler.Initialize(), Storage.Initialize());
         }
        
 

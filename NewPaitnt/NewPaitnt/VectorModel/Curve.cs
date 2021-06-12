@@ -1,7 +1,6 @@
-﻿using System;
+﻿using NewPaitnt.Enum;
+using NewPaitnt.Implementation;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
 
 namespace NewPaitnt.VectorModel
@@ -10,35 +9,18 @@ namespace NewPaitnt.VectorModel
     {
         private static int _count = 0;
 
-        public Curve(Point start, Point move, Pen pen, SmoothingMode smoothingMode)
+        public Curve(Point2D click, Point2D move, Settings settings) : base(settings)
         {
-           Points = new List<Point>();
-
-           if(Points.Count ==0)
-           {
-                Points.Add(new Point(start.X, start.Y));
-           } 
-
-            Points.Add(new Point(move.X, move.Y));
-          
-            Pen = (Pen)pen.Clone();
-
-            FigureName = "Curve" + _count++.ToString();
-
-            SmoothingMode = smoothingMode;
+            FigureType = EFigure.Curve;
+            Points = new List<Point2D>(2);
+            Points.Add(click);
+            Points.Add(move);
+            FigureName = FigureType.ToString() + _count++.ToString();
         }
 
-        public override void Draw(ref Graphics graphics)
+        public override void UpdatePoint(Point2D point)
         {
-            graphics.SmoothingMode = SmoothingMode;
-            graphics.DrawCurve(Pen, Points.ToArray());
-        }
-
-        public override void Draw(ref Graphics graphics, Point end)
-        {
-            Points.Add(new Point(end.X, end.Y));
-            graphics.SmoothingMode = SmoothingMode;
-            graphics.DrawCurve(Pen, Points.ToArray());
+            AddNextPoint(point);
         }
     }
 }

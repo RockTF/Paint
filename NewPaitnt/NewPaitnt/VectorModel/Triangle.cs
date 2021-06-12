@@ -1,51 +1,19 @@
-﻿using System;
+﻿using NewPaitnt.Enum;
+using NewPaitnt.Implementation;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace NewPaitnt.VectorModel
 {
     public class Triangle : Figure
     {
         private static int _count = 0;
-        public Triangle(Point start, Point end, Pen pen, Brush brush, SmoothingMode smoothingMode)
+        public Triangle(Point2D click, Point2D move, Settings settings) : base(settings)
         {
-            Points = new List<Point>(2);
-
-            Points.Add(start);
-            Points.Add(end);
-
-            Pen = (Pen)pen.Clone();
-            Brush = (Brush)brush.Clone();
-            SmoothingMode = smoothingMode;
-
-            FigureName = "Triangle" + _count++.ToString();
-        }
-
-        public override void Draw(ref Graphics graphics)
-        {
-            List<Point> TrianglePoint = new List<Point>(3);
-            TrianglePoint.Add(new Point(Points[1].X, Points[1].Y));
-            TrianglePoint.Add(new Point(Points[0].X, Points[1].Y));
-            TrianglePoint.Add(new Point((Points[0].X + Points[1].X) / 2, Points[0].Y));
-
-            graphics.SmoothingMode = SmoothingMode;
-            graphics.FillPolygon(Brush, TrianglePoint.ToArray());
-            graphics.DrawPolygon(Pen, TrianglePoint.ToArray());
-        }
-
-        public override void Draw(ref Graphics graphics, Point end)
-        {
-            Points[1] = end;
-
-            List<Point> TrianglePoint = new List<Point>(3);
-            TrianglePoint.Add(new Point(Points[1].X, Points[1].Y));
-            TrianglePoint.Add(new Point(Points[0].X, Points[1].Y));
-            TrianglePoint.Add(new Point((Points[0].X + Points[1].X) / 2, Points[0].Y));
-
-            graphics.SmoothingMode = SmoothingMode;
-            graphics.FillPolygon(Brush, TrianglePoint.ToArray());
-            graphics.DrawPolygon(Pen, TrianglePoint.ToArray());
+            FigureType = EFigure.Triangle;
+            Points = new List<Point2D>(2);
+            Points.Add(click);
+            Points.Add(move);
+            FigureName = FigureType.ToString() + _count++.ToString();
         }
     }
 }

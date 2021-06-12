@@ -48,7 +48,7 @@ namespace NewPaitnt
 
             PictureBoxThickness.Image = penPreview.PenBitmap;
 
-            PictureBoxPaint.Image = drawingEngine.MainImage;
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
 
             currentProcess = Process.GetCurrentProcess();
             currentProcess.Refresh();
@@ -80,7 +80,7 @@ namespace NewPaitnt
                 }
                 if (!_isLineFinished && _isFirstPointAdd)
                 {
-                    drawingEngine.AddPointToCurve(mouseHandler.GetClick());
+                    drawingEngine.AddPointToCurve();
                 }
                 else if (!_isLineFinished && !_isFirstPointAdd)
                 {
@@ -95,7 +95,7 @@ namespace NewPaitnt
                 {
                     drawingEngine.SelectFigure();
                 }
-                PictureBoxPaint.Image = drawingEngine.MainImage;
+                PictureBoxPaint.Image = drawingEngine.GetMainImage();
             }
             if (e.Button == MouseButtons.Right)
             {
@@ -126,13 +126,13 @@ namespace NewPaitnt
                     }
                 }
 
-                PictureBoxPaint.Image = drawingEngine.MainImage;
+                PictureBoxPaint.Image = drawingEngine.GetMainImage();
 
                 if (settings.Mode == EMode.Move)
                 {
                     mouseHandler.NewMove(e.Location);
                     drawingEngine.MoveFigure();
-                    PictureBoxPaint.Image = drawingEngine.MainImage;
+                    PictureBoxPaint.Image = drawingEngine.GetMainImage();
                 }
             }
             else if (settings.Mode == EMode.SmoothCurve && !_isLineFinished)
@@ -148,7 +148,7 @@ namespace NewPaitnt
                     drawingEngine.ClearAllExceptMainImage();
                     drawingEngine.RedrawNewFigure();
                 }
-                PictureBoxPaint.Image = drawingEngine.MainImage;
+                PictureBoxPaint.Image = drawingEngine.GetMainImage();
             }
         }
 
@@ -210,14 +210,14 @@ namespace NewPaitnt
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-               
-                drawingEngine.Canvas = (Bitmap)Image.FromFile(openFileDialog.FileName);
+
+                drawingEngine.SetCanvasImage((Bitmap)Image.FromFile(openFileDialog.FileName));
 
                 settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width);
                 settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
 
                 drawingEngine.DrawAllFigures();
-                PictureBoxPaint.Image = drawingEngine.MainImage;
+                PictureBoxPaint.Image = drawingEngine.GetMainImage();
             }
         }
 
@@ -225,7 +225,7 @@ namespace NewPaitnt
         {
             drawingEngine.ClearStorage();
             drawingEngine.ClearCanvas();
-            PictureBoxPaint.Image = drawingEngine.MainImage;
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
             settings.SetMode(SettingsConstants.DefaultMode);
@@ -239,9 +239,9 @@ namespace NewPaitnt
 
             if (_isFigureSelected)
             {
-                drawingEngine.ChangePenWidth(TrackBarThickness.Value);
+                drawingEngine.UpdateFigure();
                 drawingEngine.SelectFigure();
-                PictureBoxPaint.Image = drawingEngine.MainImage;
+                PictureBoxPaint.Image = drawingEngine.GetMainImage();
             }
         }
 
@@ -253,7 +253,7 @@ namespace NewPaitnt
         private void BtnUndo_Click(object sender, EventArgs e)
         {
             drawingEngine.Undo();
-            PictureBoxPaint.Image = drawingEngine.MainImage;
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
         }
@@ -261,7 +261,7 @@ namespace NewPaitnt
         private void BtnRedo_Click(object sender, EventArgs e)
         {
             drawingEngine.Redo();
-            PictureBoxPaint.Image = drawingEngine.MainImage;
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
         }
@@ -333,9 +333,9 @@ namespace NewPaitnt
         {
             if (_isFigureSelected)
             {
-                drawingEngine.ChangeAntiAliasing(smoothingMode);
+                drawingEngine.UpdateFigure();
                 drawingEngine.SelectFigure();
-                PictureBoxPaint.Image = drawingEngine.MainImage;
+                PictureBoxPaint.Image = drawingEngine.GetMainImage();
             }
         }
 
@@ -363,9 +363,9 @@ namespace NewPaitnt
         {
             if (_isFigureSelected)
             {
-                drawingEngine.ChangeDashStyle(dashStyle);
+                drawingEngine.UpdateFigure();
                 drawingEngine.SelectFigure();
-                PictureBoxPaint.Image = drawingEngine.MainImage;
+                PictureBoxPaint.Image = drawingEngine.GetMainImage();
             }
         }
 
@@ -378,7 +378,7 @@ namespace NewPaitnt
                 _isBtnFillClicked = false;
                 if (_isFigureSelected)
                 {
-                    drawingEngine.ChangeBrush(((Button)sender).BackColor);
+                    drawingEngine.UpdateFigure();
                     drawingEngine.SelectFigure();
                 }
             }
@@ -391,11 +391,11 @@ namespace NewPaitnt
 
                 if (_isFigureSelected)
                 {
-                    drawingEngine.ChangePenColor(((Button)sender).BackColor);
+                    drawingEngine.UpdateFigure();
                     drawingEngine.SelectFigure();
                 }
             }
-            PictureBoxPaint.Image = drawingEngine.MainImage;
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
         }
 
         private void PictureBoxColors_Click(object sender, EventArgs e)
@@ -440,7 +440,7 @@ namespace NewPaitnt
             drawingEngine.DeleteFigure();
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
-            PictureBoxPaint.Image = drawingEngine.MainImage;
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
             drawingEngine.SetSelectedFigure(-1);
             _isFigureSelected = false;
         }
@@ -465,7 +465,7 @@ namespace NewPaitnt
                 _isBtnFillClicked = false;
                 if (_isFigureSelected)
                 {
-                    drawingEngine.ChangeBrush(Color.Transparent);
+                    drawingEngine.UpdateFigure();
                     drawingEngine.SelectFigure();
                 }
             }
@@ -478,11 +478,11 @@ namespace NewPaitnt
 
                 if (_isFigureSelected)
                 {
-                    drawingEngine.ChangePenColor(Color.Transparent);
+                    drawingEngine.UpdateFigure();
                     drawingEngine.SelectFigure();
                 }
             }
-            PictureBoxPaint.Image = drawingEngine.MainImage;
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
         }
 
         public void RefreshPenPreview()

@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using System.Drawing.Drawing2D;
+using NewPaitnt.Enum;
 using NewPaitnt.Interfaces;
 using NewPaitnt.VectorModel;
 
@@ -11,18 +11,19 @@ namespace NewPaitnt.Implementation
         private IMouseHandler _mouseHandler;
         private IStorage _storage;              
         
-        public Bitmap Canvas;
-        public Bitmap MainImage;
-        private Bitmap Background;
-        private Bitmap CurrentFigure;
-        private Bitmap Foreground;
+        //public Bitmap Canvas;
+        //public Bitmap MainImage;
+        //private Bitmap Background;
+        //private Bitmap CurrentFigure;
+        //private Bitmap Foreground;
         private Color BlackTransparrent = Color.FromArgb(0, 0, 0, 0);
-        private Graphics MainGraphics;
-        private Graphics BackgroundGraphics;
-        private Graphics FigureGraphics;
-        private Graphics ForegroundGraphics;
+        private ExoGraphics CanvasGraphics;
+        private ExoGraphics MainGraphics;
+        private ExoGraphics BackgroundGraphics;
+        private ExoGraphics FigureGraphics;
+        private ExoGraphics ForegroundGraphics;
   
-        private int _selectedFigureIndex;
+        private int _selectedFigureIndex; 
 
         public DrawingEngine(Settings settings, IMouseHandler mouseHandler, IStorage storage)
         {
@@ -32,7 +33,7 @@ namespace NewPaitnt.Implementation
 
             NewBitmaps();
             MainGraphics.Clear(Color.White);
-            Canvas = (Bitmap)MainImage.Clone();
+            CanvasGraphics.Clear(MainGraphics.Bitmap);
 
             _selectedFigureIndex = -1;
         }
@@ -41,39 +42,39 @@ namespace NewPaitnt.Implementation
         {
             _storage.Clear();
             ClearLayers(Color.White);
-            Canvas = (Bitmap)MainImage.Clone();
+            CanvasGraphics.Clear(MainGraphics.Bitmap);
         }
 
         public void CreateFigure()
         {
             switch (_settings.Mode)
             {
-                case EFigure.Dot:
-                    _storage.AddFigure(new Dot(_mouseHandler.GetClick(), _settings.Pen, _settings.SmoothingMode));
+                case EMode.Dot:
+                    _storage.AddFigure(new Dot(_mouseHandler.GetClick(), _settings));
                     break;
-                case EFigure.Line:
-                    _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                case EMode.Line:
+                    _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
                     break;
-                case EFigure.Rectangle:
-                       _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
+                case EMode.Rectangle:
+                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
                     break;
-                case EFigure.Triangle:
-                    _storage.AddFigure(new VectorModel.Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
+                case EMode.Triangle:
+                    _storage.AddFigure(new Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
                     break;
-                case EFigure.Ellipse:
-                    _storage.AddFigure(new VectorModel.Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
+                case EMode.Ellipse:
+                    _storage.AddFigure(new Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
                     break;
-                case EFigure.RoundedRectangle:
-                    _storage.AddFigure(new VectorModel.RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.Brush, _settings.SmoothingMode));
+                case EMode.RoundedRectangle:
+                    _storage.AddFigure(new RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
                     break;
-                case EFigure.Curve:
-                    _storage.AddFigure(new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                case EMode.Curve:
+                    _storage.AddFigure(new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
                     break;
-                case EFigure.SmoothCurve:
-                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+                case EMode.SmoothCurve:
+                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
                     break;
-                case EFigure.Polygon:
-                    _storage.AddFigure(new Polygon(_mouseHandler.GetClick(), _mouseHandler.GetMove(), _settings.numberOfPolygonApexes, _settings.Pen, _settings.Brush, _settings.SmoothingMode));
+                case EMode.Polygon:
+                    _storage.AddFigure(new Polygon(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
                     break;
                 default:
                     break;
@@ -82,12 +83,8 @@ namespace NewPaitnt.Implementation
 
         public void DrawAllFigures()
         {
-            MainGraphics.DrawImage(Canvas, 0, 0);
-
-            foreach (var figure in _storage.GetAllFigures())
-            {
-                figure.Draw(ref MainGraphics);
-            }
+            MainGraphics.Clear(CanvasGraphics.Bitmap);
+            MainGraphics.Draw(_storage.GetAllFigures());
         }
 
         public void SelectFigure()
@@ -122,10 +119,10 @@ namespace NewPaitnt.Implementation
         {
             if (_selectedFigureIndex >= 0)
             {
-                MainGraphics.DrawImage(Canvas, 0, 0);
-                FigureGraphics.Clear(BlackTransparrent);
+                MainGraphics.Clear(CanvasGraphics.Bitmap);
+                FigureGraphics.Clear();
                 _storage.GetFigure(_selectedFigureIndex).Move(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove());
-                _storage.GetFigure(_selectedFigureIndex).Draw(ref FigureGraphics);
+                FigureGraphics.Draw(_storage.GetFigure(_selectedFigureIndex));
                 DrawLayers();
             }
         }
@@ -134,8 +131,8 @@ namespace NewPaitnt.Implementation
         {
             if (_selectedFigureIndex >= 0)
             {
-                MainGraphics.DrawImage(Canvas, 0, 0);
-                FigureGraphics.Clear(BlackTransparrent);
+                MainGraphics.Clear(CanvasGraphics.Bitmap);
+                FigureGraphics.Clear();
                 _storage.RemoveFigureAt(_selectedFigureIndex);                
                 DrawAllFigures();
             }
@@ -143,27 +140,27 @@ namespace NewPaitnt.Implementation
 
         public void DrawMainOnBackground()
         {
-            BackgroundGraphics.DrawImage(MainImage, 0, 0);
+            BackgroundGraphics.Clear(MainGraphics.Bitmap);
         }
 
         private void DrawBackgroundOnMain()
         {
-            MainGraphics.DrawImage(Background, 0, 0);
+            MainGraphics.Clear(BackgroundGraphics.Bitmap);
         }
 
         public void CleanBackground()
         {
-            BackgroundGraphics.Clear(BlackTransparrent);
+            BackgroundGraphics.Clear();
         }
 
         private void CleanFigure()
         {
-            FigureGraphics.Clear(BlackTransparrent);
+            FigureGraphics.Clear();
         }
 
         private void DrawFigureOnMain()
         {
-            MainGraphics.DrawImage(CurrentFigure, 0, 0);
+            MainGraphics.Clear(FigureGraphics.Bitmap);
         }
 
         public string[] GetFigureList() 
@@ -173,12 +170,13 @@ namespace NewPaitnt.Implementation
 
         public void RedrawFigure()
         {
-            _storage.GetLastFigure().Draw(ref FigureGraphics, _mouseHandler.GetMove());
+            _storage.GetLastFigure().UpdatePoint(_mouseHandler.GetMove());
+            FigureGraphics.Draw(_storage.GetLastFigure());
         }
 
         private void DrawFigure()
         {
-            _storage.GetLastFigure().Draw(ref FigureGraphics);
+            FigureGraphics.Draw(_storage.GetLastFigure());
         }
 
         public void SetSelectedFigure(int figureIndex)
@@ -188,49 +186,46 @@ namespace NewPaitnt.Implementation
 
         private void ClearLayers()
         {
-            MainGraphics.DrawImage(Canvas, 0, 0);
-            BackgroundGraphics.Clear(BlackTransparrent);
-            FigureGraphics.Clear(BlackTransparrent);
-            ForegroundGraphics.Clear(BlackTransparrent);
+            MainGraphics.Clear(CanvasGraphics.Bitmap);
+            BackgroundGraphics.Clear();
+            FigureGraphics.Clear();
+            ForegroundGraphics.Clear();
         }
 
         public void ClearAllExceptMainImage()
         {
-            MainGraphics.DrawImage(Canvas, 0, 0);
-            BackgroundGraphics.Clear(BlackTransparrent);
-            FigureGraphics.Clear(BlackTransparrent);
-            ForegroundGraphics.Clear(BlackTransparrent);
+            ClearLayers();
             DrawAllFigures();
         }
 
         private void ClearLayers(Color color)
         {
             MainGraphics.Clear(color);
-            BackgroundGraphics.Clear(BlackTransparrent);
-            FigureGraphics.Clear(BlackTransparrent);
-            ForegroundGraphics.Clear(BlackTransparrent);
+            BackgroundGraphics.Clear();
+            FigureGraphics.Clear();
+            ForegroundGraphics.Clear();
         }
 
         private void DrawLayers()
         {
-            MainGraphics.DrawImage(Background, 0, 0);
-            MainGraphics.DrawImage(CurrentFigure, 0, 0);
-            MainGraphics.DrawImage(Foreground, 0, 0);
+            MainGraphics.Clear(BackgroundGraphics.Bitmap);
+            MainGraphics.Clear(FigureGraphics.Bitmap);
+            MainGraphics.Clear(ForegroundGraphics.Bitmap);
         }
 
         private void DrawSelectedFigure()
         {
             if (_selectedFigureIndex >= 0)
             {
-                _storage.GetFigure(_selectedFigureIndex).Draw(ref FigureGraphics);
+                FigureGraphics.Draw(_storage.GetFigure(_selectedFigureIndex));
             }
         }
 
-        private void DrawFigureSequence(ref Graphics graphics, int startIndex, int endIndex)
+        private void DrawFigureSequence(ref ExoGraphics graphics, int startIndex, int endIndex)
         {
             for (int i = startIndex; i < endIndex; i++)
             {
-                _storage.GetFigure(i)?.Draw(ref graphics);
+                graphics.Draw(_storage.GetFigure(i));
             }
         }
 
@@ -243,7 +238,7 @@ namespace NewPaitnt.Implementation
         {
             NewBitmaps();
             MainGraphics.Clear(Color.White);
-            Canvas = (Bitmap)MainImage.Clone();
+            CanvasGraphics.Clear(MainGraphics.Bitmap);
             ClearCanvas();
         }
 
@@ -276,44 +271,33 @@ namespace NewPaitnt.Implementation
             DrawAllFigures();
         }
 
-        public void AddPointToCurve(Point click)
+        public void AddPointToCurve()
         {
-            _storage.GetLastFigure().AddNextPoint(click);
+            (_storage.GetLastFigure() as Figure).AddNextPoint(_mouseHandler.GetClick());
         }
 
         private void NewBitmaps()
         {
-            Canvas = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            MainImage = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Background = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            CurrentFigure = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-            Foreground = new Bitmap(_settings.ImageWidth, _settings.ImageHeight);
-
-            MainGraphics = Graphics.FromImage(MainImage);
-            BackgroundGraphics = Graphics.FromImage(Background);
-            FigureGraphics = Graphics.FromImage(CurrentFigure);
-            ForegroundGraphics = Graphics.FromImage(Foreground);
+            CanvasGraphics = new ExoGraphics(_settings.ImageWidth, _settings.ImageHeight);
+            MainGraphics = new ExoGraphics(_settings.ImageWidth, _settings.ImageHeight);
+            BackgroundGraphics = new ExoGraphics(_settings.ImageWidth, _settings.ImageHeight);
+            FigureGraphics = new ExoGraphics(_settings.ImageWidth, _settings.ImageHeight);
+            ForegroundGraphics = new ExoGraphics(_settings.ImageWidth, _settings.ImageHeight);
         }
 
-        public void ChangePenColor(Color color)
+        public void UpdateFigure()
         {
-            _storage.GetFigure(_selectedFigureIndex).Pen.Color = color;
+            _storage.GetFigure(_selectedFigureIndex).Update(_settings);
         }
-        public void ChangeDashStyle(DashStyle dashStyle)
+
+        public Bitmap GetMainImage()
         {
-            _storage.GetFigure(_selectedFigureIndex).Pen.DashStyle = dashStyle;
+            return MainGraphics.Bitmap;
         }
-        public void ChangePenWidth(float width)
+
+        public void SetCanvasImage(Bitmap bitmap)
         {
-            _storage.GetFigure(_selectedFigureIndex).Pen.Width = width;
-        }
-        public void ChangeAntiAliasing(SmoothingMode smoothingMode)
-        {
-            _storage.GetFigure(_selectedFigureIndex).SmoothingMode = smoothingMode;
-        }
-        public void ChangeBrush(Color color)
-        {
-            _storage.GetFigure(_selectedFigureIndex).Brush = new SolidBrush(color);
+            CanvasGraphics.Clear(bitmap);
         }
     }
 }

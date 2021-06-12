@@ -1,4 +1,5 @@
 ﻿using NewPaitnt.Enum;
+using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
 using System.Collections.Generic;
 
@@ -15,6 +16,11 @@ namespace NewPaitnt.VectorModel
         public string BrushColor { get; protected set; }
         public bool IsSmoothed { get; protected set; }
 
+        public Figure(Settings settings)
+        {
+            Update(settings);
+        }
+
         public void Move(Point2D from, Point2D to)
         {
             for (int i = 0; i < Points.Count; i++)
@@ -25,18 +31,23 @@ namespace NewPaitnt.VectorModel
             }
         }
 
-        public void UpdatePoint(Point2D point)
+        public virtual void UpdatePoint(Point2D point)
         {
             Points[^1].Cnahge(point.X, point.Y);
         }
 
-        public void Update(string penColor, float penWidth, EDashStyle penDashStyle, string brushColor, bool isSmoothed)
+        public void AddNextPoint(Point2D point)
         {
-            PenColor = penColor;
-            PenWidth = penWidth;
-            PenDashStyle = penDashStyle;
-            BrushColor = brushColor;
-            IsSmoothed = isSmoothed;
+            Points.Add(point);
+        }
+
+        public void Update(Settings settings)
+        {
+            PenColor = settings.PenColor;
+            PenWidth = settings.PenWidth;
+            PenDashStyle = settings.PenDashStyle;
+            BrushColor = settings.BrushColor;
+            IsSmoothed = settings.IsSmoothed;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace NewPaitnt.Interfaces
 {
     interface IGraphics
     {
-        Bitmap bitmap { get; }
+        Bitmap Bitmap { get; }
         void Clear();
         void Clear(Color color);
         void Clear(Bitmap bitmap);

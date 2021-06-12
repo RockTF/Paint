@@ -1,4 +1,5 @@
 ﻿using NewPaitnt.Enum;
+using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
 using System.Collections.Generic;
 
@@ -17,20 +18,20 @@ namespace NewPaitnt.VectorModel
 
         private static int _count = 0;
 
-        public Dot(Point2D click, string penColor, float penWidth, bool isSmoothed)
+        public Dot(Point2D click, Settings settings)
         {
             FigureType = EFigure.Dot;
             Points = new List<Point2D>(2);
             Points.Add(click);
             Points.Add(new Point2D(click.X + 1, click.Y + 1));
-            PenColor = penColor;
-            PenWidth = penWidth;
+            PenColor = settings.PenColor;
+            PenWidth = settings.PenWidth;
             PenDashStyle = EDashStyle.Solid;
             BrushColor = "#00000000";
 
             FigureName = FigureType.ToString() + _count++.ToString();
 
-            IsSmoothed = isSmoothed;
+            IsSmoothed = settings.IsSmoothed;
         }
 
         public void Move(Point2D from, Point2D to)
@@ -45,14 +46,14 @@ namespace NewPaitnt.VectorModel
 
         public void UpdatePoint(Point2D point)
         {
-            throw new System.NotImplementedException();
+            return;
         }
 
-        public void Update(string penColor, float penWidth, EDashStyle penDashStyle, string brushColor, bool isSmoothed)
+        public void Update(Settings settings)
         {
-            PenColor = penColor;
-            PenWidth = penWidth;
-            IsSmoothed = isSmoothed;
+            PenColor = settings.PenColor;
+            PenWidth = settings.PenWidth;
+            IsSmoothed = settings.IsSmoothed;
         }
     }
 }

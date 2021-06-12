@@ -1,4 +1,5 @@
 ﻿using NewPaitnt.Enum;
+using NewPaitnt.Implementation;
 using NewPaitnt.VectorModel;
 using System.Collections.Generic;
 
@@ -17,6 +18,6 @@ namespace NewPaitnt.Interfaces
 
         public void UpdatePoint(Point2D point);
         void Move(Point2D from, Point2D to);
-        void Update(string penColor, float penWidth, EDashStyle penDashStyle, string brushColor, bool isSmoothed);
+        void Update(Settings settings);
    }
 }

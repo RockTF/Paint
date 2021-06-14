@@ -1,4 +1,5 @@
 ﻿using NewPaitnt.Enum;
+using NewPaitnt.Forms;
 using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
 using System;
@@ -490,6 +491,20 @@ namespace NewPaitnt
         {
             penPreview.DrawPen(settings.PenColor, settings.PenWidth, settings.IsSmoothed);
             PictureBoxThickness.Image = penPreview.PenBitmap;
+        }
+
+        private void BtnMyStatistics_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Statistics statistics = new Statistics();
+            statistics.ShowDialog();
+        }
+
+        private void BtnLoginOut_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Welcome welcome = new Welcome();
+            welcome.ShowDialog();
         }
     }
 }

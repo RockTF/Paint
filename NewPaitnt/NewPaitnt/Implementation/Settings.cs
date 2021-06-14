@@ -1,56 +1,96 @@
-﻿using NewPaitnt.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static NewPaitnt.Implementation.DrawingEngine;
+﻿using NewPaitnt.Enum;
 
 namespace NewPaitnt.Implementation
 {
-    public static class Settings
+    public class Settings
     {
-        public static int ImageWidth { get; set; }
-        public static int ImageHeight { get; set; }
-        public static Buttons Mode { get; set; }
-        public static Pen Pen { get; set; }
-        public static Brush Brush { get; set; }
-        public static bool IsImageBorderClosed { get; set; }
-        public static SmoothingMode SmoothingMode { get; set; }
+        private static Settings _settings;
+        public int ImageWidth { get; private set; }
+        public int ImageHeight { get; private set; }
+        public bool AddNextPoint { get; private set; } // оправдано ли здесь
+        public bool IisLineFinished { get; private set; } // оправдано ли здесь
+        public EMode Mode { get; private set; }
+        public string PenColor { get; private set; }
+        public float PenWidth { get; private set; }
+        public EDashStyle PenDashStyle { get; private set; }
+        public string BrushColor { get; private set; }
+        public bool IsSmoothed { get; private set; }
+        public int numberOfPolygonApexes { get; private set; }
 
-        public static void Init1ialize()
+        private Settings()
         {
-            ImageWidth = 928;
-            ImageHeight = 560;
-            Mode = Buttons.curve;  // "point", "curve", "line", "rectangle", "ellipse", "traingle"
-            Pen = new Pen(Color.Black, 1f);
-            Pen.StartCap = LineCap.Round;
-            Pen.EndCap = LineCap.Round;
-            // Соединение линий под углом (излом)
-            Pen.LineJoin = LineJoin.Round;
-            // Кончик линии на штрихе
-            Pen.DashCap = DashCap.Round;
-            Brush = new SolidBrush(Color.Transparent);
-            IsImageBorderClosed = false;
-            SmoothingMode = SmoothingMode.None;
+            Reset();
         }
-        // Предстоит реализовать сброс настроек
-        public static void Reset()
+        public static Settings Initialize()
         {
-            ImageWidth = 640;
-            ImageHeight = 360;
-            Settings.Mode = DrawingEngine.Buttons.curve; 
-            Pen.Color = Color.Black;
-            Pen.Width = 1f;
-            Pen.StartCap = LineCap.Round;
-            Pen.EndCap = LineCap.Round;
-            Pen.LineJoin = LineJoin.Round;
-            Pen.DashCap = DashCap.Round;
-            Brush = new SolidBrush(Color.Transparent);
-            IsImageBorderClosed = false;
-            SmoothingMode = SmoothingMode.None;
+            if (_settings == null)
+            {
+                _settings = new Settings();
+            }
+            return _settings;
+        }
+       
+        public void SetImageWidth(int newWidth)
+        {
+            _settings.ImageWidth = newWidth;
+        }
+
+        public void SetImageHeight(int newHeight)
+        {
+            _settings.ImageHeight = newHeight;
+        }
+
+        public void SetMode(EMode newMode)
+        {
+            _settings.Mode = newMode;
+        }
+
+        public void SetPenWidth(float newWidth)
+        {
+            _settings.PenWidth = newWidth;
+        }
+
+        public void SetPenColor(string hexColor)
+        {
+            _settings.PenColor = hexColor;
+        }
+
+        public void SetPenDashStyle(EDashStyle dashStyle)
+        {
+            _settings.PenDashStyle = dashStyle;
+        }
+
+        public void SetBrushColor(string hexColor)
+        {
+            _settings.BrushColor = hexColor;
+        }
+
+        public void SetSmooth()
+        {
+            _settings.IsSmoothed = true;
+        }
+
+        public void SetUnsmooth()
+        {
+            _settings.IsSmoothed = false;
+        }
+
+        public void SetNumberOfPolygonApexes(int number)
+        {
+            numberOfPolygonApexes = number;
+        }
+
+        public void Reset()
+        {
+            ImageWidth = SettingsConstants.DefaultImageWidth;
+            ImageHeight = SettingsConstants.DefaultImageHeight;
+            Mode = SettingsConstants.DefaultMode;
+            PenColor = SettingsConstants.DefaultPenColor;
+            PenWidth = SettingsConstants.DefaultPenWidth;
+            PenDashStyle = SettingsConstants.DefaultPenDashStyle;
+            BrushColor = SettingsConstants.DefaultBrushColor;
+            IsSmoothed = SettingsConstants.DefaultSmooth;
+            numberOfPolygonApexes = SettingsConstants.DefaultNumberOfPolygonApexes;
         }
     }
 }

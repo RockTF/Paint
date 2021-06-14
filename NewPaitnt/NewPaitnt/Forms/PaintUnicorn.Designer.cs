@@ -191,7 +191,7 @@ namespace NewPaitnt
             this.BtnLoginOut.Name = "BtnLoginOut";
             this.BtnLoginOut.Size = new System.Drawing.Size(104, 43);
             this.BtnLoginOut.TabIndex = 67;
-            this.BtnLoginOut.Text = "Login Out";
+            this.BtnLoginOut.Text = "LogOut";
             this.BtnLoginOut.UseVisualStyleBackColor = false;
             this.BtnLoginOut.Click += new System.EventHandler(this.BtnLoginOut_Click);
             // 
@@ -342,7 +342,7 @@ namespace NewPaitnt
             this.LabelFigures.BackColor = System.Drawing.Color.Transparent;
             this.LabelFigures.Location = new System.Drawing.Point(348, 9);
             this.LabelFigures.Name = "LabelFigures";
-            this.LabelFigures.Size = new System.Drawing.Size(45, 15);
+            this.LabelFigures.Size = new System.Drawing.Size(47, 15);
             this.LabelFigures.TabIndex = 56;
             this.LabelFigures.Text = "Figures";
             // 
@@ -507,7 +507,7 @@ namespace NewPaitnt
             this.CheckBoxAntiAliasing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.CheckBoxAntiAliasing.Location = new System.Drawing.Point(222, 62);
             this.CheckBoxAntiAliasing.Name = "CheckBoxAntiAliasing";
-            this.CheckBoxAntiAliasing.Size = new System.Drawing.Size(88, 17);
+            this.CheckBoxAntiAliasing.Size = new System.Drawing.Size(86, 17);
             this.CheckBoxAntiAliasing.TabIndex = 44;
             this.CheckBoxAntiAliasing.Text = "AntiAliasing";
             this.CheckBoxAntiAliasing.UseVisualStyleBackColor = true;
@@ -791,7 +791,7 @@ namespace NewPaitnt
             this.LabelSize.BackColor = System.Drawing.Color.Transparent;
             this.LabelSize.Location = new System.Drawing.Point(251, 16);
             this.LabelSize.Name = "LabelSize";
-            this.LabelSize.Size = new System.Drawing.Size(27, 15);
+            this.LabelSize.Size = new System.Drawing.Size(30, 15);
             this.LabelSize.TabIndex = 5;
             this.LabelSize.Text = "Size";
             // 
@@ -838,7 +838,7 @@ namespace NewPaitnt
             this.memoryLabel.Location = new System.Drawing.Point(11, 3);
             this.memoryLabel.Margin = new System.Windows.Forms.Padding(0);
             this.memoryLabel.Name = "memoryLabel";
-            this.memoryLabel.Size = new System.Drawing.Size(128, 15);
+            this.memoryLabel.Size = new System.Drawing.Size(134, 15);
             this.memoryLabel.TabIndex = 0;
             this.memoryLabel.Text = "Memory usage: 0,0 MB";
             // 
@@ -861,34 +861,34 @@ namespace NewPaitnt
             this.toolStripMenuSave,
             this.toolStripMenuClear});
             this.toolStripMenuFile.Name = "toolStripMenuFile";
-            this.toolStripMenuFile.Size = new System.Drawing.Size(37, 20);
+            this.toolStripMenuFile.Size = new System.Drawing.Size(38, 20);
             this.toolStripMenuFile.Text = "File";
             // 
             // toolStripMenuCreate
             // 
             this.toolStripMenuCreate.Name = "toolStripMenuCreate";
-            this.toolStripMenuCreate.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuCreate.Size = new System.Drawing.Size(111, 22);
             this.toolStripMenuCreate.Text = "Create";
             this.toolStripMenuCreate.Click += new System.EventHandler(this.MenuCreate_Click);
             // 
             // toolStripMenuOpen
             // 
             this.toolStripMenuOpen.Name = "toolStripMenuOpen";
-            this.toolStripMenuOpen.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuOpen.Size = new System.Drawing.Size(111, 22);
             this.toolStripMenuOpen.Text = "Open";
             this.toolStripMenuOpen.Click += new System.EventHandler(this.MenuOpen_Click);
             // 
             // toolStripMenuSave
             // 
             this.toolStripMenuSave.Name = "toolStripMenuSave";
-            this.toolStripMenuSave.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuSave.Size = new System.Drawing.Size(111, 22);
             this.toolStripMenuSave.Text = "Save";
             this.toolStripMenuSave.Click += new System.EventHandler(this.MenuSave_Click);
             // 
             // toolStripMenuClear
             // 
             this.toolStripMenuClear.Name = "toolStripMenuClear";
-            this.toolStripMenuClear.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuClear.Size = new System.Drawing.Size(111, 22);
             this.toolStripMenuClear.Text = "Clear";
             this.toolStripMenuClear.Click += new System.EventHandler(this.MenuClear_Click);
             // 

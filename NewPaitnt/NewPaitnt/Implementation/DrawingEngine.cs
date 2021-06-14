@@ -43,6 +43,7 @@ namespace NewPaitnt.Implementation
             _storage.Clear();
             ClearLayers(Color.White);
             CanvasGraphics.Clear(MainGraphics.Bitmap);
+            _selectedFigureIndex = -1;
         }
 
         public void CreateFigure()

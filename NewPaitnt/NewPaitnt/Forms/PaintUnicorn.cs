@@ -229,6 +229,7 @@ namespace NewPaitnt
             FiguresListBox.Items.Clear();
             FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
             settings.SetMode(SettingsConstants.DefaultMode);
+            _isFigureSelected = false;
         }
 
         private void TrackBarThickness_Scroll(object sender, EventArgs e)

@@ -1,7 +1,6 @@
 using Moq;
 using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
-using NewPaitnt.Vector;
 using NewPaitnt.VectorModel;
 using NUnit.Framework;
 using System.Collections.Generic;

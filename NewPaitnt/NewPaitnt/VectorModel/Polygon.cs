@@ -33,6 +33,13 @@ namespace NewPaitnt.VectorModel
             RecalculateCoordinates(move);
         }
 
+        public Polygon(List<Point2D> points, Settings settings) : base(settings)
+        {
+            FigureType = EFigure.Polygon;
+            Points = points;
+            FigureName = FigureType.ToString() + _count++.ToString();
+        }
+
         public override void UpdatePoint(Point2D point)
         {
             RecalculateCoordinates(point);
@@ -49,6 +56,11 @@ namespace NewPaitnt.VectorModel
                 _aroundCenterPoints[i] = new Point2D(tempX, tempY);
                 Points[i] = new Point2D(tempX + _center.X, tempY + _center.Y);
             }
+        }
+
+        public void ResetCounter()
+        {
+            _count = 0;
         }
     }
 }

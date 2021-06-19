@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows.Forms;
 using Button = System.Windows.Forms.Button;
 
@@ -179,23 +180,32 @@ namespace NewPaitnt
                     settings.SetMode(EMode.Curve);
                 }
 
-                createNewCanvas = new CreateNewCanvas();
+                createNewCanvas = new CreateNewCanvas(this, drawingEngine);
                 createNewCanvas.Show();
             }
             else
             {
                 createNewCanvas.Activate();
+                if (createNewCanvas.ShowDialog() == DialogResult.OK)
+                {
+                  PictureBoxPaint.Image = drawingEngine.GetMainImage();
+                }
             }
+            
         }
 
         private void MenuSave_Click(object sender, EventArgs e)
         {
             saveFileDialog.FileName = "newUnicorn";
-            saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
+            saveFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|JSON File|*.json";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (PictureBoxPaint != null)
+                if (saveFileDialog.FilterIndex == 5)
+                {
+                    File.WriteAllText(saveFileDialog.FileName, storage.GetJson());
+                }
+                else if (PictureBoxPaint != null)
                 {
                     PictureBoxPaint.Image.Save(saveFileDialog.FileName);
                 }
@@ -205,20 +215,31 @@ namespace NewPaitnt
         private void MenuOpen_Click(object sender, EventArgs e)
         {
             openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|storege Json|*.json|All|*.*";
+            openFileDialog.Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png|JSON File|*.json|All|*.*";
 
             openFileDialog.RestoreDirectory = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-
-                drawingEngine.SetCanvasImage((Bitmap)Image.FromFile(openFileDialog.FileName));
-
-                settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width);
-                settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
-
-                drawingEngine.DrawAllFigures();
-                PictureBoxPaint.Image = drawingEngine.GetMainImage();
+                if (openFileDialog.FilterIndex == 5)
+                {
+                    FigureFactory figureFactory = new FigureFactory();
+                    figureFactory.ResetAllCounters();
+                    string json = File.ReadAllText(openFileDialog.FileName);
+                    storage.SetJson(json);
+                    drawingEngine.DrawAllFigures();
+                    PictureBoxPaint.Image = drawingEngine.GetMainImage();
+                    FiguresListBox.Items.Clear();
+                    FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
+                }
+                else
+                {
+                    drawingEngine.SetCanvasImage((Bitmap)Image.FromFile(openFileDialog.FileName));
+                    settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width);
+                    settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
+                    drawingEngine.DrawAllFigures();
+                    PictureBoxPaint.Image = drawingEngine.GetMainImage();
+                }
             }
         }
 
@@ -505,6 +526,11 @@ namespace NewPaitnt
             this.Hide();
             Welcome welcome = new Welcome();
             welcome.ShowDialog();
+        }
+
+        public void RefreshPictureBox()
+        {
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
         }
     }
 }

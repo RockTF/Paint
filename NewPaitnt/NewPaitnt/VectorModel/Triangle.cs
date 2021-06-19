@@ -15,5 +15,10 @@ namespace NewPaitnt.VectorModel
             Points.Add(move);
             FigureName = FigureType.ToString() + _count++.ToString();
         }
+
+        public void ResetCounter()
+        {
+            _count = 0;
+        }
     }
 }

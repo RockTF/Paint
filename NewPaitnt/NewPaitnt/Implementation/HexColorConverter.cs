@@ -10,18 +10,32 @@ namespace NewPaitnt.Implementation
             Color color;
             if (hexColor.Length == 9)
             {
-                int A = Convert.ToInt32(hexColor.Substring(1, 2), 16);
-                int R = Convert.ToInt32(hexColor.Substring(3, 2), 16);
-                int G = Convert.ToInt32(hexColor.Substring(5, 2), 16);
-                int B = Convert.ToInt32(hexColor.Substring(7, 2), 16);
-                color = Color.FromArgb(A, R, G, B);
+                try
+                {
+                    int A = Convert.ToInt32(hexColor.Substring(1, 2), 16);
+                    int R = Convert.ToInt32(hexColor.Substring(3, 2), 16);
+                    int G = Convert.ToInt32(hexColor.Substring(5, 2), 16);
+                    int B = Convert.ToInt32(hexColor.Substring(7, 2), 16);
+                    color = Color.FromArgb(A, R, G, B);
+                }
+                catch
+                {
+                    throw new ArgumentException("Invalid hex color");
+                }
             }
             else if (hexColor.Length == 7)
             {
-                int R = Convert.ToInt32(hexColor.Substring(1, 2), 16);
-                int G = Convert.ToInt32(hexColor.Substring(3, 2), 16);
-                int B = Convert.ToInt32(hexColor.Substring(5, 2), 16);
-                color = Color.FromArgb(R, G, B);
+                try
+                {
+                    int R = Convert.ToInt32(hexColor.Substring(1, 2), 16);
+                    int G = Convert.ToInt32(hexColor.Substring(3, 2), 16);
+                    int B = Convert.ToInt32(hexColor.Substring(5, 2), 16);
+                    color = Color.FromArgb(R, G, B);
+                }
+                catch
+                {
+                    throw new ArgumentException("Invalid hex color");
+                }
             }
             else
             {

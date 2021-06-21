@@ -1,4 +1,5 @@
 using Moq;
+using NewPaitnt.Enum;
 using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
 using NewPaitnt.VectorModel;
@@ -20,17 +21,17 @@ namespace NUnitNewPaint
         {
             _settings = Settings.Initialize();
             _mouseHandler = MouseHandler.Initialize();
-            _penPreview = PenPreview.Initialize(_settings.Pen, 31, 31);
+            _penPreview = PenPreview.Initialize(_settings.PenColor, _settings.PenWidth, _settings.IsSmoothed, 31, 31);
             _storage = new Mock<IStorage>(MockBehavior.Strict);
             _mousehandler = new Mock<IMouseHandler>(MockBehavior.Strict);
-            _drawingEngine = new DrawingEngine(_settings, _mousehandler.Object, _penPreview, _storage.Object);
-            _drawable = new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode);
+            _drawingEngine = new DrawingEngine(_settings, _mousehandler.Object, _storage.Object);
+            _drawable = new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings);
         }
         [Test]
         public void CreateFigureTestStorage()
         {
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<IDrawable>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<IDrawable>()), Times.Once);
@@ -38,9 +39,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreateCurveTestStorage()
         {
-            _settings.SetMode(EFigure.Curve);
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.Curve);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<Curve>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<Curve>()), Times.Once);
@@ -48,9 +49,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreateLineTestStorage()
         {
-            _settings.SetMode(EFigure.Line);
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.Line);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<Line>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<Line>()), Times.Once);
@@ -58,9 +59,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreateEllipseTestStorage()
         {
-            _settings.SetMode(EFigure.Ellipse);
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.Ellipse);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<Ellipse>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<Ellipse>()), Times.Once);
@@ -68,9 +69,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreatePolygonTestStorage()
         {
-            _settings.SetMode(EFigure.Polygon);
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetClick()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.Polygon);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<Polygon>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<Polygon>()), Times.Once);
@@ -78,9 +79,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreateRoundedRectangleTestStorage()
         {
-            _settings.SetMode(EFigure.RoundedRectangle);
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.RoundedRectangle);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<RoundedRectangle>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<RoundedRectangle>()), Times.Once);
@@ -88,9 +89,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreateSmoothCurveTestStorage()
         {
-            _settings.SetMode(EFigure.SmoothCurve);
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetClick()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.SmoothCurve);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<SmoothCurve>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<SmoothCurve>()), Times.Once);
@@ -98,9 +99,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreateSmoothTriangleTestStorage()
         {
-            _settings.SetMode(EFigure.Triangle);
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.Triangle);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<Triangle>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<Triangle>()), Times.Once);
@@ -108,8 +109,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreateDotTestStorage()
         {
-            _settings.SetMode(EFigure.Dot);
-            _mousehandler.Setup(a => a.GetClick()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.Dot);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<Dot>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<Dot>()), Times.Once);
@@ -117,9 +119,9 @@ namespace NUnitNewPaint
         [Test]
         public void CreateRectangleTestStorage()
         {
-            _settings.SetMode(EFigure.Rectangle);
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _settings.SetMode(EMode.Rectangle);
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<Rectangle>()));
             _drawingEngine.CreateFigure();
             _storage.Verify(a => a.AddFigure(It.IsAny<Rectangle>()), Times.Once);
@@ -128,15 +130,15 @@ namespace NUnitNewPaint
         public void SelectFigureTestStorage()
         {
             _storage.Setup(a => a.GetCount()).Returns(1);
-            _storage.Setup(a => a.GetFigure(0)).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+            _storage.Setup(a => a.GetFigure(0)).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
             _drawingEngine.SelectFigure();
             _storage.Verify(a => a.GetCount(), Times.Once);
         }
         [Test]
         public void RedrawNewFigureTestStorage1()
         {
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _storage.Setup(a => a.GetLastFigure()).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(0, 0));
+            _storage.Setup(a => a.GetLastFigure()).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
             _drawingEngine.RedrawNewFigure();
             _storage.Verify(a => a.GetLastFigure(), Times.Once);
         }
@@ -159,7 +161,7 @@ namespace NUnitNewPaint
         {
             var t = new List<IDrawable>()
             {
-                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode)
+                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings)
             };
             _storage.Setup(a => a.GetAllFigures()).Returns(t);
             _drawingEngine.DrawAllFigures();
@@ -186,23 +188,23 @@ namespace NUnitNewPaint
         [Test]
         public void RedrawFigureTestMouseHandler()
         {
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _storage.Setup(a => a.GetLastFigure()).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode));
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _storage.Setup(a => a.GetLastFigure()).Returns(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
             _drawingEngine.RedrawFigure();
             _mousehandler.Verify(a => a.GetMove(), Times.Once);
         }
         [Test]
         public void MoveFigureTest1MouseHandler()
         {
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _drawingEngine.MoveFigure();
             _mousehandler.Verify(a => a.GetPreviousMove(), Times.Never);
         }
         [Test]
         public void MoveFigureTest2MouseHandler()
         {
-            _mousehandler.Setup(a => a.GetMove()).Returns(new System.Drawing.Point());
-            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new System.Drawing.Point());
+            _mousehandler.Setup(a => a.GetMove()).Returns(new Point2D(1, 1));
+            _mousehandler.Setup(a => a.GetPreviousMove()).Returns(new Point2D(0, 0));
             _storage.Setup(a => a.AddFigure(It.IsAny<Triangle>()));
             _drawingEngine.CreateFigure();
             _mousehandler.Verify(a => a.GetMove(), Times.Once);

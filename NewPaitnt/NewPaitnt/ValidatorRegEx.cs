@@ -53,7 +53,7 @@ namespace NewPaitnt
             {
                 return (false, "The password must contain more than 5 letters and be no longer than 30");
             }
-            else if (!Regex.IsMatch(password, @"^[A-Z0-9][a-z0-9'+\-_']*$"))
+            else if (!Regex.IsMatch(password, @"^(?=.*?[A-Z0-9][a-z0-9'+\-_']).{6,}$")) //"^[A-Z0-9][a-z0-9'+\-_']*$"
             {
                 return (false, "The input line can contain only Latin characters and cannot contain invalid characters");
             }

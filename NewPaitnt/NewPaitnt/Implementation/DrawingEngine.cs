@@ -136,8 +136,9 @@ namespace NewPaitnt.Implementation
 
         public void RedrawFigure()
         {
-            _storage.GetLastFigure().UpdatePoint(_mouseHandler.GetMove());
-            FigureGraphics.Draw(_storage.GetLastFigure());
+            IDrawable figure = _storage.GetLastFigure();
+            figure.UpdatePoint(_mouseHandler.GetMove());
+            FigureGraphics.Draw(figure);
         }
 
         private void DrawFigure()

@@ -3,8 +3,6 @@ using NewPaitnt.Interfaces;
 using NewPaitnt.VectorModel;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Reflection;
 namespace NUnitNewPaint
 {
@@ -83,7 +81,7 @@ namespace NUnitNewPaint
         {
             var listFigure = new List<IDrawable>()
             {
-                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode)
+                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings)
             };
             var listNames = new List<string>()
             {
@@ -105,7 +103,7 @@ namespace NUnitNewPaint
         [Test]
         public void RemoveFigureTest()
         {
-            Line line = new Line(new Point(0, 0), new Point(0, 0), new Pen(Color.Black), SmoothingMode.None);
+            Line line = new Line(new Point2D(0, 0), new Point2D(1, 1), _settings);
             int initialCount = 5;
             _storage.Clear();
             for (int i = 0; i < initialCount; i++)
@@ -120,7 +118,7 @@ namespace NUnitNewPaint
         {
             var listFigure = new List<IDrawable>()
             {
-                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode)
+                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings)
             };
             var fieldInfo = typeof(Storage).GetField("_figures", BindingFlags.NonPublic | BindingFlags.Instance);
             fieldInfo.SetValue(_storage, listFigure);

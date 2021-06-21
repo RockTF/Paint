@@ -1,6 +1,6 @@
 ﻿using NewPaitnt.Implementation;
 using NewPaitnt.Interfaces;
-using NewPaitnt.Vector;
+using NewPaitnt.VectorModel;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Drawing;
@@ -25,7 +25,7 @@ namespace NUnitNewPaint
         {
             var listFigure = new List<IDrawable>()
             {
-                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode)
+                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings)
             };
             var listNames = new List<string>()
             {
@@ -53,7 +53,7 @@ namespace NUnitNewPaint
         {
             var listBuffer = new List<IDrawable>()
             {
-                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings.Pen, _settings.SmoothingMode)
+                new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings)
             };
             var listNames = new List<string>()
             {

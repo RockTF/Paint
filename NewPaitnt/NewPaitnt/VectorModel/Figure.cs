@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NewPaitnt.VectorModel
 {
-    public abstract class Figure : IDrawable 
+    public abstract class Figure : IDrawableDTO, IDrawable
     {
         public EFigure FigureType { get; protected set; }
         public string FigureName { get; protected set; }

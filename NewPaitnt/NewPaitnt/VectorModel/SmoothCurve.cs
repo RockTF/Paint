@@ -15,5 +15,17 @@ namespace NewPaitnt.VectorModel
             Points.Add(move);
             FigureName = FigureType.ToString() + _count++.ToString();
         }
+
+        public SmoothCurve(List<Point2D> points, Settings settings) : base(settings)
+        {
+            FigureType = EFigure.SmoothCurve;
+            Points = points;
+            FigureName = FigureType.ToString() + _count++.ToString();
+        }
+
+        public void ResetCounter()
+        {
+            _count = 0;
+        }
     }
 }

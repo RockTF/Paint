@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using NewPaitnt.Enum;
 using NewPaitnt.Interfaces;
 using NewPaitnt.VectorModel;
 
@@ -9,14 +8,9 @@ namespace NewPaitnt.Implementation
     {
         private Settings _settings;
         private IMouseHandler _mouseHandler;
-        private IStorage _storage;              
+        private IStorage _storage;
+        private FigureFactory _figureFactory;
         
-        //public Bitmap Canvas;
-        //public Bitmap MainImage;
-        //private Bitmap Background;
-        //private Bitmap CurrentFigure;
-        //private Bitmap Foreground;
-        private Color BlackTransparrent = Color.FromArgb(0, 0, 0, 0);
         private ExoGraphics CanvasGraphics;
         private ExoGraphics MainGraphics;
         private ExoGraphics BackgroundGraphics;
@@ -30,6 +24,8 @@ namespace NewPaitnt.Implementation
             _settings = settings;
             _mouseHandler = mouseHandler;
             _storage = storage;
+
+            _figureFactory = new FigureFactory();
 
             NewBitmaps();
             MainGraphics.Clear(Color.White);
@@ -48,38 +44,7 @@ namespace NewPaitnt.Implementation
 
         public void CreateFigure()
         {
-            switch (_settings.Mode)
-            {
-                case EMode.Dot:
-                    _storage.AddFigure(new Dot(_mouseHandler.GetClick(), _settings));
-                    break;
-                case EMode.Line:
-                    _storage.AddFigure(new Line(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
-                    break;
-                case EMode.Rectangle:
-                    _storage.AddFigure(new VectorModel.Rectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
-                    break;
-                case EMode.Triangle:
-                    _storage.AddFigure(new Triangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
-                    break;
-                case EMode.Ellipse:
-                    _storage.AddFigure(new Ellipse(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
-                    break;
-                case EMode.RoundedRectangle:
-                    _storage.AddFigure(new RoundedRectangle(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
-                    break;
-                case EMode.Curve:
-                    _storage.AddFigure(new Curve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
-                    break;
-                case EMode.SmoothCurve:
-                    _storage.AddFigure(new SmoothCurve(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
-                    break;
-                case EMode.Polygon:
-                    _storage.AddFigure(new Polygon(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
-                    break;
-                default:
-                    break;
-            }
+            _storage.AddFigure(_figureFactory.CreateFigure(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
         }
 
         public void DrawAllFigures()

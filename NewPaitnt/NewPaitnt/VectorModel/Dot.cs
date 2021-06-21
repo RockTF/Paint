@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NewPaitnt.VectorModel
 {
-    public class Dot : IDrawable
+    public class Dot : IDrawableDTO, IDrawable
     {
         public EFigure FigureType { get; }
         public string FigureName { get; private set; }
@@ -34,6 +34,16 @@ namespace NewPaitnt.VectorModel
             IsSmoothed = settings.IsSmoothed;
         }
 
+        public Dot(List<Point2D> points, Settings settings)
+        {
+            FigureType = EFigure.Dot;
+            Update(settings);
+            Points = points;
+            PenDashStyle = EDashStyle.Solid;
+            BrushColor = "#00000000";
+            FigureName = FigureType.ToString() + _count++.ToString();
+        }
+
         public void Move(Point2D from, Point2D to)
         {
             for (int i = 0; i < Points.Count; i++)
@@ -54,6 +64,11 @@ namespace NewPaitnt.VectorModel
             PenColor = settings.PenColor;
             PenWidth = settings.PenWidth;
             IsSmoothed = settings.IsSmoothed;
+        }
+
+        public void ResetCounter()
+        {
+            _count = 0;
         }
     }
 }

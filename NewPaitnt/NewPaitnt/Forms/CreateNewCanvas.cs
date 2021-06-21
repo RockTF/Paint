@@ -8,12 +8,14 @@ namespace NewPaitnt
     {
         DrawingEngine drawingEngine;
         Settings settings;
+        MainPaint parrent;
 
-        public CreateNewCanvas()
+        public CreateNewCanvas(MainPaint paintUnicorn, DrawingEngine mainDrawingEngine)
         {
             InitializeComponent();
             settings = Settings.Initialize();
-            drawingEngine = new DrawingEngine(settings, MouseHandler.Initialize(), Storage.Initialize());
+            drawingEngine = mainDrawingEngine;
+            parrent = paintUnicorn;
         }
        
 
@@ -23,7 +25,8 @@ namespace NewPaitnt
             settings.SetImageHeight((int)NumericUpDownHeight.Value);
 
             drawingEngine.NewImageSize();
-
+            parrent.RefreshPictureBox();
+            // обновить и листбокс тоже
             this.Close();
         }
 

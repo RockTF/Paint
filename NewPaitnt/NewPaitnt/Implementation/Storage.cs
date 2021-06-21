@@ -14,6 +14,8 @@ namespace NewPaitnt.Implementation
         private List<IDrawable> _buffer;
         private List<string> _figuresNames;
 
+        private FigureFactory _figureFactory;
+
         private string _jsonText;
 
         private Storage()
@@ -21,6 +23,8 @@ namespace NewPaitnt.Implementation
             _figures = new List<IDrawable>();
             _figuresNames = new List<string>();
             _buffer = new List<IDrawable>();
+
+            _figureFactory = new FigureFactory();
         }
 
         public static Storage Initialize()
@@ -124,6 +128,26 @@ namespace NewPaitnt.Implementation
             _figures.Clear();
             _buffer.Clear();
             _figuresNames.Clear();
+        }
+
+        public string GetJson()
+        {
+            _jsonText = JsonConvert.SerializeObject(_figures);
+            return _jsonText;
+        }
+        public void SetJson(string json)
+        {
+            _jsonText = json;
+            List<IDrawableDTO> temp = JsonConvert.DeserializeObject<List<IDrawableDTO>>(_jsonText, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
+            Clear();
+            foreach (IDrawableDTO figure in temp)
+            {
+                _figures.Add(_figureFactory.ConvertToFigure(figure));
+                _figuresNames.Add(_figures[^1].FigureName);
+            }
         }
     }
 }

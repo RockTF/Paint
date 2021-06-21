@@ -1,18 +1,18 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using NewPaitnt.Interfaces;
+using System;
 using System.Windows.Forms;
 
 namespace NewPaitnt.Forms
 {
     public partial class Signup : Form
     {
-        Validator validator;
+        IRegistrationValidator validator;
 
         public Signup()
         {
             InitializeComponent();
 
-            validator = new Validator();
+            validator = new ValidatorRegEx();
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
@@ -40,28 +40,40 @@ namespace NewPaitnt.Forms
         {
             TextBoxFirstName.MaxLength = 30;
 
-            validator.Name = TextBoxFirstName.Text;
-            LabelErrorFirstName.Text = validator.InputValidation();
-            validator.InputValidation();
-
+            bool isValid;
+            string validationMessage;
+            (isValid, validationMessage) = validator.NameValidation(TextBoxFirstName.Text);
+            LabelErrorFirstName.Text = validationMessage;
         }
 
         private void TextBoxLastName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             TextBoxLastName.MaxLength = 30;
 
-            validator.Name = TextBoxLastName.Text;
-            LabelErrorLastName.Text = validator.InputValidation();
-            validator.InputValidation();
+            bool isValid;
+            string validationMessage;
+            (isValid, validationMessage) = validator.NameValidation(TextBoxLastName.Text);
+            LabelErrorLastName.Text = validationMessage;
         }
 
         private void TextBoxEmail_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             TextBoxEmail.MaxLength = 30;
 
-            validator.Name = TextBoxEmail.Text;
-            LabelErrorEmailName.Text = validator.InputValidationEmail();
-            validator.InputValidationEmail();
+            bool isValid;
+            string validationMessage;
+            (isValid, validationMessage) = validator.EmailValidation(TextBoxEmail.Text);
+            LabelErrorEmailName.Text = validationMessage;
+        }
+
+        private void TextBoxPassword_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TextBoxPassword.MaxLength = 30;
+
+            bool isValid;
+            string validationMessage;
+            (isValid, validationMessage) = validator.PasswordValidation(TextBoxEmail.Text);
+            //LabelErrorEmailName.Text = validationMessage;
         }
     }
 }

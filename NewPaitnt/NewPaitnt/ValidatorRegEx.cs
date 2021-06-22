@@ -7,7 +7,7 @@ namespace NewPaitnt
     public class ValidatorRegEx : IRegistrationValidator
     {
         
-            public (bool, string) NameValidation(string name)
+        public (bool, string) NameValidation(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -19,7 +19,7 @@ namespace NewPaitnt
             }
             else if (!Regex.IsMatch(name, @"^[A-Z][a-z]*$"))
             {
-                return (false, "The input line can contain only Latin characters and cannot contain invalid characters");
+                return (false, "The input line must begin with a capital letter, contain only Latin characters");
             }
             else
             {
@@ -53,7 +53,7 @@ namespace NewPaitnt
             {
                 return (false, "The password must contain more than 5 letters and be no longer than 30");
             }
-            else if (!Regex.IsMatch(password, @"^(?=.*?[A-Z0-9][a-z0-9'+\-_']).{6,}$")) //"^[A-Z0-9][a-z0-9'+\-_']*$"
+            else if (!Regex.IsMatch(password, @"^(?=.*?[A-Z0-9][a-z0-9'+\-_']).{6,}$")) 
             {
                 return (false, "The input line can contain only Latin characters and cannot contain invalid characters");
             }

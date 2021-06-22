@@ -451,7 +451,8 @@ namespace NewPaitnt
                 var result = MessageBox.Show("Save your changes before exiting?", "Attention", MessageBoxButtons.YesNoCancel);
                 switch (result)
                 {
-                    case DialogResult.No: break;
+                    case DialogResult.No: 
+                        break;
                     case DialogResult.Yes: MenuSave_Click(sender, e); break;
                     case DialogResult.Cancel: return;
                 }

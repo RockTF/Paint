@@ -46,21 +46,22 @@ namespace NewPaitnt.Forms
             this.label1 = new System.Windows.Forms.Label();
             this.LabelErrorLastName = new System.Windows.Forms.Label();
             this.LabelErrorEmailName = new System.Windows.Forms.Label();
+            this.LabelErrorPassword = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LabelFirstName
             // 
             this.LabelFirstName.AutoSize = true;
             this.LabelFirstName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelFirstName.Location = new System.Drawing.Point(47, 38);
+            this.LabelFirstName.Location = new System.Drawing.Point(56, 38);
             this.LabelFirstName.Name = "LabelFirstName";
-            this.LabelFirstName.Size = new System.Drawing.Size(88, 21);
+            this.LabelFirstName.Size = new System.Drawing.Size(86, 21);
             this.LabelFirstName.TabIndex = 2;
             this.LabelFirstName.Text = "First Name";
             // 
             // TextBoxFirstName
             // 
-            this.TextBoxFirstName.Location = new System.Drawing.Point(50, 66);
+            this.TextBoxFirstName.Location = new System.Drawing.Point(59, 66);
             this.TextBoxFirstName.Name = "TextBoxFirstName";
             this.TextBoxFirstName.Size = new System.Drawing.Size(308, 23);
             this.TextBoxFirstName.TabIndex = 3;
@@ -68,7 +69,7 @@ namespace NewPaitnt.Forms
             // 
             // TextBoxLastName
             // 
-            this.TextBoxLastName.Location = new System.Drawing.Point(49, 144);
+            this.TextBoxLastName.Location = new System.Drawing.Point(58, 144);
             this.TextBoxLastName.Name = "TextBoxLastName";
             this.TextBoxLastName.Size = new System.Drawing.Size(308, 23);
             this.TextBoxLastName.TabIndex = 5;
@@ -78,15 +79,15 @@ namespace NewPaitnt.Forms
             // 
             this.LabelLastName.AutoSize = true;
             this.LabelLastName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelLastName.Location = new System.Drawing.Point(46, 116);
+            this.LabelLastName.Location = new System.Drawing.Point(55, 116);
             this.LabelLastName.Name = "LabelLastName";
-            this.LabelLastName.Size = new System.Drawing.Size(86, 21);
+            this.LabelLastName.Size = new System.Drawing.Size(84, 21);
             this.LabelLastName.TabIndex = 4;
             this.LabelLastName.Text = "Last Name";
             // 
             // TextBoxPassword
             // 
-            this.TextBoxPassword.Location = new System.Drawing.Point(48, 298);
+            this.TextBoxPassword.Location = new System.Drawing.Point(57, 298);
             this.TextBoxPassword.Name = "TextBoxPassword";
             this.TextBoxPassword.Size = new System.Drawing.Size(308, 23);
             this.TextBoxPassword.TabIndex = 9;
@@ -96,15 +97,15 @@ namespace NewPaitnt.Forms
             // 
             this.LabelPassword.AutoSize = true;
             this.LabelPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelPassword.Location = new System.Drawing.Point(45, 270);
+            this.LabelPassword.Location = new System.Drawing.Point(54, 270);
             this.LabelPassword.Name = "LabelPassword";
-            this.LabelPassword.Size = new System.Drawing.Size(79, 21);
+            this.LabelPassword.Size = new System.Drawing.Size(76, 21);
             this.LabelPassword.TabIndex = 8;
             this.LabelPassword.Text = "Password";
             // 
             // TextBoxEmail
             // 
-            this.TextBoxEmail.Location = new System.Drawing.Point(49, 220);
+            this.TextBoxEmail.Location = new System.Drawing.Point(58, 220);
             this.TextBoxEmail.Name = "TextBoxEmail";
             this.TextBoxEmail.Size = new System.Drawing.Size(308, 23);
             this.TextBoxEmail.TabIndex = 7;
@@ -114,7 +115,7 @@ namespace NewPaitnt.Forms
             // 
             this.LabelEmail.AutoSize = true;
             this.LabelEmail.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelEmail.Location = new System.Drawing.Point(46, 192);
+            this.LabelEmail.Location = new System.Drawing.Point(55, 192);
             this.LabelEmail.Name = "LabelEmail";
             this.LabelEmail.Size = new System.Drawing.Size(48, 21);
             this.LabelEmail.TabIndex = 6;
@@ -125,7 +126,7 @@ namespace NewPaitnt.Forms
             this.BtnBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.BtnBack.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnBack.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BtnBack.Location = new System.Drawing.Point(63, 439);
+            this.BtnBack.Location = new System.Drawing.Point(72, 444);
             this.BtnBack.Name = "BtnBack";
             this.BtnBack.Size = new System.Drawing.Size(125, 45);
             this.BtnBack.TabIndex = 11;
@@ -138,7 +139,7 @@ namespace NewPaitnt.Forms
             this.BtnSignup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.BtnSignup.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnSignup.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BtnSignup.Location = new System.Drawing.Point(214, 439);
+            this.BtnSignup.Location = new System.Drawing.Point(223, 444);
             this.BtnSignup.Name = "BtnSignup";
             this.BtnSignup.Size = new System.Drawing.Size(125, 45);
             this.BtnSignup.TabIndex = 10;
@@ -148,7 +149,7 @@ namespace NewPaitnt.Forms
             // 
             // TextBoxReapeatPassword
             // 
-            this.TextBoxReapeatPassword.Location = new System.Drawing.Point(48, 375);
+            this.TextBoxReapeatPassword.Location = new System.Drawing.Point(57, 375);
             this.TextBoxReapeatPassword.Name = "TextBoxReapeatPassword";
             this.TextBoxReapeatPassword.Size = new System.Drawing.Size(308, 23);
             this.TextBoxReapeatPassword.TabIndex = 13;
@@ -157,9 +158,9 @@ namespace NewPaitnt.Forms
             // 
             this.LabelRepeatPassword.AutoSize = true;
             this.LabelRepeatPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelRepeatPassword.Location = new System.Drawing.Point(45, 347);
+            this.LabelRepeatPassword.Location = new System.Drawing.Point(54, 347);
             this.LabelRepeatPassword.Name = "LabelRepeatPassword";
-            this.LabelRepeatPassword.Size = new System.Drawing.Size(135, 21);
+            this.LabelRepeatPassword.Size = new System.Drawing.Size(128, 21);
             this.LabelRepeatPassword.TabIndex = 12;
             this.LabelRepeatPassword.Text = "Repeat Password";
             // 
@@ -168,7 +169,7 @@ namespace NewPaitnt.Forms
             this.LabelErrorFirstName.AutoSize = true;
             this.LabelErrorFirstName.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelErrorFirstName.ForeColor = System.Drawing.Color.Red;
-            this.LabelErrorFirstName.Location = new System.Drawing.Point(48, 95);
+            this.LabelErrorFirstName.Location = new System.Drawing.Point(60, 95);
             this.LabelErrorFirstName.Name = "LabelErrorFirstName";
             this.LabelErrorFirstName.Size = new System.Drawing.Size(0, 12);
             this.LabelErrorFirstName.TabIndex = 14;
@@ -188,7 +189,7 @@ namespace NewPaitnt.Forms
             this.LabelErrorLastName.AutoSize = true;
             this.LabelErrorLastName.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelErrorLastName.ForeColor = System.Drawing.Color.Red;
-            this.LabelErrorLastName.Location = new System.Drawing.Point(48, 170);
+            this.LabelErrorLastName.Location = new System.Drawing.Point(59, 172);
             this.LabelErrorLastName.Name = "LabelErrorLastName";
             this.LabelErrorLastName.Size = new System.Drawing.Size(0, 12);
             this.LabelErrorLastName.TabIndex = 16;
@@ -198,17 +199,28 @@ namespace NewPaitnt.Forms
             this.LabelErrorEmailName.AutoSize = true;
             this.LabelErrorEmailName.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelErrorEmailName.ForeColor = System.Drawing.Color.Red;
-            this.LabelErrorEmailName.Location = new System.Drawing.Point(46, 249);
+            this.LabelErrorEmailName.Location = new System.Drawing.Point(60, 249);
             this.LabelErrorEmailName.Name = "LabelErrorEmailName";
             this.LabelErrorEmailName.Size = new System.Drawing.Size(0, 12);
             this.LabelErrorEmailName.TabIndex = 17;
+            // 
+            // LabelErrorPassword
+            // 
+            this.LabelErrorPassword.AutoSize = true;
+            this.LabelErrorPassword.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LabelErrorPassword.ForeColor = System.Drawing.Color.Red;
+            this.LabelErrorPassword.Location = new System.Drawing.Point(60, 327);
+            this.LabelErrorPassword.Name = "LabelErrorPassword";
+            this.LabelErrorPassword.Size = new System.Drawing.Size(0, 12);
+            this.LabelErrorPassword.TabIndex = 18;
             // 
             // Signup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(402, 524);
+            this.ClientSize = new System.Drawing.Size(424, 535);
+            this.Controls.Add(this.LabelErrorPassword);
             this.Controls.Add(this.LabelErrorEmailName);
             this.Controls.Add(this.LabelErrorLastName);
             this.Controls.Add(this.label1);
@@ -252,5 +264,6 @@ namespace NewPaitnt.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LabelErrorLastName;
         private System.Windows.Forms.Label LabelErrorEmailName;
+        private System.Windows.Forms.Label LabelErrorPassword;
     }
 }

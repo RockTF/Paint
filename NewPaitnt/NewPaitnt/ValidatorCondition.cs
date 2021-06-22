@@ -32,12 +32,13 @@ namespace NewPaitnt
                     }
                     else
                     {
-                        return (false, "The input line can contain only Latin characters and cannot contain invalid characters");
+                        return (false, "The input line must begin with a capital letter, contain only Latin characters");
                     }
                 }
             }
             return (true, "");
         }
+
         public (bool, string) PasswordValidation(string password)
         {
             char[] input = password.ToCharArray();
@@ -71,6 +72,7 @@ namespace NewPaitnt
             }
             return (true, "");
         }
+
         public (bool, string) EmailValidation(string email)
         {
             char[] input = email.ToCharArray();

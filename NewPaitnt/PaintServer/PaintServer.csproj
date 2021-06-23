@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccess\" />
+    <Compile Remove="DataAccess\**" />
+    <Content Remove="DataAccess\**" />
+    <EmbeddedResource Remove="DataAccess\**" />
+    <None Remove="DataAccess\**" />
   </ItemGroup>
 
   <ItemGroup>

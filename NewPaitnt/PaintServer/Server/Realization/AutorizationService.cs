@@ -19,7 +19,7 @@ namespace PaintServer.Server.Realization
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM dbo.PaintUsers", connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM dbo.Persons", connection))
                 {
                     var reader = command.ExecuteReader();
                     while (reader.Read())

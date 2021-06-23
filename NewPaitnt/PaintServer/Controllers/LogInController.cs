@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PaintServer.DTO;
+using PaintServer.Server.Realization;
 using PaintServer.ServerRequest;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,23 @@ using System.Threading.Tasks;
 
 namespace PaintServer.Controllers
 {
-    [Route("api")]
+    [Route("api/login")]
     [ApiController]
     public class LogInController : ControllerBase
     {
         [HttpPost]
-        [Route("login")]
+        //[Route("login")]
         public IActionResult Login([FromBody] UserAutorizationData userAutorizationData)
         {
+            //Persons autorizationResultData = new Login().AutorizeUser(userAutorizationData);
 
-            Persons autorizationResultData = new Login().AutorizeUser(userAutorizationData);
+            AutorizationService autorizationService = new AutorizationService();
 
-            return Ok(autorizationResultData);
+            Persons person = autorizationService.login(userAutorizationData.Login, userAutorizationData.Password); //переделать на обьект параметры метода
+
+            int userId = person.Id;
+
+            return Ok(userId);
         }
     }
  

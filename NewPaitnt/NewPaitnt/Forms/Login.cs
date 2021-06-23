@@ -1,4 +1,5 @@
 ﻿using NewPaitnt.Interfaces;
+using NewPaitnt.SQLWebRequester;
 using System;
 using System.Windows.Forms;
 
@@ -24,9 +25,14 @@ namespace NewPaitnt.Forms
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            MainPaint mainPaint = new MainPaint();
-            mainPaint.Show();
+            Authorization authorization = new Authorization();
+            (bool isAuthorized, int UserId) = authorization.Authorize(TextBoxEmail.Text, TextBoxPassword.Text);
+            if (isAuthorized)
+            {
+                this.Hide();
+                MainPaint mainPaint = new MainPaint();
+                mainPaint.Show();
+            }
         }
 
         private void BtnForgot_Click(object sender, EventArgs e)

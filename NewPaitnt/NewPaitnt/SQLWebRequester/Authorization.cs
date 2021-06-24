@@ -29,6 +29,7 @@ namespace NewPaitnt.SQLWebRequester
             var response = restClient.Execute(request);
 
             httpStatusCode = response.StatusCode;
+
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 try

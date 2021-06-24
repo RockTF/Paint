@@ -19,15 +19,19 @@ namespace PaintServer.Controllers
     [ApiController]
     public class LogInController : ControllerBase
     {
+        private AutorizationService _autorization;
+        public LogInController(AutorizationService autorization)
+        {
+            _autorization = autorization;
+        }
+
         [HttpPost]
         //[Route("login")]
         public IActionResult Login([FromBody] UserAutorizationData userAutorizationData)
         {
             //Persons autorizationResultData = new Login().AutorizeUser(userAutorizationData);
 
-            AutorizationService autorizationService = new AutorizationService();
-
-            Persons person = autorizationService.login(userAutorizationData.Login, userAutorizationData.Password); //переделать на обьект параметры метода
+            Persons person = _autorization.login(userAutorizationData.Login, userAutorizationData.Password); //переделать на обьект параметры метода
 
             int userId = person.Id;
 

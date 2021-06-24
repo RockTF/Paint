@@ -1,4 +1,6 @@
-﻿using NewPaitnt.Interfaces;
+﻿using NewPaitnt.Implementation;
+using NewPaitnt.Interfaces;
+using NewPaitnt.SQLWebRequester;
 using System;
 using System.Windows.Forms;
 
@@ -7,11 +9,12 @@ namespace NewPaitnt.Forms
     public partial class Signup : Form
     {
         IRegistrationValidator validator;
+        private Settings _settings;
 
         public Signup()
         {
             InitializeComponent();
-
+            _settings = Settings.Initialize();
             validator = new ValidatorRegEx();
         }
 
@@ -26,13 +29,19 @@ namespace NewPaitnt.Forms
         {
             if (TextBoxPassword.Text != TextBoxReapeatPassword.Text)
             {
-                MessageBox.Show("Sorry, but the first password does not match the second");
+                MessageBox.Show("Sorry, but the passwords does not match");
             }
             else 
             {
-                this.Hide();
-                MainPaint mainPaint = new MainPaint();
-                mainPaint.Show();
+                Registration registration = new Registration();
+                (bool isRegistered, int UserId) = registration.Register(TextBoxFirstName.Text, TextBoxLastName.Text, TextBoxEmail.Text, TextBoxPassword.Text);
+                if (isRegistered)
+                {
+                    _settings.SetUserID(UserId);
+                    this.Hide();
+                    MainPaint mainPaint = new MainPaint();
+                    mainPaint.Show();
+                }
             }
         }
 

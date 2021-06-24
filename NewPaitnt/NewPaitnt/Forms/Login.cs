@@ -1,4 +1,5 @@
-﻿using NewPaitnt.Interfaces;
+﻿using NewPaitnt.Implementation;
+using NewPaitnt.Interfaces;
 using NewPaitnt.SQLWebRequester;
 using System;
 using System.Windows.Forms;
@@ -8,11 +9,12 @@ namespace NewPaitnt.Forms
     public partial class Login : Form
     {
         IRegistrationValidator validator;
+        private Settings _settings;
 
         public Login()
         {
             InitializeComponent();
-
+            _settings = Settings.Initialize();
             validator = new ValidatorRegEx();
         }
 
@@ -29,6 +31,7 @@ namespace NewPaitnt.Forms
             (bool isAuthorized, int UserId) = authorization.Authorize(TextBoxEmail.Text, TextBoxPassword.Text);
             if (isAuthorized)
             {
+                _settings.SetUserID(UserId);
                 this.Hide();
                 MainPaint mainPaint = new MainPaint();
                 mainPaint.Show();

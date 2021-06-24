@@ -16,6 +16,7 @@ namespace NewPaitnt.Implementation
         public string BrushColor { get; private set; }
         public bool IsSmoothed { get; private set; }
         public int numberOfPolygonApexes { get; private set; }
+        public int UserId { get; private set; }
 
         private Settings()
         {
@@ -80,6 +81,11 @@ namespace NewPaitnt.Implementation
             numberOfPolygonApexes = number;
         }
 
+        public void SetUserID(int id)
+        {
+            UserId = id;
+        }
+
         public void Reset()
         {
             ImageWidth = SettingsConstants.DefaultImageWidth;
@@ -91,6 +97,7 @@ namespace NewPaitnt.Implementation
             BrushColor = SettingsConstants.DefaultBrushColor;
             IsSmoothed = SettingsConstants.DefaultSmooth;
             numberOfPolygonApexes = SettingsConstants.DefaultNumberOfPolygonApexes;
+            UserId = -1;
         }
     }
 }

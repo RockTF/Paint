@@ -58,13 +58,16 @@ namespace PaintServer.Server.Realization
             }
         }
 
-        public RegistrationDTO register(string login, string password, string Name, string lastName, int admin)
+        public Persons register(string login, string password, string Name, string lastName)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            SqlConnection connection = new SqlConnection(_connectionString);
+            connection.Open();
+            
             {
-                var queryString = $"INSERT INTO dbo.PaintUsers (Name, Lastname, Email, Password, Admin) VALUES ('{Name}','{lastName}','{login}','{password}',{admin})";
+                var queryString = $"INSERT INTO dbo.Persons (Name, Lastname, Email, Password, 2) VALUES ('{Name}','{lastName}','{login}','{password}')";
                 connection.Open();
-                using (SqlCommand command = new SqlCommand(queryString, connection))
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.ExecuteNonQuery();
                 {
                     try
                     {

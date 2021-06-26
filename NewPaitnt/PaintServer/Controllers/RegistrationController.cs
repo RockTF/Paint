@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PaintServer.DTO;
-using PaintServer.Server.Realization;
+﻿using DAL;
+using DAL.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PaintServer.Controllers
 {
@@ -12,24 +9,47 @@ namespace PaintServer.Controllers
     [ApiController]
     public class RegistrationController : ControllerBase
     {
+        private IDAL _dal;
+
         [HttpPost]
-        public IActionResult Register([FromBody] UserRegistrationData userRegistrationData)
+        public IActionResult Register([FromBody] DTO.UserRegistrationData userRegistrationData)
         {
             //Persons autorizationResultData = new Login().AutorizeUser(userAutorizationData);
 
-            AutorizationService autorizationService = new AutorizationService();
+            //AutorizationService autorizationService = new AutorizationService();
 
-            //1. Проверить в базе по эмейлу, если есть, вернуть соотв. статус-код
-            //2. Если нет, то добавить его в базу и добавить дату регистрации
-            //3. Достать у вновь созданого юзера его ИД и вернуть в качестве ответа
+            //RegistrationDTO registration = autorizationService.register(userRegistrationData.Login, userRegistrationData.Password, userRegistrationData.Name, userRegistrationData.LastName); //переделать на обьект параметры метода
 
+            if (userRegistrationData == null)
+            {
+                return BadRequest();
+            }
 
+            PersonModel person = new PersonModel()
+            {
+                Name = userRegistrationData.Name,
+                Lastname = userRegistrationData.LastName,
+                Email = userRegistrationData.Login,
+                Password = userRegistrationData.Password,
+                Admin = false,
+                RegisterDate = DateTime.Now,
+                LastVisitDate = DateTime.Now
+            };
 
-            Persons person = autorizationService.register(userRegistrationData.Login, userRegistrationData.Password, userRegistrationData.Name, userRegistrationData.LastName); //переделать на обьект параметры метода
-
-            int userId = person.Id;
-
-            return Ok(userId);
+            _dal.Create(person);
+            //return CreatedAtRoute("GetTodoItem", new { id = person.Id }, userRegistrationData);
+            return Ok();
         }
+
+        //public static bool ChekForus(string username, string connectionString)
+        //{
+        //    using (MySqlConnection connection = new MySqlConnection(connectionString))
+        //    {
+        //        MySqlCommand sqlCom = new MySqlCommand("SELECT * FROM dbo.Persons WHERE Name = @Name", connection);
+        //        sqlCom.Parameters.AddWithValue("@Name", username);
+        //        connection.Open();
+        //        return 1 == sqlCom.ExecuteNonQuery();
+        //    }
+        //}
     }
 }

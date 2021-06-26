@@ -58,7 +58,7 @@ namespace PaintServer.Server.Realization
             }
         }
 
-        public Persons register(string login, string password, string Name, string lastName)
+        public RegistrationDTO register(string login, string password, string Name, string lastName)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
             connection.Open();

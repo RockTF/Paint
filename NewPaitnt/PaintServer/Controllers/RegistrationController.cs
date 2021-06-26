@@ -7,9 +7,14 @@ namespace PaintServer.Controllers
 {
     [Route("api/signup")]
     [ApiController]
-    public class RegistrationController : ControllerBase
+    public class RegistrationController : Controller
     {
         private IDAL _dal;
+
+        public RegistrationController(IDAL dal)
+        {
+            _dal = dal;
+        }
 
         [HttpPost]
         public IActionResult Register([FromBody] DTO.UserRegistrationData userRegistrationData)

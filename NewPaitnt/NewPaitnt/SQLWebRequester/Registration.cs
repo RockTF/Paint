@@ -17,7 +17,7 @@ namespace NewPaitnt.SQLWebRequester
 
         public (bool, int) Register(string name, string lastname, string login, string password)
         {
-            var request = new RestRequest { Resource = $"http://localhost:9090/api/login", Method = Method.POST };
+            var request = new RestRequest { Resource = $"http://localhost:9090/api/signup", Method = Method.POST };
 
             UserRegistrationData userRegistrationData = new UserRegistrationData();
             userRegistrationData.Name = name;

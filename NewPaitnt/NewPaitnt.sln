@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitNewPaint", "NUnitNewPa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaintServer", "PaintServer\PaintServer.csproj", "{0E6C2524-FF46-4F1B-A3B6-689586FD0559}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{8DB34500-80C3-4ECA-8D55-3F0A1588225F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{8DB34500-80C3-4ECA-8D55-3F0A1588225F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

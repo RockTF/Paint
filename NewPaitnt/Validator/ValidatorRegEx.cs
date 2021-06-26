@@ -1,8 +1,7 @@
-﻿using NewPaitnt.Interfaces;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 
-namespace NewPaitnt
+namespace Validator
 {
     public class ValidatorRegEx : IRegistrationValidator
     {

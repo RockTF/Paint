@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PaintServer.DTO;
-using PaintServer.Server.Realization;
+﻿using DAL;
+using DAL.Models;
+using DTO;
+using Microsoft.AspNetCore.Mvc;
+using System;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,19 +13,61 @@ namespace PaintServer.Controllers
     [ApiController]
     public class LogInController : ControllerBase
     {
+       
+        private IDAL _dal;
+
+        public LogInController(IDAL dal)
+        {
+            _dal = dal;
+        }
+
         [HttpPost]
-        //[Route("login")]
         public IActionResult Login([FromBody] UserAutorizationData userAutorizationData)
         {
-            //Persons autorizationResultData = new Login().AutorizeUser(userAutorizationData);
 
-            AutorizationService autorizationService = new AutorizationService();
+            if (userAutorizationData == null)
+            {
+                return BadRequest();
+            }
 
-            Persons person = autorizationService.login(userAutorizationData.Login, userAutorizationData.Password); //переделать на обьект параметры метода
+            PersonModel personModel = _dal.Get(userAutorizationData.Login);
 
-            int userId = person.Id;
+            if (personModel == null)
+            {
+                throw new Exception("Not found");
+            }
 
-            return Ok(userId);
+            if (personModel.Password == userAutorizationData.Password)
+            {
+                return Ok(_dal.Get(userAutorizationData.Login).Id);
+            }
+            else
+            {
+                throw new Exception("Password not validation");
+            }
+           
+        }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] UserAutorizationData userAutorizationData)
+        {
+
+            if (userAutorizationData == null)
+            {
+                return BadRequest();
+            }
+
+            PersonModel personModel = _dal.Get(userAutorizationData.Login);
+
+            if (personModel == null)
+            {
+                throw new Exception("Not found");
+            }
+            else 
+            {
+                _dal.UpdatePassword(userAutorizationData);
+                return Ok(personModel.Id);
+            }
         }
     }
  

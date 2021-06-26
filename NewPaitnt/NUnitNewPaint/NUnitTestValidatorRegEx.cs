@@ -1,6 +1,7 @@
 ﻿using NewPaitnt;
 using NUnit.Framework;
 using NewPaitnt.Interfaces;
+using Validator;
 
 namespace NUnitNewPaint
 {

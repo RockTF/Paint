@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using DTO;
 using System.Collections.Generic;
 
 namespace DAL
@@ -7,8 +8,9 @@ namespace DAL
     {
         IEnumerable<PersonModel> Get();
         PersonModel Get(int id);
-        void Create(PersonModel item);
-        void Update(PersonModel item);
+        PersonModel Get(string email);
+        void Create(UserRegistrationData userRegistrationData);
+        void UpdatePassword(UserAutorizationData item);
         PersonModel Delete(int id);
     }
 }

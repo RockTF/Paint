@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaintServer", "PaintServer\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{8DB34500-80C3-4ECA-8D55-3F0A1588225F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{4CBF5F70-BC62-4280-8896-D606E48E7198}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validator", "Validator\Validator.csproj", "{B9C9639A-C895-4CCD-AD69-11CA114F0CA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{8DB34500-80C3-4ECA-8D55-3F0A1588225F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DB34500-80C3-4ECA-8D55-3F0A1588225F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DB34500-80C3-4ECA-8D55-3F0A1588225F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CBF5F70-BC62-4280-8896-D606E48E7198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBF5F70-BC62-4280-8896-D606E48E7198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBF5F70-BC62-4280-8896-D606E48E7198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBF5F70-BC62-4280-8896-D606E48E7198}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9C9639A-C895-4CCD-AD69-11CA114F0CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9C9639A-C895-4CCD-AD69-11CA114F0CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9C9639A-C895-4CCD-AD69-11CA114F0CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9C9639A-C895-4CCD-AD69-11CA114F0CA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

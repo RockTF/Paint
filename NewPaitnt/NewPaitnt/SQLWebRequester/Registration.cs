@@ -1,11 +1,7 @@
-﻿using NewPaitnt.DTO;
+﻿using DTO;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NewPaitnt.SQLWebRequester
 {
@@ -15,11 +11,11 @@ namespace NewPaitnt.SQLWebRequester
 
         public HttpStatusCode httpStatusCode { get; private set; }
 
-        public (bool, int) Register(string name, string lastname, string login, string password)
+        public int? Register(string name, string lastname, string login, string password)
         {
             var request = new RestRequest { Resource = $"http://localhost:9090/api/signup", Method = Method.POST };
-
             UserRegistrationData userRegistrationData = new UserRegistrationData();
+
             userRegistrationData.Name = name;
             userRegistrationData.LastName = lastname;
             userRegistrationData.Login = login;
@@ -29,26 +25,24 @@ namespace NewPaitnt.SQLWebRequester
 
             RestClient restClient = new RestClient();
             var response = restClient.Execute(request);
-
             httpStatusCode = response.StatusCode;
+
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 try
                 {
                     UserId = Int32.Parse(response.Content);
-                    return (true, UserId);
+                    return UserId;
                 }
                 catch
                 {
-                    UserId = -1;
-                    return (false, UserId);
+                    return null;
                 }
 
             }
             else
             {
-                UserId = -1;
-                return (false, UserId);
+                return null;
             }
         }
     }

@@ -1,6 +1,5 @@
-﻿using NewPaitnt;
-using NUnit.Framework;
-using NewPaitnt.Interfaces;
+﻿using NUnit.Framework;
+using Validator;
 
 namespace NUnitNewPaint
 {

@@ -1,6 +1,8 @@
 ﻿using DAL.Models;
+using DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL
 {
@@ -14,10 +16,29 @@ namespace DAL
             Context = context;
         }
 
-        public void Create(PersonModel item)
+        public void Create(UserRegistrationData userRegistrationData)
         {
-            Context.Persons.Add(item);
-            Context.SaveChanges();
+
+            if (Get(userRegistrationData.Login) == null)
+            {
+                PersonModel person = new PersonModel()
+                {
+                    Name = userRegistrationData.Name,
+                    Lastname = userRegistrationData.LastName,
+                    Email = userRegistrationData.Login,
+                    Password = userRegistrationData.Password,
+                    Admin = false,
+                    RegisterDate = DateTime.Now,
+                    LastVisitDate = DateTime.Now
+                };
+
+                Context.Persons.Add(person);
+                Context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("User exist!");
+            }
         }
 
         public PersonModel Delete(int id)
@@ -43,10 +64,26 @@ namespace DAL
             return Context.Persons.Find(id);
         }
 
-        public void Update(PersonModel item)
+        public PersonModel Get(string email)
         {
-            Context.Persons.Update(item);
-            Context.SaveChanges();
+            var person = Context.Persons.Where(s => s.Email == email).FirstOrDefault<PersonModel>();
+            return person;
+        }
+
+        public void UpdatePassword(UserAutorizationData item)
+        {
+            PersonModel personModel = Get(item.Login);
+
+            if (personModel != null)
+            {
+                personModel.Password = item.Password;
+                Context.Persons.Update(personModel);
+                Context.SaveChanges();
+            }
+            else 
+            {
+                throw new Exception("User not found(");
+            }
         }
     }
 }

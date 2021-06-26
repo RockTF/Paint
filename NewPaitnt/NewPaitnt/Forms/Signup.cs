@@ -1,8 +1,8 @@
 ﻿using NewPaitnt.Implementation;
-using NewPaitnt.Interfaces;
 using NewPaitnt.SQLWebRequester;
 using System;
 using System.Windows.Forms;
+using Validator;
 
 namespace NewPaitnt.Forms
 {
@@ -34,8 +34,9 @@ namespace NewPaitnt.Forms
             else 
             {
                 Registration registration = new Registration();
-                (bool isRegistered, int UserId) = registration.Register(TextBoxFirstName.Text, TextBoxLastName.Text, TextBoxEmail.Text, TextBoxPassword.Text);
-                if (isRegistered)
+                int? UserId = registration.Register(TextBoxFirstName.Text, TextBoxLastName.Text, TextBoxEmail.Text, TextBoxPassword.Text);
+
+                if (UserId != null)
                 {
                     _settings.SetUserID(UserId);
                     this.Hide();

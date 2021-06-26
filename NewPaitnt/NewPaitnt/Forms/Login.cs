@@ -1,8 +1,8 @@
 ﻿using NewPaitnt.Implementation;
-using NewPaitnt.Interfaces;
 using NewPaitnt.SQLWebRequester;
 using System;
 using System.Windows.Forms;
+using Validator;
 
 namespace NewPaitnt.Forms
 {
@@ -28,8 +28,8 @@ namespace NewPaitnt.Forms
         private void BtnLogin_Click(object sender, EventArgs e)
         {
             Authorization authorization = new Authorization();
-            (bool isAuthorized, int UserId) = authorization.Authorize(TextBoxEmail.Text, TextBoxPassword.Text);
-            if (isAuthorized)
+            int? UserId = authorization.Authorize(TextBoxEmail.Text, TextBoxPassword.Text);
+            if (UserId != null)
             {
                 _settings.SetUserID(UserId);
                 this.Hide();
@@ -51,7 +51,7 @@ namespace NewPaitnt.Forms
 
             bool isValid;
             string validationMessage;
-            (isValid, validationMessage) = validator.NameValidation(TextBoxEmail.Text);
+            (isValid, validationMessage) = validator.EmailValidation(TextBoxEmail.Text);
             LabelErrorEmailName.Text = validationMessage;
         }
 

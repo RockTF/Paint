@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NewPaitnt.Implementation;
+using NewPaitnt.SQLWebRequester;
+using System;
 using System.Windows.Forms;
 
 namespace NewPaitnt.Forms
 {
     public partial class ChangePassword : Form
     {
+        private Settings _settings;
+
         public ChangePassword()
         {
             InitializeComponent();
+            _settings = Settings.Initialize();
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
@@ -26,9 +24,15 @@ namespace NewPaitnt.Forms
 
         private void BtnChange_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Login login = new Login();
-            login.Show();
+            Authorization authorization = new Authorization();
+            int? UserId = authorization.Update(EmailTextBox.Text, TextBoxNewPassword.Text);
+            if (UserId != null)
+            {
+                _settings.SetUserID(UserId);
+                this.Hide();
+                MainPaint mainPaint = new MainPaint();
+                mainPaint.Show();
+            }
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using NewPaitnt.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace NewPaitnt
+namespace Validator
 {
     public class ValidatorCondition : IRegistrationValidator
     {

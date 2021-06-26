@@ -11,6 +11,6 @@ namespace NewPaitnt.SQLWebRequester
     {
         int UserId { get; }
         HttpStatusCode httpStatusCode { get; }
-        (bool, int) Authorize(string login, string password);
+        int? Authorize(string login, string password);
     }
 }

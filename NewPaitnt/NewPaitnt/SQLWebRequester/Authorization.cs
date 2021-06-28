@@ -2,6 +2,7 @@
 using RestSharp;
 using System;
 using System.Net;
+using System.Text.Json;
 
 namespace NewPaitnt.SQLWebRequester
 {
@@ -13,14 +14,14 @@ namespace NewPaitnt.SQLWebRequester
 
         public int? Authorize(string login, string password)
         {
-            var request = new RestRequest { Resource = $"http://localhost:9090/api/login", Method = Method.POST };
+            var request = new RestRequest { Resource = $"http://localhost:9090/api/auth/login", Method = Method.POST };
 
             UserAutorizationData userAutorizationData = new UserAutorizationData();
             userAutorizationData.Login = login;
             userAutorizationData.Password = password;
 
             request.AddJsonBody(userAutorizationData);
-
+            var abc = JsonSerializer.Serialize(userAutorizationData);
             RestClient restClient = new RestClient();
             var response = restClient.Execute(request);
             httpStatusCode = response.StatusCode;

@@ -2,6 +2,7 @@
 using RestSharp;
 using System;
 using System.Net;
+using System.Windows.Forms;
 
 namespace NewPaitnt.SQLWebRequester
 {
@@ -13,7 +14,7 @@ namespace NewPaitnt.SQLWebRequester
 
         public int? Register(string name, string lastname, string login, string password)
         {
-            var request = new RestRequest { Resource = $"http://localhost:9090/api/signup", Method = Method.POST };
+            var request = new RestRequest { Resource = $"http://localhost:9090/api/auth", Method = Method.POST };
             UserRegistrationData userRegistrationData = new UserRegistrationData();
 
             userRegistrationData.Name = name;
@@ -39,6 +40,11 @@ namespace NewPaitnt.SQLWebRequester
                     return null;
                 }
 
+            }
+            else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                MessageBox.Show(response.Content);
+                return null;
             }
             else
             {

@@ -33,8 +33,17 @@ namespace NewPaitnt.Forms
             {
                 _settings.SetUserID(UserId);
                 this.Hide();
-                MainPaint mainPaint = new MainPaint();
-                mainPaint.ShowDialog();
+                MainPaint mainPaint = (MainPaint)Application.OpenForms["MainPaint"];
+                if (mainPaint == null)
+                {
+                    mainPaint = new MainPaint();
+                    mainPaint.Show();
+                }
+                else
+                {
+                    mainPaint.Activate();
+                    mainPaint.Show();
+                }
             }
         }
 

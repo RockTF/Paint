@@ -235,9 +235,10 @@ namespace NewPaitnt
                 }
                 else
                 {
-                    drawingEngine.SetCanvasImage((Bitmap)Image.FromFile(openFileDialog.FileName));
                     settings.SetImageWidth(Image.FromFile(openFileDialog.FileName).Width);
                     settings.SetImageHeight(Image.FromFile(openFileDialog.FileName).Height);
+                    drawingEngine.NewImageSize();
+                    drawingEngine.SetCanvasImage((Bitmap)Image.FromFile(openFileDialog.FileName));
                     drawingEngine.DrawAllFigures();
                     PictureBoxPaint.Image = drawingEngine.GetMainImage();
                 }

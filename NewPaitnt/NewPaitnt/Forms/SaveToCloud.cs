@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace NewPaitnt.Forms
 {
-    public partial class OpenPicture : Form
+    public partial class SaveToCloud : Form
     {
-        public OpenPicture()
+        public SaveToCloud()
         {
             InitializeComponent();
         }

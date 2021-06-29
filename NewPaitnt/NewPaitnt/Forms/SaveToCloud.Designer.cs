@@ -1,7 +1,7 @@
 ﻿
 namespace NewPaitnt.Forms
 {
-    partial class OpenPicture
+    partial class SaveToCloud
     {
         /// <summary>
         /// Required designer variable.
@@ -29,30 +29,62 @@ namespace NewPaitnt.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.ListBoxPicture = new System.Windows.Forms.ListBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.labelFileName = new System.Windows.Forms.Label();
+            this.labelFileType = new System.Windows.Forms.Label();
             this.Close = new System.Windows.Forms.Button();
             this.BtnOk = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // ListBoxPicture
+            // comboBox1
             // 
-            this.ListBoxPicture.FormattingEnabled = true;
-            this.ListBoxPicture.ItemHeight = 15;
-            this.ListBoxPicture.Location = new System.Drawing.Point(12, 12);
-            this.ListBoxPicture.Name = "ListBoxPicture";
-            this.ListBoxPicture.ScrollAlwaysVisible = true;
-            this.ListBoxPicture.Size = new System.Drawing.Size(246, 184);
-            this.ListBoxPicture.TabIndex = 0;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "*.png",
+            "*.jpg",
+            "*.bmp",
+            "*.gif",
+            "*.json"});
+            this.comboBox1.Location = new System.Drawing.Point(89, 72);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(194, 23);
+            this.comboBox1.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(89, 37);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(194, 23);
+            this.textBox1.TabIndex = 1;
+            // 
+            // labelFileName
+            // 
+            this.labelFileName.AutoSize = true;
+            this.labelFileName.Location = new System.Drawing.Point(25, 40);
+            this.labelFileName.Name = "labelFileName";
+            this.labelFileName.Size = new System.Drawing.Size(58, 15);
+            this.labelFileName.TabIndex = 2;
+            this.labelFileName.Text = "File name";
+            // 
+            // labelFileType
+            // 
+            this.labelFileType.AutoSize = true;
+            this.labelFileType.Location = new System.Drawing.Point(25, 75);
+            this.labelFileType.Name = "labelFileType";
+            this.labelFileType.Size = new System.Drawing.Size(51, 15);
+            this.labelFileType.TabIndex = 3;
+            this.labelFileType.Text = "File type";
             // 
             // Close
             // 
             this.Close.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.Close.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Close.Location = new System.Drawing.Point(32, 224);
+            this.Close.Location = new System.Drawing.Point(64, 145);
             this.Close.Name = "Close";
             this.Close.Size = new System.Drawing.Size(94, 37);
-            this.Close.TabIndex = 7;
+            this.Close.TabIndex = 9;
             this.Close.Text = "Close";
             this.Close.UseVisualStyleBackColor = false;
             this.Close.Click += new System.EventHandler(this.Close_Click);
@@ -62,31 +94,38 @@ namespace NewPaitnt.Forms
             this.BtnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.BtnOk.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BtnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnOk.Location = new System.Drawing.Point(144, 224);
+            this.BtnOk.Location = new System.Drawing.Point(176, 145);
             this.BtnOk.Name = "BtnOk";
             this.BtnOk.Size = new System.Drawing.Size(94, 37);
-            this.BtnOk.TabIndex = 6;
+            this.BtnOk.TabIndex = 8;
             this.BtnOk.Text = "OK";
             this.BtnOk.UseVisualStyleBackColor = false;
             this.BtnOk.Click += new System.EventHandler(this.BtnOk_Click);
             // 
-            // OpenPicture
+            // SaveToCloud
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(279, 295);
+            this.ClientSize = new System.Drawing.Size(331, 221);
             this.Controls.Add(this.Close);
             this.Controls.Add(this.BtnOk);
-            this.Controls.Add(this.ListBoxPicture);
-            this.Name = "OpenPicture";
-            this.Text = "Open Picture";
+            this.Controls.Add(this.labelFileType);
+            this.Controls.Add(this.labelFileName);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.comboBox1);
+            this.Name = "SaveToCloud";
+            this.Text = "Save To Cloud";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox ListBoxPicture;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label labelFileName;
+        private System.Windows.Forms.Label labelFileType;
         private System.Windows.Forms.Button Close;
         private System.Windows.Forms.Button BtnOk;
     }

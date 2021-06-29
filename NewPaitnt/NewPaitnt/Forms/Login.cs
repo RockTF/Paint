@@ -21,8 +21,17 @@ namespace NewPaitnt.Forms
         private void BtnBack_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Welcome welcome = new Welcome();
-            welcome.ShowDialog();
+            Welcome welcome = (Welcome)Application.OpenForms["Welcome"];
+            if (welcome == null)
+            {
+                welcome = new Welcome();
+                welcome.Show();
+            }
+            else
+            {
+                welcome.Activate();
+                welcome.Show();
+            }
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -33,16 +42,34 @@ namespace NewPaitnt.Forms
             {
                 _settings.SetUserID(UserId);
                 this.Hide();
-                MainPaint mainPaint = new MainPaint();
-                mainPaint.ShowDialog();
+                MainPaint mainPaint = (MainPaint)Application.OpenForms["MainPaint"];
+                if (mainPaint == null)
+                {
+                    mainPaint = new MainPaint();
+                    mainPaint.Show();
+                }
+                else
+                {
+                    mainPaint.Activate();
+                    mainPaint.Show();
+                }
             }
         }
 
         private void BtnForgot_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ChangePassword changePassword = new ChangePassword();
-            changePassword.ShowDialog();
+            ChangePassword changePassword = (ChangePassword)Application.OpenForms["ChangePassword"];
+            if (changePassword == null)
+            {
+                changePassword = new ChangePassword();
+                changePassword.Show();
+            }
+            else
+            {
+                changePassword.Activate();
+                changePassword.Show();
+            }
         }
 
         private void TextBoxEmail_Validating(object sender, System.ComponentModel.CancelEventArgs e)

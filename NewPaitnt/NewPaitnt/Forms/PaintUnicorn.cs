@@ -178,16 +178,18 @@ namespace NewPaitnt
                 {
                     settings.SetMode(EMode.Curve);
                 }
-
                 createNewCanvas = new CreateNewCanvas(this, drawingEngine);
                 createNewCanvas.Show();
             }
             else
             {
                 createNewCanvas.Activate();
+
                 if (createNewCanvas.ShowDialog() == DialogResult.OK)
                 {
-                  PictureBoxPaint.Image = drawingEngine.GetMainImage();
+                    FigureFactory figureFactory = new FigureFactory();
+                    figureFactory.ResetAllCounters();
+                    PictureBoxPaint.Image = drawingEngine.GetMainImage();
                 }
             }
             
@@ -381,6 +383,7 @@ namespace NewPaitnt
                     break;
             }
         }
+
         private void ChangeDashStyle(DashStyle dashStyle)
         {
             if (_isFigureSelected)
@@ -396,7 +399,7 @@ namespace NewPaitnt
             if (_isBtnFillClicked)
             {
                 settings.SetBrushColor(HexColorConverter.ColorToHex((sender as Button).BackColor));
-                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor; // check actuality
+                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor; 
                 _isBtnFillClicked = false;
                 if (_isFigureSelected)
                 {
@@ -407,7 +410,7 @@ namespace NewPaitnt
             else
             {
                 settings.SetPenColor(HexColorConverter.ColorToHex((sender as Button).BackColor));
-                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor; // check actuality
+                PictureBoxColorFillFigure.BackColor = ((Button)sender).BackColor; 
 
                 RefreshPenPreview();
 
@@ -426,7 +429,7 @@ namespace NewPaitnt
             {
                 settings.SetBrushColor(HexColorConverter.ColorToHex(colorDialog1.Color));
                 settings.SetPenColor(HexColorConverter.ColorToHex(colorDialog1.Color));
-                PictureBoxColorFillFigure.BackColor = colorDialog1.Color; // check actuality
+                PictureBoxColorFillFigure.BackColor = colorDialog1.Color; 
 
                 RefreshPenPreview();
             }
@@ -483,7 +486,7 @@ namespace NewPaitnt
             if (_isBtnFillClicked)
             {
                 settings.SetBrushColor(HexColorConverter.ColorToHex(Color.Transparent));
-                PictureBoxColorFillFigure.BackColor = Color.Transparent; // check actuality
+                PictureBoxColorFillFigure.BackColor = Color.Transparent; 
                 _isBtnFillClicked = false;
                 if (_isFigureSelected)
                 {
@@ -494,7 +497,7 @@ namespace NewPaitnt
             else
             {
                 settings.SetPenColor(HexColorConverter.ColorToHex(Color.Transparent));
-                PictureBoxColorFillFigure.BackColor = Color.Transparent; // chek actuality
+                PictureBoxColorFillFigure.BackColor = Color.Transparent; 
 
                 RefreshPenPreview();
 
@@ -516,15 +519,34 @@ namespace NewPaitnt
         private void BtnMyStatistics_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Statistics statistics = new Statistics();
-            statistics.ShowDialog();
+            Statistics statistics = (Statistics)Application.OpenForms["Statistics"];
+            if(statistics == null)
+            {
+                statistics = new Statistics();
+                statistics.Show();
+            }
+            else
+            {
+                statistics.Activate();
+                statistics.Show();
+            }
         }
 
         private void BtnLoginOut_Click(object sender, EventArgs e)
         {
+            settings.SetUserID(null);
             this.Hide();
-            Welcome welcome = new Welcome();
-            welcome.ShowDialog();
+            Welcome welcome = (Welcome)Application.OpenForms["Welcome"];
+            if (welcome == null)
+            {
+                welcome = new Welcome();
+                welcome.Show();
+            }
+            else
+            {
+                welcome.Activate();
+                welcome.Show();
+            }
         }
 
         public void RefreshPictureBox()
@@ -532,6 +554,19 @@ namespace NewPaitnt
             PictureBoxPaint.Image = drawingEngine.GetMainImage();
         }
 
-     
+        private void openFromCloudToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenPicture openPicture = (OpenPicture)Application.OpenForms["OpenPicture"];
+            if (openPicture == null)
+            {
+                openPicture = new OpenPicture();
+                openPicture.Show();
+            }
+            else
+            {
+                openPicture.Activate();
+                openPicture.Show();
+            }
+        }
     }
 }

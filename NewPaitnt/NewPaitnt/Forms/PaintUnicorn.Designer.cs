@@ -99,7 +99,7 @@ namespace NewPaitnt
             this.saveToCloudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FiguresListBox = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.ImageListBox = new System.Windows.Forms.ListBox();
+            this.openFromCloudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxPaint)).BeginInit();
             this.PanelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxDelete)).BeginInit();
@@ -124,10 +124,10 @@ namespace NewPaitnt
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PictureBoxPaint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
-            this.PictureBoxPaint.Location = new System.Drawing.Point(154, 135);
+            this.PictureBoxPaint.Location = new System.Drawing.Point(18, 135);
             this.PictureBoxPaint.Margin = new System.Windows.Forms.Padding(0);
             this.PictureBoxPaint.Name = "PictureBoxPaint";
-            this.PictureBoxPaint.Size = new System.Drawing.Size(990, 586);
+            this.PictureBoxPaint.Size = new System.Drawing.Size(1126, 586);
             this.PictureBoxPaint.TabIndex = 0;
             this.PictureBoxPaint.TabStop = false;
             this.PictureBoxPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPaint_MouseDown);
@@ -864,7 +864,8 @@ namespace NewPaitnt
             this.toolStripMenuOpen,
             this.toolStripMenuSave,
             this.toolStripMenuClear,
-            this.saveToCloudToolStripMenuItem});
+            this.saveToCloudToolStripMenuItem,
+            this.openFromCloudToolStripMenuItem});
             this.toolStripMenuFile.Name = "toolStripMenuFile";
             this.toolStripMenuFile.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuFile.Text = "File";
@@ -872,14 +873,14 @@ namespace NewPaitnt
             // toolStripMenuCreate
             // 
             this.toolStripMenuCreate.Name = "toolStripMenuCreate";
-            this.toolStripMenuCreate.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuCreate.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuCreate.Text = "Create";
             this.toolStripMenuCreate.Click += new System.EventHandler(this.MenuCreate_Click);
             // 
             // toolStripMenuOpen
             // 
             this.toolStripMenuOpen.Name = "toolStripMenuOpen";
-            this.toolStripMenuOpen.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuOpen.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuOpen.Text = "Open";
             this.toolStripMenuOpen.Click += new System.EventHandler(this.MenuOpen_Click);
             // 
@@ -889,7 +890,7 @@ namespace NewPaitnt
             this.perDeviceToolStripMenuItem,
             this.inApplicationToolStripMenuItem});
             this.toolStripMenuSave.Name = "toolStripMenuSave";
-            this.toolStripMenuSave.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuSave.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuSave.Text = "Save";
             this.toolStripMenuSave.Click += new System.EventHandler(this.MenuSave_Click);
             // 
@@ -906,14 +907,14 @@ namespace NewPaitnt
             // toolStripMenuClear
             // 
             this.toolStripMenuClear.Name = "toolStripMenuClear";
-            this.toolStripMenuClear.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuClear.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuClear.Text = "Clear";
             this.toolStripMenuClear.Click += new System.EventHandler(this.MenuClear_Click);
             // 
             // saveToCloudToolStripMenuItem
             // 
             this.saveToCloudToolStripMenuItem.Name = "saveToCloudToolStripMenuItem";
-            this.saveToCloudToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.saveToCloudToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToCloudToolStripMenuItem.Text = "Save to cloud";
             // 
             // FiguresListBox
@@ -924,6 +925,7 @@ namespace NewPaitnt
             this.FiguresListBox.Location = new System.Drawing.Point(1147, 120);
             this.FiguresListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.FiguresListBox.Name = "FiguresListBox";
+            this.FiguresListBox.ScrollAlwaysVisible = true;
             this.FiguresListBox.Size = new System.Drawing.Size(132, 601);
             this.FiguresListBox.TabIndex = 4;
             this.FiguresListBox.SelectedIndexChanged += new System.EventHandler(this.FiguresListBox_SelectedIndexChanged);
@@ -932,14 +934,12 @@ namespace NewPaitnt
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
-            // ImageListBox
+            // openFromCloudToolStripMenuItem
             // 
-            this.ImageListBox.FormattingEnabled = true;
-            this.ImageListBox.ItemHeight = 15;
-            this.ImageListBox.Location = new System.Drawing.Point(0, 120);
-            this.ImageListBox.Name = "ImageListBox";
-            this.ImageListBox.Size = new System.Drawing.Size(132, 589);
-            this.ImageListBox.TabIndex = 5;
+            this.openFromCloudToolStripMenuItem.Name = "openFromCloudToolStripMenuItem";
+            this.openFromCloudToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openFromCloudToolStripMenuItem.Text = "Open from cloud";
+            this.openFromCloudToolStripMenuItem.Click += new System.EventHandler(this.openFromCloudToolStripMenuItem_Click);
             // 
             // MainPaint
             // 
@@ -947,7 +947,6 @@ namespace NewPaitnt
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.ClientSize = new System.Drawing.Size(1279, 742);
-            this.Controls.Add(this.ImageListBox);
             this.Controls.Add(this.FiguresListBox);
             this.Controls.Add(this.footer);
             this.Controls.Add(this.PanelMenu);
@@ -1056,8 +1055,8 @@ namespace NewPaitnt
         private System.Windows.Forms.Button BtnMyStatistics;
         private System.Windows.Forms.ToolStripMenuItem perDeviceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem inApplicationToolStripMenuItem;
-        private System.Windows.Forms.ListBox ImageListBox;
         private System.Windows.Forms.ToolStripMenuItem saveToCloudToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFromCloudToolStripMenuItem;
     }
 }
 

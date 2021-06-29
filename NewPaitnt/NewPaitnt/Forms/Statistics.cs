@@ -13,8 +13,17 @@ namespace NewPaitnt.Forms
         private void BtnBack_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MainPaint mainPaint = new MainPaint();
-            mainPaint.ShowDialog();
+            MainPaint mainPaint = (MainPaint)Application.OpenForms["MainPaint"];
+            if (mainPaint == null)
+            {
+                mainPaint = new MainPaint();
+                mainPaint.Show();
+            }
+            else
+            {
+                mainPaint.Activate();
+                mainPaint.Show();
+            }
         }
     }
 }

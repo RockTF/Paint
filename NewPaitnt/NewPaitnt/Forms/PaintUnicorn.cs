@@ -21,11 +21,6 @@ namespace NewPaitnt
         DrawingEngine drawingEngine;
         IStorage storage;
 
-        ChangePassword changePassword;
-        Login login;
-        Signup signup;
-        Statistics statistics;
-        Welcome welcome;
 
         private bool _isBtnFillClicked;
         private bool _isFigureCreated;
@@ -455,15 +450,10 @@ namespace NewPaitnt
                 var result = MessageBox.Show("Save your changes before exiting?", "Attention", MessageBoxButtons.YesNo);
                 switch (result)
                 {
-                    case DialogResult.No:
-                        welcome.Close();
-                        statistics.Close();
-                        signup.Close();
-                        login.Close();
-                        changePassword.Close();
+                    case DialogResult.No: Application.Exit();
                         break;
                     case DialogResult.Yes: MenuSave_Click(sender, e); break;
-                }
+                }    
             }
         }
 

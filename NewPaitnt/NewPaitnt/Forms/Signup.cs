@@ -20,10 +20,9 @@ namespace NewPaitnt.Forms
 
         private void BtnBack_Click(object sender, EventArgs e)
         {
-            //this.Hide();
+            this.Hide();
             Welcome welcome = new Welcome();
-            welcome.Show();
-            this.Close();
+            welcome.ShowDialog();
         }
 
         private void BtnSignup_Click(object sender, EventArgs e)
@@ -40,11 +39,10 @@ namespace NewPaitnt.Forms
                 if (UserId != null)
                 {
                     _settings.SetUserID(UserId);
-                    //this.Hide();
+                    this.Hide();
                     MainPaint mainPaint = new MainPaint();
-                    mainPaint.Show();
+                    mainPaint.ShowDialog();
                 }
-                this.Close();
             }
         }
 

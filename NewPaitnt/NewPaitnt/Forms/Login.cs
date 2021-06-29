@@ -22,7 +22,7 @@ namespace NewPaitnt.Forms
         {
             this.Hide();
             Welcome welcome = new Welcome();
-            welcome.Show();
+            welcome.ShowDialog();
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -34,7 +34,7 @@ namespace NewPaitnt.Forms
                 _settings.SetUserID(UserId);
                 this.Hide();
                 MainPaint mainPaint = new MainPaint();
-                mainPaint.Show();
+                mainPaint.ShowDialog();
             }
         }
 
@@ -42,8 +42,7 @@ namespace NewPaitnt.Forms
         {
             this.Hide();
             ChangePassword changePassword = new ChangePassword();
-            changePassword.Show();
-            this.Close();
+            changePassword.ShowDialog();
         }
 
         private void TextBoxEmail_Validating(object sender, System.ComponentModel.CancelEventArgs e)

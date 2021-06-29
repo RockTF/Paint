@@ -21,7 +21,7 @@ namespace NewPaitnt.Forms
         {
             this.Hide();
             Signup signup = new Signup();
-            signup.Show();
+            signup.ShowDialog();
         }
     }
 }

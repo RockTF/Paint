@@ -568,5 +568,10 @@ namespace NewPaitnt
                 openPicture.Show();
             }
         }
+
+        private void saveToCloudToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            storage.SetBitmapToSave((Bitmap)PictureBoxPaint.Image);
+        }
     }
 }

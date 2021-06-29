@@ -266,7 +266,5 @@ namespace NewPaitnt.Implementation
         {
             CanvasGraphics.Clear(bitmap);
         }
-
-        public string
     }
 }

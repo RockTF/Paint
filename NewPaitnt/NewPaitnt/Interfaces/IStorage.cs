@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-
+﻿using DTO;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace NewPaitnt.Interfaces
 {
@@ -18,5 +19,9 @@ namespace NewPaitnt.Interfaces
         void Clear();
         string GetJson();
         public void SetJson(string json);
+        PictureDTO GetPictureDTO(int userId, string pictureName, EPictureTypes pictureType);
+        Bitmap RestorePicture();
+        void SetBitmapToSave(Bitmap bitmap);
+        void SetPictureToLoad(string picture);
     }
 }

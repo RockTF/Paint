@@ -97,9 +97,9 @@ namespace NewPaitnt
             this.inApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuClear = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToCloudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFromCloudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FiguresListBox = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.openFromCloudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxPaint)).BeginInit();
             this.PanelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxDelete)).BeginInit();
@@ -346,7 +346,7 @@ namespace NewPaitnt
             this.LabelFigures.BackColor = System.Drawing.Color.Transparent;
             this.LabelFigures.Location = new System.Drawing.Point(348, 9);
             this.LabelFigures.Name = "LabelFigures";
-            this.LabelFigures.Size = new System.Drawing.Size(45, 15);
+            this.LabelFigures.Size = new System.Drawing.Size(47, 15);
             this.LabelFigures.TabIndex = 56;
             this.LabelFigures.Text = "Figures";
             // 
@@ -511,7 +511,7 @@ namespace NewPaitnt
             this.CheckBoxAntiAliasing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.CheckBoxAntiAliasing.Location = new System.Drawing.Point(222, 62);
             this.CheckBoxAntiAliasing.Name = "CheckBoxAntiAliasing";
-            this.CheckBoxAntiAliasing.Size = new System.Drawing.Size(88, 17);
+            this.CheckBoxAntiAliasing.Size = new System.Drawing.Size(86, 17);
             this.CheckBoxAntiAliasing.TabIndex = 44;
             this.CheckBoxAntiAliasing.Text = "AntiAliasing";
             this.CheckBoxAntiAliasing.UseVisualStyleBackColor = true;
@@ -795,7 +795,7 @@ namespace NewPaitnt
             this.LabelSize.BackColor = System.Drawing.Color.Transparent;
             this.LabelSize.Location = new System.Drawing.Point(251, 16);
             this.LabelSize.Name = "LabelSize";
-            this.LabelSize.Size = new System.Drawing.Size(27, 15);
+            this.LabelSize.Size = new System.Drawing.Size(30, 15);
             this.LabelSize.TabIndex = 5;
             this.LabelSize.Text = "Size";
             // 
@@ -842,7 +842,7 @@ namespace NewPaitnt
             this.memoryLabel.Location = new System.Drawing.Point(11, 3);
             this.memoryLabel.Margin = new System.Windows.Forms.Padding(0);
             this.memoryLabel.Name = "memoryLabel";
-            this.memoryLabel.Size = new System.Drawing.Size(128, 15);
+            this.memoryLabel.Size = new System.Drawing.Size(134, 15);
             this.memoryLabel.TabIndex = 0;
             this.memoryLabel.Text = "Memory usage: 0,0 MB";
             // 
@@ -867,7 +867,7 @@ namespace NewPaitnt
             this.saveToCloudToolStripMenuItem,
             this.openFromCloudToolStripMenuItem});
             this.toolStripMenuFile.Name = "toolStripMenuFile";
-            this.toolStripMenuFile.Size = new System.Drawing.Size(37, 20);
+            this.toolStripMenuFile.Size = new System.Drawing.Size(38, 20);
             this.toolStripMenuFile.Text = "File";
             // 
             // toolStripMenuCreate
@@ -916,6 +916,14 @@ namespace NewPaitnt
             this.saveToCloudToolStripMenuItem.Name = "saveToCloudToolStripMenuItem";
             this.saveToCloudToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToCloudToolStripMenuItem.Text = "Save to cloud";
+            this.saveToCloudToolStripMenuItem.Click += new System.EventHandler(this.saveToCloudToolStripMenuItem_Click);
+            // 
+            // openFromCloudToolStripMenuItem
+            // 
+            this.openFromCloudToolStripMenuItem.Name = "openFromCloudToolStripMenuItem";
+            this.openFromCloudToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openFromCloudToolStripMenuItem.Text = "Open from cloud";
+            this.openFromCloudToolStripMenuItem.Click += new System.EventHandler(this.openFromCloudToolStripMenuItem_Click);
             // 
             // FiguresListBox
             // 
@@ -933,13 +941,6 @@ namespace NewPaitnt
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog1";
-            // 
-            // openFromCloudToolStripMenuItem
-            // 
-            this.openFromCloudToolStripMenuItem.Name = "openFromCloudToolStripMenuItem";
-            this.openFromCloudToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openFromCloudToolStripMenuItem.Text = "Open from cloud";
-            this.openFromCloudToolStripMenuItem.Click += new System.EventHandler(this.openFromCloudToolStripMenuItem_Click);
             // 
             // MainPaint
             // 

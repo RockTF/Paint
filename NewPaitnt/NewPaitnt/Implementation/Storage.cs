@@ -2,6 +2,11 @@
 using NewPaitnt.Interfaces;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Drawing;
+using DTO;
+using System.IO;
+using System.Drawing.Imaging;
+using NewPaitnt.Enum;
 
 namespace NewPaitnt.Implementation
 {
@@ -17,6 +22,10 @@ namespace NewPaitnt.Implementation
         private FigureFactory _figureFactory;
 
         private string _jsonText;
+
+        private Bitmap _bitmapToSave;
+
+        private string _pictureToLoad;
 
         private Storage()
         {
@@ -147,6 +156,78 @@ namespace NewPaitnt.Implementation
             {
                 _figures.Add(_figureFactory.ConvertToFigure(figure));
                 _figuresNames.Add(_figures[^1].FigureName);
+            }
+        }
+
+        public PictureDTO GetPictureDTO(int userId, string pictureName, EPictureTypes pictureType)
+        {
+            PictureDTO pictureDTO = new PictureDTO();
+            pictureDTO.UserId = userId;
+            pictureDTO.PictureName = pictureName;
+            pictureDTO.PictureType = pictureType;
+
+            if (pictureType == EPictureTypes.json)
+            {
+                pictureDTO.PictureContent = GetJson();
+                pictureDTO.PictureSize = _jsonText.Length;
+            }
+            else
+            {
+                (pictureDTO.PictureContent, pictureDTO.PictureSize) = ConvertPictureToString(pictureType);
+            }
+
+            CalculateStatistics(ref pictureDTO);
+
+            return pictureDTO;
+        }
+
+        private (string, int) ConvertPictureToString(EPictureTypes pictureType)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            switch (pictureType)
+            {
+                case EPictureTypes.bmp:
+                    _bitmapToSave.Save(memoryStream, ImageFormat.Bmp);
+                    break;
+                case EPictureTypes.gif:
+                    _bitmapToSave.Save(memoryStream, ImageFormat.Gif);
+                    break;
+                case EPictureTypes.jpg:
+                    _bitmapToSave.Save(memoryStream, ImageFormat.Jpeg);
+                    break;
+                case EPictureTypes.png:
+                    _bitmapToSave.Save(memoryStream, ImageFormat.Png);
+                    break;
+            }
+
+            byte[] pictureBytes = memoryStream.ToArray();
+            int pictureSize = pictureBytes.Length;
+            string pictureString = Convert.ToBase64String(pictureBytes);
+            return (pictureString, pictureSize);
+        }
+
+        public Bitmap RestorePicture()
+        {
+            byte[] restoredBytes = Convert.FromBase64String(_pictureToLoad);
+            MemoryStream restoredStream = new MemoryStream(restoredBytes);
+            return (Bitmap)Image.FromStream(restoredStream);
+        }
+
+        public void SetBitmapToSave(Bitmap bitmap)
+        {
+            _bitmapToSave = bitmap;
+        }
+
+        public void SetPictureToLoad(string picture)
+        {
+            _pictureToLoad = picture;
+        }
+
+        private void CalculateStatistics(ref PictureDTO pictureDTO)
+        {
+            foreach (IDrawable figure in _figures)
+            {
+                pictureDTO.Dictionary[(int)figure.FigureType] = new KeyValuePair<string, int>(pictureDTO.Dictionary[(int)figure.FigureType].Key, pictureDTO.Dictionary[(int)figure.FigureType].Value + 1);
             }
         }
     }

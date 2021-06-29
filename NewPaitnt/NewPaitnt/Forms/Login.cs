@@ -61,8 +61,20 @@ namespace NewPaitnt.Forms
 
             bool isValid;
             string validationMessage;
-            (isValid, validationMessage) = validator.PasswordValidation(TextBoxEmail.Text);
+            (isValid, validationMessage) = validator.PasswordValidation(TextBoxPassword.Text);
             LabelErrorPassword.Text = validationMessage;
+        }
+
+        private void CheckBoxPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBoxPassword.Checked)
+            {
+                TextBoxPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                TextBoxPassword.UseSystemPasswordChar = true;
+            }
         }
     }
 }

@@ -533,5 +533,7 @@ namespace NewPaitnt
         {
             PictureBoxPaint.Image = drawingEngine.GetMainImage();
         }
+
+     
     }
 }

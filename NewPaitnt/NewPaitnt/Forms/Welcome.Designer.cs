@@ -42,7 +42,7 @@ namespace NewPaitnt.Forms
             this.LabelPaint.AutoSize = true;
             this.LabelPaint.Font = new System.Drawing.Font("Segoe UI Semibold", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.LabelPaint.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
-            this.LabelPaint.Location = new System.Drawing.Point(188, 22);
+            this.LabelPaint.Location = new System.Drawing.Point(198, 24);
             this.LabelPaint.Name = "LabelPaint";
             this.LabelPaint.Size = new System.Drawing.Size(107, 50);
             this.LabelPaint.TabIndex = 0;
@@ -51,7 +51,7 @@ namespace NewPaitnt.Forms
             // PictureBox1
             // 
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(158, 32);
+            this.PictureBox1.Location = new System.Drawing.Point(168, 34);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(38, 37);
             this.PictureBox1.TabIndex = 1;

@@ -27,7 +27,7 @@ namespace NewPaitnt.Forms
 
         private void BtnSignup_Click(object sender, EventArgs e)
         {
-            if (TextBoxPassword.Text != TextBoxReapeatPassword.Text)
+            if (TextBoxPassword.Text != TextBoxRepeatPassword.Text)
             {
                 MessageBox.Show("Sorry, but the passwords does not match");
             }
@@ -84,6 +84,40 @@ namespace NewPaitnt.Forms
             string validationMessage;
             (isValid, validationMessage) = validator.PasswordValidation(TextBoxPassword.Text);
             LabelErrorPassword.Text = validationMessage;
+        }
+
+        private void TextBoxReapeatPassword_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TextBoxRepeatPassword.MaxLength = 30;
+
+            bool isValid;
+            string validationMessage;
+            (isValid, validationMessage) = validator.PasswordValidation(TextBoxRepeatPassword.Text);
+            LabelErrorRepeat.Text = validationMessage;
+        }
+
+        private void CheckBoxPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBoxPassword.Checked)
+            {
+                TextBoxPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                TextBoxPassword.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void CheckBoxRepeat_CheckedChanged(object sender, EventArgs e)
+        {
+            if  (CheckBoxRepeat.Checked)
+            {
+                TextBoxRepeatPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                TextBoxRepeatPassword.UseSystemPasswordChar = true;
+            }
         }
     }
 }

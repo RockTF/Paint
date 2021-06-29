@@ -39,6 +39,7 @@ namespace NewPaitnt.Forms
             this.LabelEmail = new System.Windows.Forms.Label();
             this.LabelErrorEmailName = new System.Windows.Forms.Label();
             this.LabelErrorPassword = new System.Windows.Forms.Label();
+            this.CheckBoxPassword = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // BtnForgot
@@ -46,7 +47,7 @@ namespace NewPaitnt.Forms
             this.BtnForgot.FlatAppearance.BorderSize = 0;
             this.BtnForgot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnForgot.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BtnForgot.Location = new System.Drawing.Point(219, 193);
+            this.BtnForgot.Location = new System.Drawing.Point(222, 188);
             this.BtnForgot.Name = "BtnForgot";
             this.BtnForgot.Size = new System.Drawing.Size(157, 34);
             this.BtnForgot.TabIndex = 4;
@@ -59,7 +60,7 @@ namespace NewPaitnt.Forms
             this.BtnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.BtnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnLogin.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BtnLogin.Location = new System.Drawing.Point(222, 266);
+            this.BtnLogin.Location = new System.Drawing.Point(223, 264);
             this.BtnLogin.Name = "BtnLogin";
             this.BtnLogin.Size = new System.Drawing.Size(125, 45);
             this.BtnLogin.TabIndex = 5;
@@ -72,7 +73,7 @@ namespace NewPaitnt.Forms
             this.BtnBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.BtnBack.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnBack.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BtnBack.Location = new System.Drawing.Point(71, 266);
+            this.BtnBack.Location = new System.Drawing.Point(72, 264);
             this.BtnBack.Name = "BtnBack";
             this.BtnBack.Size = new System.Drawing.Size(125, 45);
             this.BtnBack.TabIndex = 6;
@@ -86,6 +87,7 @@ namespace NewPaitnt.Forms
             this.TextBoxPassword.Name = "TextBoxPassword";
             this.TextBoxPassword.Size = new System.Drawing.Size(308, 23);
             this.TextBoxPassword.TabIndex = 10;
+            this.TextBoxPassword.UseSystemPasswordChar = true;
             this.TextBoxPassword.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxPassword_Validating);
             // 
             // LabelPassword
@@ -121,7 +123,7 @@ namespace NewPaitnt.Forms
             this.LabelErrorEmailName.AutoSize = true;
             this.LabelErrorEmailName.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelErrorEmailName.ForeColor = System.Drawing.Color.Red;
-            this.LabelErrorEmailName.Location = new System.Drawing.Point(64, 95);
+            this.LabelErrorEmailName.Location = new System.Drawing.Point(58, 92);
             this.LabelErrorEmailName.Name = "LabelErrorEmailName";
             this.LabelErrorEmailName.Size = new System.Drawing.Size(0, 12);
             this.LabelErrorEmailName.TabIndex = 18;
@@ -131,10 +133,20 @@ namespace NewPaitnt.Forms
             this.LabelErrorPassword.AutoSize = true;
             this.LabelErrorPassword.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelErrorPassword.ForeColor = System.Drawing.Color.Red;
-            this.LabelErrorPassword.Location = new System.Drawing.Point(63, 173);
+            this.LabelErrorPassword.Location = new System.Drawing.Point(57, 171);
             this.LabelErrorPassword.Name = "LabelErrorPassword";
             this.LabelErrorPassword.Size = new System.Drawing.Size(0, 12);
             this.LabelErrorPassword.TabIndex = 19;
+            // 
+            // CheckBoxPassword
+            // 
+            this.CheckBoxPassword.AutoSize = true;
+            this.CheckBoxPassword.Location = new System.Drawing.Point(349, 149);
+            this.CheckBoxPassword.Name = "CheckBoxPassword";
+            this.CheckBoxPassword.Size = new System.Drawing.Size(15, 14);
+            this.CheckBoxPassword.TabIndex = 20;
+            this.CheckBoxPassword.UseVisualStyleBackColor = true;
+            this.CheckBoxPassword.CheckedChanged += new System.EventHandler(this.CheckBoxPassword_CheckedChanged);
             // 
             // Login
             // 
@@ -142,6 +154,7 @@ namespace NewPaitnt.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(424, 365);
+            this.Controls.Add(this.CheckBoxPassword);
             this.Controls.Add(this.LabelErrorPassword);
             this.Controls.Add(this.LabelErrorEmailName);
             this.Controls.Add(this.TextBoxPassword);
@@ -170,5 +183,6 @@ namespace NewPaitnt.Forms
         private System.Windows.Forms.Label LabelEmail;
         private System.Windows.Forms.Label LabelErrorEmailName;
         private System.Windows.Forms.Label LabelErrorPassword;
+        private System.Windows.Forms.CheckBox CheckBoxPassword;
     }
 }

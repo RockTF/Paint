@@ -37,24 +37,30 @@ namespace NewPaitnt.Forms
             this.TextBoxNewPassword = new System.Windows.Forms.TextBox();
             this.LabelNewPassword = new System.Windows.Forms.Label();
             this.EmailTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.LabelEmail = new System.Windows.Forms.Label();
+            this.LabelErrorEmail = new System.Windows.Forms.Label();
+            this.LabelErrorPassword = new System.Windows.Forms.Label();
+            this.LabelErrorRepeatPassword = new System.Windows.Forms.Label();
+            this.CheckBoxRepeat = new System.Windows.Forms.CheckBox();
+            this.CheckBoxNew = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // TextBoxReapeatPassword
             // 
-            this.TextBoxReapeatPassword.Location = new System.Drawing.Point(55, 225);
-            this.TextBoxReapeatPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TextBoxReapeatPassword.Location = new System.Drawing.Point(48, 224);
             this.TextBoxReapeatPassword.Name = "TextBoxReapeatPassword";
-            this.TextBoxReapeatPassword.Size = new System.Drawing.Size(351, 27);
+            this.TextBoxReapeatPassword.Size = new System.Drawing.Size(308, 23);
             this.TextBoxReapeatPassword.TabIndex = 19;
+            this.TextBoxReapeatPassword.UseSystemPasswordChar = true;
+            this.TextBoxReapeatPassword.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxReapeatPassword_Validating);
             // 
             // LabelRepeatPassword
             // 
             this.LabelRepeatPassword.AutoSize = true;
             this.LabelRepeatPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelRepeatPassword.Location = new System.Drawing.Point(52, 187);
+            this.LabelRepeatPassword.Location = new System.Drawing.Point(46, 195);
             this.LabelRepeatPassword.Name = "LabelRepeatPassword";
-            this.LabelRepeatPassword.Size = new System.Drawing.Size(158, 28);
+            this.LabelRepeatPassword.Size = new System.Drawing.Size(128, 21);
             this.LabelRepeatPassword.TabIndex = 18;
             this.LabelRepeatPassword.Text = "Repeat Password";
             // 
@@ -63,10 +69,9 @@ namespace NewPaitnt.Forms
             this.BtnBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.BtnBack.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnBack.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BtnBack.Location = new System.Drawing.Point(72, 310);
-            this.BtnBack.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnBack.Location = new System.Drawing.Point(63, 287);
             this.BtnBack.Name = "BtnBack";
-            this.BtnBack.Size = new System.Drawing.Size(143, 60);
+            this.BtnBack.Size = new System.Drawing.Size(125, 45);
             this.BtnBack.TabIndex = 17;
             this.BtnBack.Text = "BACK";
             this.BtnBack.UseVisualStyleBackColor = false;
@@ -77,10 +82,9 @@ namespace NewPaitnt.Forms
             this.BtnChange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
             this.BtnChange.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnChange.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BtnChange.Location = new System.Drawing.Point(245, 310);
-            this.BtnChange.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnChange.Location = new System.Drawing.Point(214, 287);
             this.BtnChange.Name = "BtnChange";
-            this.BtnChange.Size = new System.Drawing.Size(143, 60);
+            this.BtnChange.Size = new System.Drawing.Size(125, 45);
             this.BtnChange.TabIndex = 16;
             this.BtnChange.Text = "CHANGE";
             this.BtnChange.UseVisualStyleBackColor = false;
@@ -88,48 +92,101 @@ namespace NewPaitnt.Forms
             // 
             // TextBoxNewPassword
             // 
-            this.TextBoxNewPassword.Location = new System.Drawing.Point(55, 122);
-            this.TextBoxNewPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TextBoxNewPassword.Location = new System.Drawing.Point(48, 147);
             this.TextBoxNewPassword.Name = "TextBoxNewPassword";
-            this.TextBoxNewPassword.Size = new System.Drawing.Size(351, 27);
+            this.TextBoxNewPassword.Size = new System.Drawing.Size(308, 23);
             this.TextBoxNewPassword.TabIndex = 15;
+            this.TextBoxNewPassword.UseSystemPasswordChar = true;
+            this.TextBoxNewPassword.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxNewPassword_Validating);
             // 
             // LabelNewPassword
             // 
             this.LabelNewPassword.AutoSize = true;
             this.LabelNewPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelNewPassword.Location = new System.Drawing.Point(52, 80);
+            this.LabelNewPassword.Location = new System.Drawing.Point(46, 115);
             this.LabelNewPassword.Name = "LabelNewPassword";
-            this.LabelNewPassword.Size = new System.Drawing.Size(137, 28);
+            this.LabelNewPassword.Size = new System.Drawing.Size(112, 21);
             this.LabelNewPassword.TabIndex = 14;
             this.LabelNewPassword.Text = "New Password";
             // 
             // EmailTextBox
             // 
-            this.EmailTextBox.Location = new System.Drawing.Point(55, 51);
-            this.EmailTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.EmailTextBox.Location = new System.Drawing.Point(48, 69);
             this.EmailTextBox.Name = "EmailTextBox";
-            this.EmailTextBox.Size = new System.Drawing.Size(351, 27);
+            this.EmailTextBox.Size = new System.Drawing.Size(308, 23);
             this.EmailTextBox.TabIndex = 21;
+            this.EmailTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.EmailTextBox_Validating);
             // 
-            // label1
+            // LabelEmail
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(52, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 28);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Email";
+            this.LabelEmail.AutoSize = true;
+            this.LabelEmail.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LabelEmail.Location = new System.Drawing.Point(46, 38);
+            this.LabelEmail.Name = "LabelEmail";
+            this.LabelEmail.Size = new System.Drawing.Size(48, 21);
+            this.LabelEmail.TabIndex = 20;
+            this.LabelEmail.Text = "Email";
+            // 
+            // LabelErrorEmail
+            // 
+            this.LabelErrorEmail.AutoSize = true;
+            this.LabelErrorEmail.ForeColor = System.Drawing.Color.Red;
+            this.LabelErrorEmail.Location = new System.Drawing.Point(45, 95);
+            this.LabelErrorEmail.Name = "LabelErrorEmail";
+            this.LabelErrorEmail.Size = new System.Drawing.Size(0, 15);
+            this.LabelErrorEmail.TabIndex = 22;
+            // 
+            // LabelErrorPassword
+            // 
+            this.LabelErrorPassword.AutoSize = true;
+            this.LabelErrorPassword.ForeColor = System.Drawing.Color.Red;
+            this.LabelErrorPassword.Location = new System.Drawing.Point(45, 173);
+            this.LabelErrorPassword.Name = "LabelErrorPassword";
+            this.LabelErrorPassword.Size = new System.Drawing.Size(0, 15);
+            this.LabelErrorPassword.TabIndex = 23;
+            // 
+            // LabelErrorRepeatPassword
+            // 
+            this.LabelErrorRepeatPassword.AutoSize = true;
+            this.LabelErrorRepeatPassword.ForeColor = System.Drawing.Color.Red;
+            this.LabelErrorRepeatPassword.Location = new System.Drawing.Point(46, 250);
+            this.LabelErrorRepeatPassword.Name = "LabelErrorRepeatPassword";
+            this.LabelErrorRepeatPassword.Size = new System.Drawing.Size(0, 15);
+            this.LabelErrorRepeatPassword.TabIndex = 24;
+            // 
+            // CheckBoxRepeat
+            // 
+            this.CheckBoxRepeat.AutoSize = true;
+            this.CheckBoxRepeat.Location = new System.Drawing.Point(339, 229);
+            this.CheckBoxRepeat.Name = "CheckBoxRepeat";
+            this.CheckBoxRepeat.Size = new System.Drawing.Size(15, 14);
+            this.CheckBoxRepeat.TabIndex = 25;
+            this.CheckBoxRepeat.UseVisualStyleBackColor = true;
+            this.CheckBoxRepeat.CheckedChanged += new System.EventHandler(this.CheckBoxRepeat_CheckedChanged);
+            // 
+            // CheckBoxNew
+            // 
+            this.CheckBoxNew.AutoSize = true;
+            this.CheckBoxNew.Location = new System.Drawing.Point(339, 152);
+            this.CheckBoxNew.Name = "CheckBoxNew";
+            this.CheckBoxNew.Size = new System.Drawing.Size(15, 14);
+            this.CheckBoxNew.TabIndex = 26;
+            this.CheckBoxNew.UseVisualStyleBackColor = true;
+            this.CheckBoxNew.CheckedChanged += new System.EventHandler(this.CheckBoxNew_CheckedChanged);
             // 
             // ChangePassword
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(459, 407);
+            this.ClientSize = new System.Drawing.Size(402, 376);
+            this.Controls.Add(this.CheckBoxNew);
+            this.Controls.Add(this.CheckBoxRepeat);
+            this.Controls.Add(this.LabelErrorRepeatPassword);
+            this.Controls.Add(this.LabelErrorPassword);
+            this.Controls.Add(this.LabelErrorEmail);
             this.Controls.Add(this.EmailTextBox);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LabelEmail);
             this.Controls.Add(this.TextBoxReapeatPassword);
             this.Controls.Add(this.LabelRepeatPassword);
             this.Controls.Add(this.BtnBack);
@@ -137,7 +194,6 @@ namespace NewPaitnt.Forms
             this.Controls.Add(this.TextBoxNewPassword);
             this.Controls.Add(this.LabelNewPassword);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "ChangePassword";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Change Password";
@@ -155,6 +211,11 @@ namespace NewPaitnt.Forms
         private System.Windows.Forms.TextBox TextBoxNewPassword;
         private System.Windows.Forms.Label LabelNewPassword;
         private System.Windows.Forms.TextBox EmailTextBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LabelEmail;
+        private System.Windows.Forms.Label LabelErrorEmail;
+        private System.Windows.Forms.Label LabelErrorPassword;
+        private System.Windows.Forms.Label LabelErrorRepeatPassword;
+        private System.Windows.Forms.CheckBox CheckBoxRepeat;
+        private System.Windows.Forms.CheckBox CheckBoxNew;
     }
 }

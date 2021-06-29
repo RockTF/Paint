@@ -43,6 +43,7 @@ namespace NewPaitnt.Forms
             this.Hide();
             ChangePassword changePassword = new ChangePassword();
             changePassword.Show();
+            this.Close();
         }
 
         private void TextBoxEmail_Validating(object sender, System.ComponentModel.CancelEventArgs e)

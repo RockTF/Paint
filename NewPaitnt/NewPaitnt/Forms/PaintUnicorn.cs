@@ -15,13 +15,17 @@ namespace NewPaitnt
     public partial class MainPaint : Form
     {
         Process currentProcess;
-
         Settings settings;
         MouseHandler mouseHandler;
         PenPreview penPreview;
+        DrawingEngine drawingEngine;
         IStorage storage;
 
-        DrawingEngine drawingEngine;
+        ChangePassword changePassword;
+        Login login;
+        Signup signup;
+        Statistics statistics;
+        Welcome welcome;
 
         private bool _isBtnFillClicked;
         private bool _isFigureCreated;
@@ -448,13 +452,17 @@ namespace NewPaitnt
         {
             if (PictureBoxPaint.Image != null)
             {
-                var result = MessageBox.Show("Save your changes before exiting?", "Attention", MessageBoxButtons.YesNoCancel);
+                var result = MessageBox.Show("Save your changes before exiting?", "Attention", MessageBoxButtons.YesNo);
                 switch (result)
                 {
-                    case DialogResult.No: 
+                    case DialogResult.No:
+                        welcome.Close();
+                        statistics.Close();
+                        signup.Close();
+                        login.Close();
+                        changePassword.Close();
                         break;
                     case DialogResult.Yes: MenuSave_Click(sender, e); break;
-                    case DialogResult.Cancel: return;
                 }
             }
         }

@@ -14,7 +14,7 @@ namespace NewPaitnt.Forms
         {
             this.Hide();
             Login login = new Login();
-            login.Show();
+            login.ShowDialog();
         }
 
         private void BtnSignUp_Click(object sender, EventArgs e)

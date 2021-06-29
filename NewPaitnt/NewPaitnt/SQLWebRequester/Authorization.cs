@@ -9,21 +9,19 @@ namespace NewPaitnt.SQLWebRequester
 {
     class Authorization : IAuthorizationRequester
     {
-        public int UserId { get; private set; }
+        public int? UserId { get; private set; }
 
         public HttpStatusCode httpStatusCode { get; private set; }
 
         public async Task<int?> AuthorizeAsync(string login, string password)
         {
-            int? id;
-            id = await Task.Run(() => Authorize( login, password));
-            return id;
+            UserId = await Task.Run(() => Authorize( login, password));
+            return UserId;
         }
         public async Task<int?> UpdateAsync(string login, string password)
         {
-            int? id;
-            id = await Task.Run(() => Update(login, password));
-            return id;
+            UserId = await Task.Run(() => Update(login, password));
+            return UserId;
         }
 
         public int? Authorize(string login, string password)

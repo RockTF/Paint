@@ -9,14 +9,13 @@ namespace NewPaitnt.SQLWebRequester
 {
     class Registration
     {
-        public int UserId { get; private set; }
+        public int? UserId { get; private set; }
 
         public HttpStatusCode httpStatusCode { get; private set; }
         public async Task<int?> RegisterAsync(string name, string lastname, string login, string password)
         {
-            int? Id;
-           Id = await Task.Run(() => Register(name, lastname, login, password));
-            return Id;
+            UserId = await Task.Run(() => Register(name, lastname, login, password));
+            return UserId;
         }
 
         public int? Register(string name, string lastname, string login, string password)

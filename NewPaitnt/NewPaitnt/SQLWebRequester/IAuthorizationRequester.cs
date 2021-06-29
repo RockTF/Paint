@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace NewPaitnt.SQLWebRequester
 {
     interface IAuthorizationRequester
     {
-        int UserId { get; }
+        int? UserId { get; }
         HttpStatusCode httpStatusCode { get; }
         int? Authorize(string login, string password);
     }

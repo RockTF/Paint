@@ -2,6 +2,7 @@
 using RestSharp;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NewPaitnt.SQLWebRequester
@@ -11,6 +12,12 @@ namespace NewPaitnt.SQLWebRequester
         public int UserId { get; private set; }
 
         public HttpStatusCode httpStatusCode { get; private set; }
+        public async Task<int?> RegisterAsync(string name, string lastname, string login, string password)
+        {
+            int? Id;
+           Id = await Task.Run(() => Register(name, lastname, login, password));
+            return Id;
+        }
 
         public int? Register(string name, string lastname, string login, string password)
         {

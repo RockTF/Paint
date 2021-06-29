@@ -25,10 +25,10 @@ namespace NewPaitnt.Forms
             login.Show();
         }
 
-        private void BtnChange_Click(object sender, EventArgs e)
+        private async void BtnChange_Click(object sender, EventArgs e)
         {
             Authorization authorization = new Authorization();
-            int? UserId = authorization.Update(EmailTextBox.Text, TextBoxNewPassword.Text);
+            int? UserId = await authorization.UpdateAsync(EmailTextBox.Text, TextBoxNewPassword.Text);
             if (UserId != null)
             {
                 _settings.SetUserID(UserId);

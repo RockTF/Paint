@@ -34,7 +34,7 @@ namespace NewPaitnt.Forms
             }
         }
 
-        private void BtnSignup_Click(object sender, EventArgs e)
+        private async void BtnSignup_Click(object sender, EventArgs e)
         {
             if (TextBoxPassword.Text != TextBoxRepeatPassword.Text)
             {
@@ -43,7 +43,7 @@ namespace NewPaitnt.Forms
             else 
             {
                 Registration registration = new Registration();
-                int? UserId = registration.Register(TextBoxFirstName.Text, TextBoxLastName.Text, TextBoxEmail.Text, TextBoxPassword.Text);
+                int? UserId = await registration.RegisterAsync(TextBoxFirstName.Text, TextBoxLastName.Text, TextBoxEmail.Text, TextBoxPassword.Text);
 
                 if (UserId != null)
                 {

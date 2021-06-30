@@ -42,6 +42,13 @@ namespace NewPaitnt.Implementation
             _selectedFigureIndex = -1;
         }
 
+        public void ClearCanvasWithoutStorage()
+        {
+            ClearLayers(Color.White);
+            CanvasGraphics.Clear(MainGraphics.Bitmap);
+            _selectedFigureIndex = -1;
+        }
+
         public void CreateFigure()
         {
             _storage.AddFigure(_figureFactory.CreateFigure(_mouseHandler.GetPreviousMove(), _mouseHandler.GetMove(), _settings));
@@ -265,6 +272,16 @@ namespace NewPaitnt.Implementation
         public void SetCanvasImage(Bitmap bitmap)
         {
             CanvasGraphics.Clear(bitmap);
+        }
+
+        public void Refresh()
+        {
+            Bitmap newImage = _storage.RestorePicture();
+            _settings.SetImageWidth(newImage.Width);
+            _settings.SetImageHeight(newImage.Height);
+            NewImageSize();
+            MainGraphics.Clear(newImage);
+            DrawAllFigures();
         }
     }
 }

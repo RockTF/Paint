@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using DTO;
+using Newtonsoft.Json;
 using RestSharp;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows.Forms;
 
@@ -12,7 +14,7 @@ namespace NewPaitnt.SQLWebRequester
 
         public HttpStatusCode httpStatusCode { get; private set; }
 
-        public Statistic Get(int userId)
+        public IEnumerable<PersonModel> Get(int userId)
         {
             var request = new RestRequest { Resource = $"http://localhost:9090/api/statistics?userid={userId}", Method = Method.GET };
 
@@ -23,7 +25,7 @@ namespace NewPaitnt.SQLWebRequester
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-             Statistic statistic = JsonConvert.DeserializeObject<Statistic>(response.Content);
+                IEnumerable<PersonModel> statistic = JsonConvert.DeserializeObject<IEnumerable<PersonModel>>(response.Content);
              return statistic;
             }
             else

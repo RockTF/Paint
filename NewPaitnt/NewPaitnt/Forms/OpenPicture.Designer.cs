@@ -80,6 +80,7 @@ namespace NewPaitnt.Forms
             this.Controls.Add(this.ListBoxPicture);
             this.Name = "OpenPicture";
             this.Text = "Open Picture";
+            this.Load += new System.EventHandler(this.OpenPicture_Load);
             this.ResumeLayout(false);
 
         }

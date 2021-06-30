@@ -100,6 +100,7 @@ namespace NewPaitnt
             this.openFromCloudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FiguresListBox = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.RefreshButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxPaint)).BeginInit();
             this.PanelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxDelete)).BeginInit();
@@ -137,6 +138,7 @@ namespace NewPaitnt
             // PanelMenu
             // 
             this.PanelMenu.BackColor = System.Drawing.SystemColors.Control;
+            this.PanelMenu.Controls.Add(this.RefreshButton);
             this.PanelMenu.Controls.Add(this.BtnLoginOut);
             this.PanelMenu.Controls.Add(this.BtnMyStatistics);
             this.PanelMenu.Controls.Add(this.BtnTransparent);
@@ -873,14 +875,14 @@ namespace NewPaitnt
             // toolStripMenuCreate
             // 
             this.toolStripMenuCreate.Name = "toolStripMenuCreate";
-            this.toolStripMenuCreate.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuCreate.Size = new System.Drawing.Size(168, 22);
             this.toolStripMenuCreate.Text = "Create";
             this.toolStripMenuCreate.Click += new System.EventHandler(this.MenuCreate_Click);
             // 
             // toolStripMenuOpen
             // 
             this.toolStripMenuOpen.Name = "toolStripMenuOpen";
-            this.toolStripMenuOpen.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuOpen.Size = new System.Drawing.Size(168, 22);
             this.toolStripMenuOpen.Text = "Open";
             this.toolStripMenuOpen.Click += new System.EventHandler(this.MenuOpen_Click);
             // 
@@ -890,7 +892,7 @@ namespace NewPaitnt
             this.perDeviceToolStripMenuItem,
             this.inApplicationToolStripMenuItem});
             this.toolStripMenuSave.Name = "toolStripMenuSave";
-            this.toolStripMenuSave.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuSave.Size = new System.Drawing.Size(168, 22);
             this.toolStripMenuSave.Text = "Save";
             this.toolStripMenuSave.Click += new System.EventHandler(this.MenuSave_Click);
             // 
@@ -907,21 +909,21 @@ namespace NewPaitnt
             // toolStripMenuClear
             // 
             this.toolStripMenuClear.Name = "toolStripMenuClear";
-            this.toolStripMenuClear.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuClear.Size = new System.Drawing.Size(168, 22);
             this.toolStripMenuClear.Text = "Clear";
             this.toolStripMenuClear.Click += new System.EventHandler(this.MenuClear_Click);
             // 
             // saveToCloudToolStripMenuItem
             // 
             this.saveToCloudToolStripMenuItem.Name = "saveToCloudToolStripMenuItem";
-            this.saveToCloudToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToCloudToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.saveToCloudToolStripMenuItem.Text = "Save to cloud";
             this.saveToCloudToolStripMenuItem.Click += new System.EventHandler(this.saveToCloudToolStripMenuItem_Click);
             // 
             // openFromCloudToolStripMenuItem
             // 
             this.openFromCloudToolStripMenuItem.Name = "openFromCloudToolStripMenuItem";
-            this.openFromCloudToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openFromCloudToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.openFromCloudToolStripMenuItem.Text = "Open from cloud";
             this.openFromCloudToolStripMenuItem.Click += new System.EventHandler(this.openFromCloudToolStripMenuItem_Click);
             // 
@@ -941,6 +943,16 @@ namespace NewPaitnt
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog1";
+            // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Location = new System.Drawing.Point(90, 60);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(76, 25);
+            this.RefreshButton.TabIndex = 68;
+            this.RefreshButton.Text = "Refresh";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
             // MainPaint
             // 
@@ -1058,6 +1070,7 @@ namespace NewPaitnt
         private System.Windows.Forms.ToolStripMenuItem inApplicationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToCloudToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFromCloudToolStripMenuItem;
+        private System.Windows.Forms.Button RefreshButton;
     }
 }
 

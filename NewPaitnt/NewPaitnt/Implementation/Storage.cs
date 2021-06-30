@@ -210,7 +210,8 @@ namespace NewPaitnt.Implementation
         {
             byte[] restoredBytes = Convert.FromBase64String(_pictureToLoad);
             MemoryStream restoredStream = new MemoryStream(restoredBytes);
-            return (Bitmap)Image.FromStream(restoredStream);
+            _bitmapToSave = (Bitmap)Image.FromStream(restoredStream);
+            return _bitmapToSave;
         }
 
         public void SetBitmapToSave(Bitmap bitmap)

@@ -29,41 +29,41 @@ namespace NewPaitnt.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.comboBoxPictureType = new System.Windows.Forms.ComboBox();
+            this.textBoxFileName = new System.Windows.Forms.TextBox();
             this.labelFileName = new System.Windows.Forms.Label();
             this.labelFileType = new System.Windows.Forms.Label();
             this.Close = new System.Windows.Forms.Button();
             this.BtnOk = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // comboBoxPictureType
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "*.png",
+            this.comboBoxPictureType.FormattingEnabled = true;
+            this.comboBoxPictureType.Items.AddRange(new object[] {
             "*.jpg",
             "*.bmp",
             "*.gif",
+            "*.png",
             "*.json"});
-            this.comboBox1.Location = new System.Drawing.Point(89, 72);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(194, 23);
-            this.comboBox1.TabIndex = 0;
+            this.comboBoxPictureType.Location = new System.Drawing.Point(89, 72);
+            this.comboBoxPictureType.Name = "comboBoxPictureType";
+            this.comboBoxPictureType.Size = new System.Drawing.Size(194, 23);
+            this.comboBoxPictureType.TabIndex = 0;
             // 
-            // textBox1
+            // textBoxFileName
             // 
-            this.textBox1.Location = new System.Drawing.Point(89, 37);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(194, 23);
-            this.textBox1.TabIndex = 1;
+            this.textBoxFileName.Location = new System.Drawing.Point(89, 37);
+            this.textBoxFileName.Name = "textBoxFileName";
+            this.textBoxFileName.Size = new System.Drawing.Size(194, 23);
+            this.textBoxFileName.TabIndex = 1;
             // 
             // labelFileName
             // 
             this.labelFileName.AutoSize = true;
             this.labelFileName.Location = new System.Drawing.Point(25, 40);
             this.labelFileName.Name = "labelFileName";
-            this.labelFileName.Size = new System.Drawing.Size(58, 15);
+            this.labelFileName.Size = new System.Drawing.Size(60, 15);
             this.labelFileName.TabIndex = 2;
             this.labelFileName.Text = "File name";
             // 
@@ -72,7 +72,7 @@ namespace NewPaitnt.Forms
             this.labelFileType.AutoSize = true;
             this.labelFileType.Location = new System.Drawing.Point(25, 75);
             this.labelFileType.Name = "labelFileType";
-            this.labelFileType.Size = new System.Drawing.Size(51, 15);
+            this.labelFileType.Size = new System.Drawing.Size(54, 15);
             this.labelFileType.TabIndex = 3;
             this.labelFileType.Text = "File type";
             // 
@@ -111,8 +111,8 @@ namespace NewPaitnt.Forms
             this.Controls.Add(this.BtnOk);
             this.Controls.Add(this.labelFileType);
             this.Controls.Add(this.labelFileName);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.textBoxFileName);
+            this.Controls.Add(this.comboBoxPictureType);
             this.Name = "SaveToCloud";
             this.Text = "Save To Cloud";
             this.ResumeLayout(false);
@@ -122,8 +122,8 @@ namespace NewPaitnt.Forms
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox comboBoxPictureType;
+        private System.Windows.Forms.TextBox textBoxFileName;
         private System.Windows.Forms.Label labelFileName;
         private System.Windows.Forms.Label labelFileType;
         private System.Windows.Forms.Button Close;

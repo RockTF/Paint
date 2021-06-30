@@ -1,11 +1,16 @@
-﻿using System;
+﻿using DTO;
+using NewPaitnt.Implementation;
+using NewPaitnt.SQLWebRequester;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace NewPaitnt.Forms
 {
-    public partial class Statistics : Form
+    public partial class StatisticsForm : Form
     {
-        public Statistics()
+        private Settings _settings = Settings.Initialize();
+        public StatisticsForm()
         {
             InitializeComponent();
         }
@@ -24,6 +29,13 @@ namespace NewPaitnt.Forms
                 mainPaint.Activate();
                 mainPaint.Show();
             }
+        }
+
+        private void Statistics_Load(object sender, EventArgs e)
+        {
+            Statistic statistic = new Statistic();
+            IEnumerable<PersonModel> stats = statistic.Get((int)_settings.UserId);
+            dataGridView.DataSource = stats;
         }
     }
 }

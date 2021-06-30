@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DTO;
+using NewPaitnt.Implementation;
+using NewPaitnt.SQLWebRequester;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +15,8 @@ namespace NewPaitnt.Forms
 {
     public partial class SaveToCloud : Form
     {
+        private Storage _storage = Storage.Initialize();
+        private Settings _settings = Settings.Initialize();
         public SaveToCloud()
         {
             InitializeComponent();
@@ -35,6 +40,12 @@ namespace NewPaitnt.Forms
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
+            PictureDTO pictureDTO = _storage.GetPictureDTO((int)_settings.UserId, textBoxFileName.Text, (EPictureTypes)comboBoxPictureType.SelectedIndex);
+
+            SaveLoad saveLoad = new SaveLoad();
+
+            saveLoad.SaveToServer(pictureDTO);
+
             this.Hide();
             MainPaint mainPaint = (MainPaint)Application.OpenForms["MainPaint"];
             if (mainPaint == null)

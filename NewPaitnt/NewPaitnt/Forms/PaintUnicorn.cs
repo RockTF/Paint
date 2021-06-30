@@ -520,10 +520,10 @@ namespace NewPaitnt
         private void BtnMyStatistics_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Statistics statistics = (Statistics)Application.OpenForms["Statistics"];
+            StatisticsForm statistics = (StatisticsForm)Application.OpenForms["Statistics"];
             if(statistics == null)
             {
-                statistics = new Statistics();
+                statistics = new StatisticsForm();
                 statistics.Show();
             }
             else
@@ -557,6 +557,8 @@ namespace NewPaitnt
 
         private void openFromCloudToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
+            
             OpenPicture openPicture = (OpenPicture)Application.OpenForms["OpenPicture"];
             if (openPicture == null)
             {
@@ -573,6 +575,30 @@ namespace NewPaitnt
         private void saveToCloudToolStripMenuItem_Click(object sender, EventArgs e)
         {
             storage.SetBitmapToSave((Bitmap)PictureBoxPaint.Image);
+
+            SaveToCloud saveToCloud = (SaveToCloud)Application.OpenForms["SaveToCloud"];
+            if (saveToCloud == null)
+            {
+                saveToCloud = new SaveToCloud();
+                saveToCloud.Show();
+            }
+            else
+            {
+                saveToCloud.Activate();
+                saveToCloud.Show();
+            }
+        }
+
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+
+            drawingEngine.ClearCanvasWithoutStorage();
+            FigureFactory figureFactory = new FigureFactory();
+            figureFactory.ResetAllCounters();
+            drawingEngine.DrawAllFigures();
+            PictureBoxPaint.Image = drawingEngine.GetMainImage();
+            FiguresListBox.Items.Clear();
+            FiguresListBox.Items.AddRange(drawingEngine.GetFigureList());
         }
     }
 }
